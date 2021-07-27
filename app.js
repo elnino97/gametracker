@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const session = require('express-session');
+const methodOverride = require('method-override');
 
 const Schema = mongoose.Schema;
 
@@ -18,7 +19,7 @@ const User = require('./models/user')
 const games = require('./games');
 const gameDetails = require('./wolfenstein');
 const Review = require('./models/review');
-
+const { isLoggedIn, loginRedirect } = require('./middleware');
 
 mongoose.connect('mongodb://localhost:27017/gametracker', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -26,6 +27,7 @@ app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
+app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true }));
 // app.use(express.static(path.join(__dirname, 'public')))
 
@@ -80,7 +82,7 @@ app.post('/games', async (req, res) => {
     res.render('searchResult', { games })
 })
 
-app.get('/games/:id', async (req, res) => {
+app.get('/games/:id', loginRedirect, async (req, res) => {
     const { id } = req.params;
     const reviews = await Review.find({ gameId: id });
     const shortReviews = reviews.slice(0,3);
@@ -91,13 +93,22 @@ app.get('/games/:id', async (req, res) => {
     res.render('details', { screenshots, gameDetails, shortReviews });
 })
 
-app.post('/games/:id', async (req, res) => {
+app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
     const { id } = req.params
     const review = new Review(req.body.review);
+    review.authorId = req.user._id;
+    review.author = req.user.username;
     review.gameId = id;
     await review.save();
     res.redirect(`/games/${id}`)
 })
+
+app.delete('/games/:id/reviews/:reviewId', isLoggedIn, async (req, res) => {
+    const { id, reviewId } = req.params;
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/games/${id}`)
+})
+
 
 app.get('/register', (req, res) => {
     res.render('users/register')
@@ -113,7 +124,6 @@ app.post('/register', async (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-    console.log(req.originalUrl)
     res.render('users/login')
 })
 

@@ -17,11 +17,11 @@
         <div class="col-md-6 mb-5">
           <% if (currentUser) { %> 
           <p>What do you think about this game?</p>
-          <form action="/games/<%= gameDetails.id %>/" method="POST">
+          <form class="needs-validation" action="/games/<%= gameDetails.id %>/reviews" method="POST" novalidate>
               <label class="form-label" for="rating">Rating</label>
               <input class="form-range" type="range" min="1" max="10" name="review[rating]" id="rating">
               <label for="description"></label>
-              <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3"></textarea>
+              <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
               <button>Submit</button>
           </form>
           <% } %> 
@@ -31,7 +31,15 @@
           <div class="card">
             <div class="card-body">
               <h6 class="card-subtitle mb-2 text-muted">Rating: <%= review.rating %></h6>
-              <p class="card-text"><%= review.body %> </p>
+              <p class="card-text"><%= review.body %> by <strong><%= review.author %></strong></p>
+              <%  if( currentUser && review.authorId.equals(currentUser._id)) {%>
+              <form action="">
+                  <button>Edit</button>
+              </form>
+              <form action="/games/<%= gameDetails.id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                  <button class="btn btn-sm btn-danger">Delete</button>
+              </form>
+              <% } %> 
             </div>
           </div>
         <% } %> 
@@ -49,7 +57,7 @@
           </h2>
           <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-              <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores odio qui perferendis! Numquam, sint harum deserunt impedit vel amet delectus sit temporibus aliquam nisi incidunt, molestiae distinctio eum reiciendis voluptate.
             </div>
           </div>
         </div>

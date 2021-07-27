@@ -4,7 +4,12 @@ const Schema = mongoose.Schema;
 const reviewSchema = new Schema({
     body: String,
     rating: Number,
-    gameId: Number
+    gameId: Number,
+    authorId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    author: String,
 })
 
 module.exports = mongoose.model("Review", reviewSchema);
