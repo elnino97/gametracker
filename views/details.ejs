@@ -1,0 +1,89 @@
+<% layout('layouts/boilerplate')%>
+    <div class="container" style="margin-top: 100px">
+        <div class="row">
+          <div class="col-md-6">
+              <img src="<%= gameDetails.background_image %>" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-6 mb-5">
+              <div>
+                  <h1><%= gameDetails.name %> </h1>
+                  <p><%= gameDetails.description_raw %></p>
+                  <p>Release date: <%= gameDetails.released %> </p>
+                  <p>Metacritic: <%= gameDetails.metacritic %> </p>
+              </div>
+          </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-md-6 mb-5">
+          <% if (currentUser) { %> 
+          <p>What do you think about this game?</p>
+          <form action="/games/<%= gameDetails.id %>/" method="POST">
+              <label class="form-label" for="rating">Rating</label>
+              <input class="form-range" type="range" min="1" max="10" name="review[rating]" id="rating">
+              <label for="description"></label>
+              <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3"></textarea>
+              <button>Submit</button>
+          </form>
+          <% } %> 
+        </div>
+      <div class="col-md-6">
+        <% for (let review of shortReviews) { %> 
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-muted">Rating: <%= review.rating %></h6>
+              <p class="card-text"><%= review.body %> </p>
+            </div>
+          </div>
+        <% } %> 
+      </div>
+      </div>
+
+        
+
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Additional information
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Lorem Ipsum
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Screenshots
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="row">
+                    <% for (let screenshot of screenshots) { %>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <img src="<%= screenshot.image %>" class="card-img-top" style="object-fit: cover;" width="600" height="300" alt="">
+                            </div>
+                        </div>
+                    <% } %>  
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
