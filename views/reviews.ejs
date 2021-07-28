@@ -1,0 +1,38 @@
+<% layout('layouts/boilerplate')%>
+
+
+<div class="container mt-5">
+
+    <div class="col-md-6 mb-5">
+        <% if (currentUser) { %> 
+        <p>What do you think about this game?</p>
+        <form class="needs-validation" action="/games/<%= gameDetails.id %>/reviews" method="POST" novalidate>
+            <label class="form-label" for="rating">Rating</label>
+            <input class="form-range" type="range" min="1" max="10" name="review[rating]" id="rating">
+            <label for="description"></label>
+            <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+            <button>Submit</button>
+        </form>
+        <% } %> 
+    </div>
+    <div class="row">
+        <% for (let review of reviews) { %> 
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                      <h6 class="card-subtitle mb-2 text-muted">Rating: <%= review.rating %></h6>
+                      <p class="card-text"><%= review.body %> by <strong><%= review.author %></strong></p>
+                      <%  if( currentUser && review.authorId.equals(currentUser._id)) {%>
+                      <form action="">
+                          <button>Edit</button>
+                      </form>
+                      <form action="/games/<%= gameDetails.id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                          <button class="btn btn-sm btn-danger">Delete</button>
+                      </form>
+                      <% } %> 
+                    </div>
+                  </div>
+            </div>
+          <% } %> 
+    </div>
+</div>

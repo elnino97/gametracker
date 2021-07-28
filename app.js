@@ -93,6 +93,12 @@ app.get('/games/:id', loginRedirect, async (req, res) => {
     res.render('details', { screenshots, gameDetails, shortReviews });
 })
 
+app.get('/games/:id/reviews', async (req, res) => {
+    const { id } = req.params;
+    const reviews = await Review.find({ gameId: id });
+    res.render('reviews', { reviews, gameDetails })
+})
+
 app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
     const { id } = req.params
     const review = new Review(req.body.review);
@@ -100,7 +106,7 @@ app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
     review.author = req.user.username;
     review.gameId = id;
     await review.save();
-    res.redirect(`/games/${id}`)
+    res.redirect(`/games/${id}/reviews`)
 })
 
 app.delete('/games/:id/reviews/:reviewId', isLoggedIn, async (req, res) => {
