@@ -149,6 +149,12 @@ app.get('/account/dashboard', (req, res) => {
     res.render('users/account')
 })
 
+app.get('/account/myreviews', async (req, res) => {
+    const reviews = await Review.find({ authorId: req.user._id })
+    console.log(reviews)
+    res.render('users/myReviews', { reviews })
+})
+
 app.listen(3000, () => {
     console.log("Listening on port 3000")
 })
