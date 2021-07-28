@@ -83,6 +83,7 @@ app.post('/games', async (req, res) => {
 })
 
 app.get('/games/:id', loginRedirect, async (req, res) => {
+    console.log(res.locals.currentUser)
     const { id } = req.params;
     const reviews = await Review.find({ gameId: id });
     const shortReviews = reviews.slice(0,3);
@@ -142,6 +143,10 @@ app.post('/login', passport.authenticate('local', { failureFlash: true, failureR
 app.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/');
+})
+
+app.get('/account/dashboard', (req, res) => {
+    res.render('users/account')
 })
 
 app.listen(3000, () => {
