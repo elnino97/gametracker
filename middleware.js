@@ -1,6 +1,7 @@
 module.exports.isLoggedIn = (req, res, next) => {
+    console.log("REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
     if (!req.isAuthenticated()){
-        res.redirect('/login')
+        return res.redirect('/login')
     }
     next();
 }

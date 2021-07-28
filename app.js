@@ -134,22 +134,22 @@ app.get('/login', (req, res) => {
     res.render('users/login')
 })
 
-app.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
     const redirectUrl = req.session.returnTo || '/';
     delete req.session.returnTo;
     res.redirect(redirectUrl);
 })
 
-app.get('/logout', (req, res) => {
+app.get('/logout', isLoggedIn, (req, res) => {
     req.logout();
     res.redirect('/');
 })
 
-app.get('/account/dashboard', (req, res) => {
+app.get('/account/dashboard', isLoggedIn, (req, res) => {
     res.render('users/account')
 })
 
-app.get('/account/myreviews', async (req, res) => {
+app.get('/account/myreviews', isLoggedIn, async (req, res) => {
     const reviews = await Review.find({ authorId: req.user._id })
     console.log(reviews)
     res.render('users/myReviews', { reviews })
