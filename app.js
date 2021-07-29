@@ -15,6 +15,7 @@ const Schema = mongoose.Schema;
 
 const app = express();
 
+const ExpressError = require('./utils/ExpressError');
 const User = require('./models/user')
 const games = require('./games');
 const gameDetails = require('./wolfenstein');
@@ -153,6 +154,16 @@ app.get('/account/myreviews', isLoggedIn, async (req, res) => {
     const reviews = await Review.find({ authorId: req.user._id })
     console.log(reviews)
     res.render('users/myReviews', { reviews })
+})
+
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Page Not Found', 404))
+})
+
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = 'Oh No, Something Went Wrong!'
+    res.status(statusCode).render('error', { err })
 })
 
 app.listen(3000, () => {
