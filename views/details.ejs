@@ -11,6 +11,12 @@
                   <p>Release date: <%= gameDetails.released %> </p>
                   <p>Metacritic: <%= gameDetails.metacritic %> </p>
               </div>
+              <div class="d-flex">
+                Platforms:
+                <% for (let i of gameDetails.platforms) { %>
+                  <div><%= i.platform.name %></div> 
+                <% } %> 
+              </div>
           </div>
       </div>
       <div class="row mb-5">
