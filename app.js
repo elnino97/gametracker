@@ -87,7 +87,6 @@ app.post('/games', async (req, res) => {
 })
 
 app.get('/games/:id', loginRedirect, async (req, res) => {
-    console.log(res.locals.currentUser)
     const { id } = req.params;
     const reviews = await Review.find({ gameId: id });
     const shortReviews = reviews.slice(0,3);
@@ -163,7 +162,6 @@ app.get('/account/dashboard', isLoggedIn, (req, res) => {
 
 app.get('/account/myreviews', isLoggedIn, async (req, res) => {
     const reviews = await Review.find({ authorId: req.user._id })
-    console.log(reviews)
     res.render('users/myReviews', { reviews })
 })
 
