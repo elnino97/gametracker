@@ -7,14 +7,14 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const session = require('express-session');
+const flash = require('connect-flash');
 const methodOverride = require('method-override');
-
-const Schema = mongoose.Schema;
 
 // const fetch = require('node-fetch');
 
 const app = express();
 
+const Schema = mongoose.Schema;
 const ExpressError = require('./utils/ExpressError');
 const User = require('./models/user')
 const games = require('./games');
@@ -48,6 +48,7 @@ const sessionConfig = {
 }
 
 app.use(session(sessionConfig));
+app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -58,6 +59,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
     next();
 })
 
@@ -129,9 +132,11 @@ app.post('/register', async (req, res) => {
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if (err) return next(err);
+            req.flash('success', `Hey ${username}`);
             res.redirect('/');
         })
-    } catch {
+    } catch(e) {
+        req.flash('error', e.message);
         res.redirect('register');
     }
 })
@@ -140,7 +145,8 @@ app.get('/login', (req, res) => {
     res.render('users/login')
 })
 
-app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
+app.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
+    req.flash('success', 'Welcome back!');
     const redirectUrl = req.session.returnTo || '/';
     delete req.session.returnTo;
     res.redirect(redirectUrl);
