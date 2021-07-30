@@ -17,6 +17,13 @@
                   <div><%= i.platform.name %></div> 
                 <% } %> 
               </div>
+              <% if (!favorites.includes(gameDetails.id)) { %> 
+              <div>
+                <form action="/games/<%= gameDetails.id %>/favorite" method="POST">
+                  <button>Favorite</button>
+                </form>
+              </div>
+              <% } %> 
           </div>
       </div>
       <div class="row mb-5">

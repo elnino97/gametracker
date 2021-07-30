@@ -87,14 +87,19 @@ app.post('/games', async (req, res) => {
 })
 
 app.get('/games/:id', loginRedirect, async (req, res) => {
+    let favorites = [];
     const { id } = req.params;
     const reviews = await Review.find({ gameId: id });
+    if (req.user) {
+        favorites = req.user.favorite;
+    }
+    console.log(favorites)
     const shortReviews = reviews.slice(0,3);
     const screenshots = games.results
         .filter(i => i.id === parseInt(id))
         .map(i => i.short_screenshots)
         .flat()
-    res.render('details', { screenshots, gameDetails, shortReviews });
+    res.render('details', { screenshots, gameDetails, shortReviews, favorites });
 })
 
 app.get('/games/:id/reviews', async (req, res) => {
@@ -119,6 +124,17 @@ app.delete('/games/:id/reviews/:reviewId', isLoggedIn, async (req, res) => {
     res.redirect(`/games/${id}`)
 })
 
+app.post('/games/:id/favorite', isLoggedIn, async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(req.user._id);
+    if (user.favorite.includes(id)) {
+        return res.redirect(`/games/${ id }`)
+    } 
+    user.favorite.push(id);
+    await user.save()
+    req.flash('success', `Added to favorites!`);
+    res.redirect(`/games/${ id }`)
+})
 
 app.get('/register', (req, res) => {
     res.render('users/register')
