@@ -181,6 +181,17 @@ app.get('/account/myreviews', isLoggedIn, async (req, res) => {
     res.render('users/myReviews', { reviews })
 })
 
+app.get('/account/settings', isLoggedIn, async (req, res) => {
+    res.render('users/settings')
+})
+
+app.post('/account/settings', isLoggedIn, async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    const user = await User.findById(req.user._id);
+    await user.changePassword( oldPassword, newPassword );
+    res.send('aight')
+})
+
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
 })

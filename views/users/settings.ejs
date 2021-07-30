@@ -1,0 +1,15 @@
+<% layout('layouts/profile')%>
+<div class="col-6">
+    <form action="/account/settings" method="POST">
+        <h1>Change your credentials</h1>
+        <!-- <label for="username">Username</label>
+        <input class="form-control" type="text" name="" id="username">
+        <label for="username">Email</label>
+        <input class="form-control" type="email" name="" id="email"> -->
+        <label for="username">Old Password</label>
+        <input class="form-control" type="password" name="oldPassword" id="oldPassword">
+        <label for="username">New Password</label>
+        <input class="form-control" type="password" name="newPassword" id="newPassword">
+        <button>Save</button>
+    </form>
+</div>
