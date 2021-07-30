@@ -19,6 +19,7 @@ const ExpressError = require('./utils/ExpressError');
 const User = require('./models/user')
 const games = require('./games');
 const gameDetails = require('./wolfenstein');
+const Game = require('./models/gameinfo')
 const Review = require('./models/review');
 const { isLoggedIn, loginRedirect } = require('./middleware');
 
@@ -72,7 +73,7 @@ const apiKey = process.env.RAWG_KEY
 //     return gamesData
 // }
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     res.render('home')
 })
 
@@ -93,7 +94,6 @@ app.get('/games/:id', loginRedirect, async (req, res) => {
     if (req.user) {
         favorites = req.user.favorite;
     }
-    console.log(favorites)
     const shortReviews = reviews.slice(0,3);
     const screenshots = games.results
         .filter(i => i.id === parseInt(id))
@@ -126,12 +126,21 @@ app.delete('/games/:id/reviews/:reviewId', isLoggedIn, async (req, res) => {
 
 app.post('/games/:id/favorite', isLoggedIn, async (req, res) => {
     const { id } = req.params;
+    const { name, background_image, released} = gameDetails;
+    //---------------------SAVE GAME ID TO USER MODEL
     const user = await User.findById(req.user._id);
     if (user.favorite.includes(id)) {
         return res.redirect(`/games/${ id }`)
     } 
     user.favorite.push(id);
     await user.save()
+    //-------------------SAVE INFO ABOUT GAME IN DB IF THERE IS NONE
+    const games = await Game.find({ id });
+    if (!games.length){
+        const game = await new Game({ id, name, background_image, released });
+        await game.save();
+    }
+    //------------------------------------------------
     req.flash('success', `Added to favorites!`);
     res.redirect(`/games/${ id }`)
 })
@@ -174,6 +183,10 @@ app.get('/logout', isLoggedIn, (req, res) => {
 
 app.get('/account/dashboard', isLoggedIn, (req, res) => {
     res.render('users/account')
+})
+
+app.get('/account/games', isLoggedIn, async (req, res) => {
+    res.render('users/games')
 })
 
 app.get('/account/myreviews', isLoggedIn, async (req, res) => {
