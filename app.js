@@ -186,7 +186,13 @@ app.get('/account/dashboard', isLoggedIn, (req, res) => {
 })
 
 app.get('/account/games', isLoggedIn, async (req, res) => {
-    res.render('users/games')
+    let i = [];
+    for (let game of req.user.favorite){
+        const foundGame = await Game.find({ id: game })
+        i.push(foundGame);
+    }
+    const games = i.flat()
+    res.render('users/games', { games })
 })
 
 app.get('/account/myreviews', isLoggedIn, async (req, res) => {
