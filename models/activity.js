@@ -8,8 +8,12 @@ const activitySchema = new Schema({
         ref: 'User'
     },
     game: {
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: 'Game'
+    },
+    review: {
+        type: Schema.Types.ObjectId,
+        ref: 'Review'
     }
 }, { timestamps: { createdAt: 'created_at' } })
 
