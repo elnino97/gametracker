@@ -129,7 +129,7 @@ app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
         game = await new Game({ id, name, background_image, released });
         await game.save();
     }
-    newActivity("review", req.user._id, game._id);
+    newActivity("review", req.user._id, game._id, review._id);
 
     res.redirect(`/games/${id}/reviews`)
 })
@@ -202,8 +202,12 @@ app.get('/logout', isLoggedIn, (req, res) => {
 })
 
 app.get('/account/dashboard', isLoggedIn, async (req, res) => {
+    const activities = await Activity.find({user: req.user._id})
+        .populate('game')
+        .populate('review')
     console.log(req.user)
-    res.render('users/account')
+    console.log(activities)
+    res.render('users/account', { activities })
 })
 
 app.get('/account/games', isLoggedIn, async (req, res) => {
