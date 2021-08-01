@@ -17,7 +17,7 @@
                   <div><%= i.platform.name %></div> 
                 <% } %> 
               </div>
-              <% if (!favorites.includes(gameDetails.id)) { %> 
+              <% if (!favorites) { %> 
               <div>
                 <form action="/games/<%= gameDetails.id %>/favorite" method="POST">
                   <button>Favorite</button>
@@ -43,7 +43,10 @@
         <% for (let review of shortReviews) { %> 
           <div class="card">
             <div class="card-body">
-              <h6 class="card-subtitle mb-2 text-muted">Rating: <%= review.rating %></h6>
+              <div class="d-flex justify-content-between">
+                <h6 class="card-subtitle mb-2 text-muted">Rating: <%= review.rating %></h6>
+                <h6 class="card-subtitle mb-2 text-muted"> Created on: <%= review.created_at.toLocaleString() %></h6>
+            </div>
               <p class="card-text"><%= review.body %> by <strong><%= review.author %></strong></p>
               <%  if( currentUser && review.authorId.equals(currentUser._id)) {%>
               <form action="">

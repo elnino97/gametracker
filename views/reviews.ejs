@@ -20,8 +20,12 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                      <h6 class="card-subtitle mb-2 text-muted">Rating: <%= review.rating %></h6>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="card-subtitle mb-2 text-muted">Rating: <%= review.rating %></h6>
+                            <h6 class="card-subtitle mb-2 text-muted"> Created on: <%= review.created_at.toLocaleString() %></h6>
+                        </div>
                       <p class="card-text"><%= review.body %> by <strong><%= review.author %></strong></p>
+                      <p class="card-text"></p>
                       <%  if( currentUser && review.authorId.equals(currentUser._id)) {%>
                       <form action="">
                           <button>Edit</button>

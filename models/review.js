@@ -9,7 +9,7 @@ const reviewSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    author: String,
-})
+    author: String
+}, { timestamps: { createdAt: 'created_at' } })
 
 module.exports = mongoose.model("Review", reviewSchema);

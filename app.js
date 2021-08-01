@@ -19,8 +19,10 @@ const ExpressError = require('./utils/ExpressError');
 const User = require('./models/user')
 const games = require('./games');
 const gameDetails = require('./wolfenstein');
+const Activity = require('./models/activity');
 const Game = require('./models/gameinfo')
 const Review = require('./models/review');
+const { newActivity } = require('./schemaInstance');
 const { isLoggedIn, loginRedirect } = require('./middleware');
 
 mongoose.connect('mongodb://localhost:27017/gametracker', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -88,11 +90,15 @@ app.post('/games', async (req, res) => {
 })
 
 app.get('/games/:id', loginRedirect, async (req, res) => {
-    let favorites = [];
+    let favorites;
     const { id } = req.params;
     const reviews = await Review.find({ gameId: id });
     if (req.user) {
-        favorites = req.user.favorite;
+        for (let i of req.user.favorite){
+            if (i.id === parseInt(id)) {
+                favorites = true;
+            } 
+        }
     }
     const shortReviews = reviews.slice(0,3);
     const screenshots = games.results
@@ -114,7 +120,17 @@ app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
     review.authorId = req.user._id;
     review.author = req.user.username;
     review.gameId = id;
+    review.date = Date.now();
     await review.save();
+    
+    let game = await Game.findOne({ id });
+    if (!game){
+        const { name, background_image, released} = gameDetails;
+        game = await new Game({ id, name, background_image, released });
+        await game.save();
+    }
+    newActivity("review", req.user._id, game._id);
+
     res.redirect(`/games/${id}/reviews`)
 })
 
@@ -126,21 +142,25 @@ app.delete('/games/:id/reviews/:reviewId', isLoggedIn, async (req, res) => {
 
 app.post('/games/:id/favorite', isLoggedIn, async (req, res) => {
     const { id } = req.params;
-    const { name, background_image, released} = gameDetails;
-    //---------------------SAVE GAME ID TO USER MODEL
+    //---------------------SAVE GAME ID TO USER SCHEMA FOR FURTHER USE
     const user = await User.findById(req.user._id);
-    if (user.favorite.includes(id)) {
-        return res.redirect(`/games/${ id }`)
-    } 
-    user.favorite.push(id);
+    for (let i of user.favorite){
+        if (i.id === parseInt(id)) {
+            return res.redirect(`/games/${ id }`)
+        } 
+    }
+    const favoriteGame = { id, date: Date.now() }
+    user.favorite.push(favoriteGame);
     await user.save()
-    //-------------------SAVE INFO ABOUT GAME IN DB IF THERE IS NONE
-    const games = await Game.find({ id });
-    if (!games.length){
-        const game = await new Game({ id, name, background_image, released });
+    //-------------------IF NO GAME DATA IN DB CREATE NEW INSTANCE, ELSE FETCH DATA
+    let game = await Game.findOne({ id });
+    if (!game){
+        const { name, background_image, released} = gameDetails;
+        game = await new Game({ id, name, background_image, released });
         await game.save();
     }
     //------------------------------------------------
+    newActivity("favorite", req.user._id, game._id);
     req.flash('success', `Added to favorites!`);
     res.redirect(`/games/${ id }`)
 })
@@ -181,14 +201,15 @@ app.get('/logout', isLoggedIn, (req, res) => {
     res.redirect('/');
 })
 
-app.get('/account/dashboard', isLoggedIn, (req, res) => {
+app.get('/account/dashboard', isLoggedIn, async (req, res) => {
+    console.log(req.user)
     res.render('users/account')
 })
 
 app.get('/account/games', isLoggedIn, async (req, res) => {
     let i = [];
     for (let game of req.user.favorite){
-        const foundGame = await Game.find({ id: game })
+        const foundGame = await Game.find({ id: game.id })
         i.push(foundGame);
     }
     const games = i.flat()
