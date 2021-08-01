@@ -1,4 +1,19 @@
 <% layout('layouts/boilerplate')%>
 <% layout('layouts/profile')%>
 
-
+<% for (let activity of activities) { %> 
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h6 class="card-subtitle mb-2 text-muted">You <%= activity.action === "favorite" ? "favorited" : "reviewed" %> <a href="/games/<%= activity.game.id %> "><%= activity.game.name %></a></h6>
+                <h6 class="card-subtitle mb-2 text-muted"> Date: <%= activity.created_at.toLocaleString() %></h6>               
+            </div>
+            <% if (activity.action === "review") { %> 
+                <div class="d-flex justify-content-between">
+                    <p class="card-text"><%= activity.review.body %></p>
+                    <p class="card-text">Rating: <%= activity.review.rating %></p>
+                </div>
+            <% } %> 
+        </div>
+    </div>
+<% } %> 
