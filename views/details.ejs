@@ -28,14 +28,14 @@
       </div>
       <div class="row mb-5">
         <div class="col-md-6 mb-5">
-          <% if (currentUser) { %> 
+          <% if (currentUser && !checkReview) { %> 
           <p>What do you think about this game?</p>
           <form class="needs-validation" action="/games/<%= gameDetails.id %>/reviews" method="POST" novalidate>
               <label class="form-label" for="rating">Rating</label>
               <input class="form-range" type="range" min="1" max="10" name="review[rating]" id="rating">
               <label for="description"></label>
               <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
-              <button>Submit</button>
+              <button class="btn btn-primary">Submit</button>
           </form>
           <% } %> 
         </div>
@@ -49,17 +49,14 @@
             </div>
               <p class="card-text"><%= review.body %> by <strong><%= review.author %></strong></p>
               <%  if( currentUser && review.authorId.equals(currentUser._id)) {%>
-              <form action="">
-                  <button>Edit</button>
-              </form>
-              <form action="/games/<%= gameDetails.id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
-                  <button class="btn btn-sm btn-danger">Delete</button>
-              </form>
+                  <a class="btn btn-primary" href="/games/<%= review.gameId %>/reviews">View details</a>
               <% } %> 
             </div>
           </div>
-        <% } %> 
+        <% } %>
+        <% if (shortReviews.length) { %>  
           <a href="/games/<%= gameDetails.id %>/reviews">View more</a>
+        <% } %> 
       </div>
       </div>
 
@@ -100,7 +97,7 @@
             <div class="accordion-body">
                 <div class="row">
                     <% for (let screenshot of screenshots) { %>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 mb-2">
                             <div class="card">
                                 <img src="<%= screenshot.image %>" class="card-img-top" style="object-fit: cover;" width="600" height="300" alt="">
                             </div>
