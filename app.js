@@ -93,19 +93,22 @@ app.get('/games/:id', loginRedirect, async (req, res) => {
     let favorites;
     const { id } = req.params;
     const reviews = await Review.find({ gameId: id });
+    let checkReview = false;
     if (req.user) {
         for (let i of req.user.favorite){
             if (i.id === parseInt(id)) {
                 favorites = true;
             } 
         }
+       const findreview = await Review.find({ authorId: req.user._id })
+       if (findreview.length) checkReview = true;
     }
     const shortReviews = reviews.slice(0,3);
     const screenshots = games.results
         .filter(i => i.id === parseInt(id))
         .map(i => i.short_screenshots)
         .flat()
-    res.render('details', { screenshots, gameDetails, shortReviews, favorites });
+    res.render('details', { screenshots, gameDetails, shortReviews, favorites, checkReview });
 })
 
 app.get('/games/:id/reviews', async (req, res) => {
@@ -116,6 +119,12 @@ app.get('/games/:id/reviews', async (req, res) => {
 
 app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
     const { id } = req.params
+
+    const checkReviews = await Review.findOne({gameId: id, authorId: req.user._id})
+    if (checkReviews){
+        return res.redirect(`/games/${id}`)
+    }
+
     const review = new Review(req.body.review);
     review.authorId = req.user._id;
     review.author = req.user.username;
