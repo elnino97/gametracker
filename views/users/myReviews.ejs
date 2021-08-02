@@ -8,9 +8,7 @@
                 <h6 class="card-subtitle mb-2 text-muted"> Created on: <%= review.created_at.toLocaleString() %></h6>
             </div>
             <p class="card-text"><%= review.body %> by <strong><%= review.author %></strong></p>
-            <form action="">
-                <button>Edit</button>
-            </form>
+            <a class="btn btn-primary" href="/games/<%= review.gameId %>/reviews">View details</a>
         </div>
     </div>
 <% } %> 
