@@ -11,6 +11,7 @@ nav {
 
 .nav-link {
     color: white;
+    margin-top: 1px;
 }
 
 .login {
@@ -25,4 +26,12 @@ nav {
     box-sizing: border-box;
     width: 104px;
     text-align: center;
+}
+
+.logo {
+    margin: 0;
+}
+
+.logo img {
+    width: 131px;
 }

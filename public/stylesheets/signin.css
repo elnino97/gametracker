@@ -1,0 +1,116 @@
+body {
+    background: black;
+    color: white;
+}
+
+.wrapper {
+    overflow: hidden;
+    display: flex;
+    margin: 100px auto 0 auto;
+    width: 1144px;
+    height: 756px;
+    border: 1px solid #32CDB1;
+    box-sizing: border-box;
+    border-radius: 24px;
+}
+
+.info-wrapper {
+    width: 404px;
+    height: 100%;
+}
+
+.info {
+    margin: 144px auto 0 auto;
+    width: 309px;
+    height: 319px;
+}
+
+.logo {
+    width: 206px;
+    margin-bottom: 31px;
+}
+
+.info-1 {
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 120.2%;
+    color: #32CDB1;
+    margin-bottom: 33px;
+}
+
+.info-2 {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 120.2%;
+    margin-bottom: 29px;
+}
+
+.info-3, .info-4, .info-5 {
+    font-size: 18px;
+    line-height: 120.2%;
+    border-left: 5px solid #32CDB1;
+    padding-left: 5px;
+}
+
+.signin-wrapper {
+    width: 740px;
+    height: 100%;
+    background: white;
+}
+
+.signin {
+    color: black;
+    margin: 150px auto 0 auto;
+    width: 339px;
+    height: 457px;
+}
+
+.signin-header {
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 120.2%;
+    margin-bottom: 32px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 120.2%;
+    margin-bottom: 8px;
+}
+
+input {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid #B7B2B2;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 337px;
+    height: 40px;
+    margin-bottom: 33px;
+    padding-left: 10px;
+}
+
+form > button {
+    height: 40px;
+    background: #32CDB1;
+    border: 1px solid #32CDB1;
+    box-sizing: border-box;
+    font-size: 18px;
+    line-height: 120.2%;
+    margin-bottom: 16px;
+}
+
+.create-account {
+    border-radius: 25px;
+    width: 156px;
+}
+
+.login {
+    width: 80px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
