@@ -1,0 +1,68 @@
+.wrapper {
+    margin: auto;
+    width: 922px;
+    height: 802px;
+}
+
+.content {
+    margin-top: 91px;
+}
+
+.results-header {
+    display: flex;
+    margin-bottom: 91px;
+}
+
+form {
+    width: 401px;
+}
+
+input {
+    width: 200px;
+    border: 2px solid #474787;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding-left: 35px;
+}
+
+.search-icon {
+    width: 18px;
+    display: block;
+    color:black;
+    position: relative;
+    left: 10px;
+    bottom: 28px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.card {
+    overflow: hidden;
+    width: 286px;
+    height: 280px;
+    border: 1px solid #32CDB1;
+    box-sizing: border-box;
+    margin-bottom: 32px;
+}
+
+.card-body {
+    background: #12121F;
+}
+
+.card-img-top {
+    object-fit: cover;
+    max-width: 100%;
+    height: 159px;
+}
+
+.card-title {
+    font-size: 18px;
+    line-height: 120.2%;
+}
+
+.card-text {
+    font-size: 14px;
+    line-height: 120.2%;
+}
