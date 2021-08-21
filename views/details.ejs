@@ -1,111 +1,140 @@
-<% layout('layouts/boilerplate')%>
-    <div style="margin-top: 100px">
-        <div class="row">
-          <div class="col-md-6">
-              <img src="<%= gameDetails.background_image %>" class="img-fluid" alt="">
-          </div>
-          <div class="col-md-6 mb-5">
-              <div>
-                  <h1><%= gameDetails.name %> </h1>
-                  <p><%= gameDetails.description_raw %></p>
-                  <p>Release date: <%= gameDetails.released %> </p>
-                  <p>Metacritic: <%= gameDetails.metacritic %> </p>
-              </div>
-              <div class="d-flex">
-                Platforms:
-                <% for (let i of gameDetails.platforms) { %>
-                  <div><%= i.platform.name %></div> 
-                <% } %> 
-              </div>
-              <% if (!favorites) { %> 
-              <div>
-                <form action="/games/<%= gameDetails.id %>/favorite" method="POST">
-                  <button>Favorite</button>
-                </form>
-              </div>
-              <% } %> 
-          </div>
-      </div>
-      <div class="row mb-5">
-        <div class="col-md-6 mb-5">
-          <% if (currentUser && !checkReview) { %> 
-          <p>What do you think about this game?</p>
-          <form class="needs-validation" action="/games/<%= gameDetails.id %>/reviews" method="POST" novalidate>
-              <label class="form-label" for="rating">Rating</label>
-              <input class="form-range" type="range" min="1" max="10" name="review[rating]" id="rating">
-              <label for="description"></label>
-              <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
-              <button class="btn btn-primary">Submit</button>
-          </form>
-          <% } %> 
-        </div>
-      <div class="col-md-6">
-        <% for (let review of shortReviews) { %> 
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex justify-content-between">
-                <h6 class="card-subtitle mb-2 text-muted">Rating: <%= review.rating %></h6>
-                <h6 class="card-subtitle mb-2 text-muted"> Created on: <%= review.created_at.toLocaleString() %></h6>
-            </div>
-              <p class="card-text"><%= review.body %> by <strong><%= review.author %></strong></p>
-              <%  if( currentUser && review.authorId.equals(currentUser._id)) {%>
-                  <a class="btn btn-primary" href="/games/<%= review.gameId %>/reviews">View details</a>
-              <% } %> 
-            </div>
-          </div>
-        <% } %>
-        <% if (shortReviews.length) { %>  
-          <a href="/games/<%= gameDetails.id %>/reviews">View more</a>
-        <% } %> 
-      </div>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= gameDetails.name %></title>
 
-        
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+  rel="stylesheet" 
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+  crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/stylesheets/app.css">
+  <link rel="stylesheet" href="/stylesheets/navbar.css">
+  <link rel="stylesheet" href="/stylesheets/details.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
 
-    <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Additional information
-            </button>
-          </h2>
-          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores odio qui perferendis! Numquam, sint harum deserunt impedit vel amet delectus sit temporibus aliquam nisi incidunt, molestiae distinctio eum reiciendis voluptate.
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Lorem Ipsum
-            </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingThree">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              Screenshots
-            </button>
-          </h2>
-          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-                <div class="row">
-                    <% for (let screenshot of screenshots) { %>
-                        <div class="col-lg-4 mb-2">
-                            <div class="card">
-                                <img src="<%= screenshot.image %>" class="card-img-top" style="object-fit: cover;" width="600" height="300" alt="">
-                            </div>
-                        </div>
-                    <% } %>  
+</head>
+<body>
+  <%- include('./partials/navbar')%>
+  <div class="game-wrapper" style="background-image: linear-gradient(180deg, #000000 -4.83%, rgba(0, 0, 0, 0.65) 45.85%, #000000 101.55%, rgba(0, 0, 0, 0) 104.39%), url('<%= gameDetails.background_image %>')">
+      <div class="info-wrapper">
+          <div class="game-info">
+              <h1 class="game-title"><%= gameDetails.name %></h1>
+              <div class="description">
+                  <span class="info-span">Description</span>
+                  <p class="info-data"><%= gameDetails.description_raw %></p>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <span class="info-span">Released</span>
+                  <p class="info-data"><%= gameDetails.released %> </p>
                 </div>
+                <div class="col-md-3">
+                  <span class="info-span">Metacritic</span>
+                  <p class="info-data"><%= gameDetails.metacritic %></p>
+                </div>
+                <div class="col-md-3">
+                  <span class="info-span">User Score</span>
+                  <p class="info-data">4.1/5</p>
+                </div>
+                <div class="col-md-3">
+                  <span class="info-span">Developer</span>
+                  <p class="info-data">Raven Software</p>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-5">
+                    <div class="genres">
+                      <p><span class="info-span">Genres </span> Shooter, Action</p>
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="platforms">
+                      <p>
+                        <span class="info-span">Platforms</span>
+                        <% for (let i of gameDetails.platforms) { %>
+                          <span><%= i.platform.name %></span>
+                        <% } %>
+                      </p>
+                    </div>                    
+                  </div>
+                </div>
+                <div class="buttons">
+                  <% if (!favorites) { %> 
+                      <form action="/games/<%= gameDetails.id %>/favorite" method="POST">
+                        <button class="favorite-btn">Add to favorites <span class="favorite-icon"><img src="/img/heart.png" alt=""></span></button>
+                      </form>
+                    <% } %>
+                    <div class="review-btn">
+                      <a href="/games/<%= gameDetails.id %>/reviews">Write a review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
+                    </div> 
+                </div>
+              </div>
+          </div>
+          <div class="splide">
+            <div class="splide__track">
+              <ul class="splide__list">
+                <% for (let screenshot of screenshots) { %>
+                      <img class="splide__slide" src="<%= screenshot.image %>" alt="">
+                <% } %> 
+              </ul>
             </div>
           </div>
-        </div>
-      </div>  
     </div>
+    <div class="break"></div>
+    <div class="review-page">
+        <div class="review-wrapper">
+              <h1>User reviews</h1>
+                <% for (let review of shortReviews) { %> 
+                    <div class="review-body">
+                        <div class="review-top">
+                            <h1 class="review-title">Review title</h1>
+                            <%  if( currentUser && review.authorId.equals(currentUser._id)) {%>
+                            <a href="" class="review-edit">Edit</a>
+                            <% } %> 
+                        </div>
+                        <p class="review-rating">Rating: <%= review.rating %></p>
+                        <p class="review-author"><%= review.author %> <span class="review-date"><%= review.created_at.toLocaleString() %></span></p>
+                        <p class="review-text"><%- review.body %></p>
+                        <div class="recommended">Recommended <span class="thumbs-up"><img src="/img/thumbsup.png" alt=""></span></div>
+                    </div>
+                <% } %>
+                <% if (shortReviews.length) { %>
+                  <div class="view-more">  
+                      <a href="/games/<%= gameDetails.id %>/reviews">View more reviews</a>
+                  </div>
+                <% } %> 
+          </div>
+      </div>
+  </div>
+
+  <div>
+    <% if (currentUser && !checkReview) { %> 
+    <p>What do you think about this game?</p>
+    <form class="needs-validation" action="/games/<%= gameDetails.id %>/reviews" method="POST" novalidate>
+        <label class="form-label" for="rating">Rating</label>
+        <input class="form-range" type="range" min="1" max="10" name="review[rating]" id="rating">
+        <label for="description"></label>
+        <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+        <button class="btn btn-primary">Submit</button>
+    </form>
+    <% } %> 
+  </div>
+  <script>
+    new Splide( '.splide', {
+      type: 'loop',
+      perPage: 4,
+      fixedWidth: 229,
+      fixedHeight: 129,
+      gap: 10
+    } ).mount();
+  </script>  
+</body>
+</html>
+  
