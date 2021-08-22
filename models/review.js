@@ -2,8 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema({
-    body: String,
+    title: String,
     rating: Number,
+    body: String,
+    recommend: Boolean,
     gameId: Number,
     authorId: {
         type: Schema.Types.ObjectId,
