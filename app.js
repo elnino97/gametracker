@@ -112,6 +112,10 @@ app.get('/games/:id', loginRedirect, async (req, res) => {
     res.render('details', { screenshots, gameDetails, shortReviews, favorites, checkReview });
 })
 
+app.get('/games/:id/review/new', isLoggedIn, async (req, res) => {
+    res.render("newreview", { gameDetails })
+})
+
 app.get('/games/:id/reviews', async (req, res) => {
     const { id } = req.params;
     const reviews = await Review.find({ gameId: id });
@@ -147,6 +151,18 @@ app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
 app.delete('/games/:id/reviews/:reviewId', isLoggedIn, async (req, res) => {
     const { id, reviewId } = req.params;
     await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/games/${id}`)
+})
+
+app.get('/games/:id/review/edit', isLoggedIn, async (req, res) => {
+    const { id } = req.params;
+    const review = await Review.findOne({ gameId: id, authorId: req.user._id });
+    res.render('edit', { gameDetails, review });
+})
+
+app.put('/games/:id/review', isLoggedIn, async (req, res) => {
+    const { id } = req.params;
+    await Review.findOneAndUpdate({ gameId: id, authorId: req.user._id }, req.body.review);
     res.redirect(`/games/${id}`)
 })
 
