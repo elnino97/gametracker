@@ -1,0 +1,156 @@
+body {
+    background: #F1F7F8;
+    color: #000000;
+}
+
+.review-wrapper {
+    width: 988px;
+    height: 723px;
+    margin: 65px auto 0 auto;
+}
+
+.review-wrapper > h1 {
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 120.2%;
+}
+
+.review-body {
+    width: 988px;
+    height: 723px;
+    background: #FFFFFF;
+    box-shadow: 9px 7px 15px rgba(0, 0, 0, 0.25);
+}
+
+form {
+    padding-top: 33px;
+}
+
+.title > input {
+    display: block;
+    width: 920px;
+    height: 29px;
+    border: 1px solid #A9A9A9;
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin: auto;
+}
+
+.starability-basic {
+    margin-top: 22px;
+    margin-left: 33px;
+}
+
+.review-text {
+    margin-left: 33px;
+}
+
+.review-text > textarea {
+    resize: none;
+    width: 920px;
+    height: 461px;
+    border: 1px solid #A9A9A9;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.buttons {
+    margin: 15px auto 0 auto;
+    width: 917.5px;
+    height: 52px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group1 {
+    display: flex;
+    justify-content: space-between;
+    width: 317px;
+}
+
+.form-group2 {
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.submit {
+    width: 184px;
+    height: 51px;
+    background: #50E3C2;
+    box-sizing: border-box;
+    border-radius: 24px;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 120.2%;
+}
+
+.cancel {
+    width: 120px;
+    height: 51px;
+    background: #474787;
+    box-sizing: border-box;
+    border-radius: 24px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 120.2%;
+    padding: 10px;
+}
+
+.cancel > a {
+    text-decoration: none;
+    color: white;
+}
+
+.recommended, .recommeded-selected {
+    padding: 11px;
+    width: 219px;
+    height: 51px;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    display: block;
+}
+
+.recommended-selected {
+    background: #32CDB1;
+    transition: 1s;
+}
+
+.not-recommended, .not-recommended-selected {
+    padding: 11px;
+    width: 264px;
+    height: 51px;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    display: block;
+}
+
+.not-recommended-selected {
+    background: #FF5A79;
+    transition: 1s;
+}
+
+label {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 120.2%;
+}
+
+input[type=radio] {
+    position: fixed;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.thumbs-up {
+    position: relative;
+    left: 170px;
+    bottom: 29px;
+}
+
+.thumbs-down {
+    position: relative;
+    left: 213px;
+    bottom: 25px;
+}
