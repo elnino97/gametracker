@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="/stylesheets/navbar.css">
   <link rel="stylesheet" href="/stylesheets/details.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/starability-basic.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
 
 </head>
@@ -72,7 +73,7 @@
                       </form>
                     <% } %>
                     <div class="review-btn">
-                      <a href="/games/<%= gameDetails.id %>/reviews">Write a review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
+                      <a href="/games/<%= gameDetails.id %>/review/new">Write a review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
                     </div> 
                 </div>
               </div>
@@ -94,15 +95,21 @@
                 <% for (let review of shortReviews) { %> 
                     <div class="review-body">
                         <div class="review-top">
-                            <h1 class="review-title">Review title</h1>
+                            <h1 class="review-title"><%= review.title %> </h1>
                             <%  if( currentUser && review.authorId.equals(currentUser._id)) {%>
-                            <a href="" class="review-edit">Edit</a>
+                            <a href="/games/<%= review.gameId %>/review/edit" class="review-edit">Edit</a>
                             <% } %> 
                         </div>
-                        <p class="review-rating">Rating: <%= review.rating %></p>
+                        <p class="starability-result" data-rating="<%=review.rating%>">
+                          Rated: <%= review.rating %> stars
+                        </p>
                         <p class="review-author"><%= review.author %> <span class="review-date"><%= review.created_at.toLocaleString() %></span></p>
                         <p class="review-text"><%- review.body %></p>
+                        <% if (review.recommend) { %> 
                         <div class="recommended">Recommended <span class="thumbs-up"><img src="/img/thumbsup.png" alt=""></span></div>
+                        <% } else { %>
+                        <div class="not-recommended">Not Recommended <span class="thumbs-down"><img src="/img/thumbsdown.png" alt=""></span></div>
+                        <% } %>  
                     </div>
                 <% } %>
                 <% if (shortReviews.length) { %>
@@ -114,18 +121,6 @@
       </div>
   </div>
 
-  <div>
-    <% if (currentUser && !checkReview) { %> 
-    <p>What do you think about this game?</p>
-    <form class="needs-validation" action="/games/<%= gameDetails.id %>/reviews" method="POST" novalidate>
-        <label class="form-label" for="rating">Rating</label>
-        <input class="form-range" type="range" min="1" max="10" name="review[rating]" id="rating">
-        <label for="description"></label>
-        <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
-        <button class="btn btn-primary">Submit</button>
-    </form>
-    <% } %> 
-  </div>
   <script>
     new Splide( '.splide', {
       type: 'loop',
@@ -134,7 +129,7 @@
       fixedHeight: 129,
       gap: 10
     } ).mount();
-  </script>  
+  </script> 
 </body>
 </html>
   
