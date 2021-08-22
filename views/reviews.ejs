@@ -1,41 +1,47 @@
-<% layout('layouts/boilerplate')%>
-
-
-<div class="mt-5">
-    <div class="col-md-6 mb-5">
-        <% if (currentUser) { %> 
-        <p>What do you think about this game?</p>
-        <form class="needs-validation" action="/games/<%= gameDetails.id %>/reviews" method="POST" novalidate>
-            <label class="form-label" for="rating">Rating</label>
-            <input class="form-range" type="range" min="1" max="10" name="review[rating]" id="rating">
-            <label for="description"></label>
-            <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
-            <button>Submit</button>
-        </form>
-        <% } %> 
-    </div>
-    <div class="row">
-        <% for (let review of reviews) { %> 
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h6 class="card-subtitle mb-2 text-muted">Rating: <%= review.rating %></h6>
-                            <h6 class="card-subtitle mb-2 text-muted"> Created on: <%= review.created_at.toLocaleString() %></h6>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet" 
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+    crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/stylesheets/app.css">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
+    <link rel="stylesheet" href="/stylesheets/details.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/starability-basic.min.css"/>
+</head>
+<body>
+    <div class="review-page">
+        <div class="review-wrapper">
+              <h1>User reviews</h1>
+                <% for (let review of reviews) { %> 
+                    <div class="review-body">
+                        <div class="review-top">
+                            <h1 class="review-title"><%= review.title %> </h1>
+                            <%  if( currentUser && review.authorId.equals(currentUser._id)) {%>
+                            <a href="/games/<%= gameDetails.id %>/review/edit" class="review-edit">Edit</a>
+                            <% } %> 
                         </div>
-                      <p class="card-text"><%= review.body %> by <strong><%= review.author %></strong></p>
-                      <p class="card-text"></p>
-                      <%  if( currentUser && review.authorId.equals(currentUser._id)) {%>
-                      <form action="">
-                          <button>Edit</button>
-                      </form>
-                      <form action="/games/<%= gameDetails.id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
-                          <button class="btn btn-sm btn-danger">Delete</button>
-                      </form>
-                      <% } %> 
+                        <p class="starability-result" data-rating="<%=review.rating%>">
+                            Rated: <%= review.rating %> stars
+                        </p>
+                        <p class="review-author"><%= review.author %> <span class="review-date"><%= review.created_at.toLocaleString() %></span></p>
+                        <p class="review-text"><%- review.body %></p>
+                        <% if (review.recommend) { %> 
+                            <div class="recommended">Recommended <span class="thumbs-up"><img src="/img/thumbsup.png" alt=""></span></div>
+                        <% } else { %>
+                            <div class="not-recommended">Not Recommended <span class="thumbs-down"><img src="/img/thumbsdown.png" alt=""></span></div>
+                        <% } %> 
                     </div>
-                  </div>
-            </div>
-          <% } %> 
-    </div>
-</div>
+                <% } %>
+          </div>
+      </div>
+</body>
+</html>
