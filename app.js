@@ -104,16 +104,56 @@ app.get('/games/:id', loginRedirect, async (req, res) => {
        const findreview = await Review.find({ authorId: req.user._id })
        if (findreview.length) checkReview = true;
     }
+    let averageScore = 0;
+    if (reviews.length){
+        for (let review of reviews){
+            averageScore += review.rating ;
+        }
+        averageScore = (Math.round(averageScore / reviews.length * 10) / 10).toFixed(1)
+    }
     const shortReviews = reviews.slice(0,3);
     const screenshots = games.results
         .filter(i => i.id === parseInt(id))
         .map(i => i.short_screenshots)
         .flat()
-    res.render('details', { screenshots, gameDetails, shortReviews, favorites, checkReview });
+    res.render('details', { screenshots, gameDetails, shortReviews, favorites, checkReview, averageScore });
+})
+
+app.get('/games/:id/review', isLoggedIn, async (req, res) => {
+    const review = await Review.findOne({ gameId: req.params.id, authorId: req.user._id });
+    if (!review) {
+        res.redirect(`/games/${id}`)
+    }
+    res.render('review', { gameDetails, review });
 })
 
 app.get('/games/:id/review/new', isLoggedIn, async (req, res) => {
+    const review = await Review.findOne({ gameId: req.params.id, authorId: req.user._id})
+    if (review) {
+        return res.redirect(`/games/${req.params.id}`)
+    }
     res.render("newreview", { gameDetails })
+})
+
+app.delete('/games/:id/reviews/:reviewId', isLoggedIn, async (req, res) => {
+    const { id, reviewId } = req.params;
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/games/${id}`)
+})
+
+app.get('/games/:id/review/edit', isLoggedIn, async (req, res) => {
+    const { id } = req.params;
+    const review = await Review.findOne({ gameId: id, authorId: req.user._id });
+    if (!review) {
+        res.redirect(`/games/${id}`)
+    }
+    res.render('edit', { gameDetails, review });
+})
+
+app.put('/games/:id/review', isLoggedIn, async (req, res) => {
+    const { id } = req.params;
+    await Review.findOneAndUpdate({ gameId: id, authorId: req.user._id }, req.body.review);
+    res.redirect(`/games/${id}`)
 })
 
 app.get('/games/:id/reviews', async (req, res) => {
@@ -146,24 +186,6 @@ app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
     newActivity("review", req.user._id, game._id, review._id);
 
     res.redirect(`/games/${id}/reviews`)
-})
-
-app.delete('/games/:id/reviews/:reviewId', isLoggedIn, async (req, res) => {
-    const { id, reviewId } = req.params;
-    await Review.findByIdAndDelete(reviewId);
-    res.redirect(`/games/${id}`)
-})
-
-app.get('/games/:id/review/edit', isLoggedIn, async (req, res) => {
-    const { id } = req.params;
-    const review = await Review.findOne({ gameId: id, authorId: req.user._id });
-    res.render('edit', { gameDetails, review });
-})
-
-app.put('/games/:id/review', isLoggedIn, async (req, res) => {
-    const { id } = req.params;
-    await Review.findOneAndUpdate({ gameId: id, authorId: req.user._id }, req.body.review);
-    res.redirect(`/games/${id}`)
 })
 
 app.post('/games/:id/favorite', isLoggedIn, async (req, res) => {
@@ -231,8 +253,6 @@ app.get('/account/dashboard', isLoggedIn, async (req, res) => {
     const activities = await Activity.find({user: req.user._id})
         .populate('game')
         .populate('review')
-    console.log(req.user)
-    console.log(activities)
     res.render('users/account', { activities })
 })
 
