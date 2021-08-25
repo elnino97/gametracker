@@ -1,0 +1,31 @@
+.wrapper {
+    display: flex;
+    width: 1220px;
+    height: 585px;
+    border: 1px solid #50E3C2;
+    box-sizing: border-box;
+    border-radius: 30px;
+    margin: 164px auto 0 auto;
+    overflow: hidden;
+}
+
+.navigation {
+    width: 191px;
+    height: 585px;
+}
+
+.navigation > a {
+    margin-top: 36px;
+    margin-left: 27px;
+    display: block;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 120.2%;
+    color: #A8A6C6;
+}
+
+.content {
+    display: flex;
+    width: 1029px;
+    background: #F7F8FC;
+}
