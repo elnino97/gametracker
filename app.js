@@ -24,6 +24,7 @@ const Game = require('./models/gameinfo')
 const Review = require('./models/review');
 const { newActivity } = require('./schemaInstance');
 const { isLoggedIn, loginRedirect } = require('./middleware');
+const { timeDifference } = require('./timeconvert');
 
 mongoose.connect('mongodb://localhost:27017/gametracker', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -183,7 +184,7 @@ app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
         game = await new Game({ id, name, background_image, released });
         await game.save();
     }
-    newActivity("review", req.user._id, game._id, review._id);
+    newActivity("review", req.user._id, game._id, review._id, game.background_image);
 
     res.redirect(`/games/${id}/reviews`)
 })
@@ -208,7 +209,7 @@ app.post('/games/:id/favorite', isLoggedIn, async (req, res) => {
         await game.save();
     }
     //------------------------------------------------
-    newActivity("favorite", req.user._id, game._id);
+    newActivity("favorite", req.user._id, game._id, null, game.background_image);
     req.flash('success', `Added to favorites!`);
     res.redirect(`/games/${ id }`)
 })
@@ -253,7 +254,7 @@ app.get('/account/dashboard', isLoggedIn, async (req, res) => {
     const activities = await Activity.find({user: req.user._id})
         .populate('game')
         .populate('review')
-    res.render('users/account', { activities })
+    res.render('users/account', { activities, timeDifference })
 })
 
 app.get('/account/games', isLoggedIn, async (req, res) => {
