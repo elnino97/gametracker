@@ -14,7 +14,8 @@ const activitySchema = new Schema({
     review: {
         type: Schema.Types.ObjectId,
         ref: 'Review'
-    }
+    },
+    image: String
 }, { timestamps: { createdAt: 'created_at' } })
 
 module.exports = mongoose.model("Activity", activitySchema);
