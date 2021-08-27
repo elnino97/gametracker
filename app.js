@@ -9,6 +9,10 @@ const LocalStrategy = require('passport-local');
 const session = require('express-session');
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
+const multer = require('multer');
+const { storage } = require('./cloudinary');
+const upload = multer({ storage });
+
 
 // const fetch = require('node-fetch');
 
@@ -78,17 +82,17 @@ const apiKey = process.env.RAWG_KEY
 // }
 
 app.get('/', async (req, res) => {
-    res.render('home')
+    res.render('app/home')
 })
 
-app.get('/games', (req, res) => {
-    res.render('games')
+app.get('/explore', (req, res) => {
+    res.render('app/explore')
 })
 
-app.post('/games', async (req, res) => {
+app.post('/explore', async (req, res) => {
     // const { name } = req.body;
     // const games = await getGames(name);
-    res.render('searchResult', { games })
+    res.render('app/results', { games })
 })
 
 app.get('/games/:id', loginRedirect, async (req, res) => {
@@ -117,7 +121,7 @@ app.get('/games/:id', loginRedirect, async (req, res) => {
         .filter(i => i.id === parseInt(id))
         .map(i => i.short_screenshots)
         .flat()
-    res.render('details', { screenshots, gameDetails, shortReviews, favorites, checkReview, averageScore });
+    res.render('app/game', { screenshots, gameDetails, shortReviews, favorites, checkReview, averageScore });
 })
 
 app.get('/games/:id/review', isLoggedIn, async (req, res) => {
@@ -125,7 +129,7 @@ app.get('/games/:id/review', isLoggedIn, async (req, res) => {
     if (!review) {
         res.redirect(`/games/${id}`)
     }
-    res.render('review', { gameDetails, review });
+    res.render('review/myreview', { gameDetails, review });
 })
 
 app.get('/games/:id/review/new', isLoggedIn, async (req, res) => {
@@ -133,7 +137,7 @@ app.get('/games/:id/review/new', isLoggedIn, async (req, res) => {
     if (review) {
         return res.redirect(`/games/${req.params.id}`)
     }
-    res.render("newreview", { gameDetails })
+    res.render("review/new", { gameDetails })
 })
 
 app.delete('/games/:id/reviews/:reviewId', isLoggedIn, async (req, res) => {
@@ -148,7 +152,7 @@ app.get('/games/:id/review/edit', isLoggedIn, async (req, res) => {
     if (!review) {
         res.redirect(`/games/${id}`)
     }
-    res.render('edit', { gameDetails, review });
+    res.render('review/edit', { gameDetails, review });
 })
 
 app.put('/games/:id/review', isLoggedIn, async (req, res) => {
@@ -160,7 +164,7 @@ app.put('/games/:id/review', isLoggedIn, async (req, res) => {
 app.get('/games/:id/reviews', async (req, res) => {
     const { id } = req.params;
     const reviews = await Review.find({ gameId: id });
-    res.render('reviews', { reviews, gameDetails })
+    res.render('review/allreviews', { reviews, gameDetails })
 })
 
 app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
@@ -170,13 +174,6 @@ app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
     if (checkReviews){
         return res.redirect(`/games/${id}`)
     }
-
-    const review = new Review(req.body.review);
-    review.authorId = req.user._id;
-    review.author = req.user.username;
-    review.gameId = id;
-    review.date = Date.now();
-    await review.save();
     
     let game = await Game.findOne({ id });
     if (!game){
@@ -184,6 +181,14 @@ app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
         game = await new Game({ id, name, background_image, released });
         await game.save();
     }
+
+    const review = new Review(req.body.review);
+    review.authorId = req.user._id;
+    review.author = req.user.username;
+    review.gameId = id;
+    review.game = game._id;
+    await review.save();
+
     newActivity("review", req.user._id, game._id, review._id, game.background_image);
 
     res.redirect(`/games/${id}/reviews`)
@@ -215,13 +220,14 @@ app.post('/games/:id/favorite', isLoggedIn, async (req, res) => {
 })
 
 app.get('/register', (req, res) => {
-    res.render('users/register')
+    res.render('user/register')
 })
 
 app.post('/register', async (req, res) => {
     try {
+        const image = "/img/profilepicture.jpg"
         const { email, username, password } = req.body;
-        const user = new User({ email, username });
+        const user = new User({ email, username, image });
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if (err) return next(err);
@@ -235,7 +241,7 @@ app.post('/register', async (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-    res.render('users/login')
+    res.render('user/login')
 })
 
 app.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
@@ -254,7 +260,7 @@ app.get('/account/dashboard', isLoggedIn, async (req, res) => {
     const activities = await Activity.find({user: req.user._id})
         .populate('game')
         .populate('review')
-    res.render('users/account', { activities, timeDifference })
+    res.render('user/dashboard', { activities: activities.reverse().slice(0, 6), timeDifference })
 })
 
 app.get('/account/games', isLoggedIn, async (req, res) => {
@@ -264,23 +270,31 @@ app.get('/account/games', isLoggedIn, async (req, res) => {
         i.push(foundGame);
     }
     const games = i.flat()
-    res.render('users/games', { games })
+    res.render('user/favorites', { games })
 })
 
 app.get('/account/myreviews', isLoggedIn, async (req, res) => {
     const reviews = await Review.find({ authorId: req.user._id })
-    res.render('users/myReviews', { reviews })
+        .populate('game');
+    res.render('user/reviews', { reviews, timeDifference })
 })
 
 app.get('/account/settings', isLoggedIn, async (req, res) => {
-    res.render('users/settings')
+    res.render('user/settings')
 })
 
 app.post('/account/settings', isLoggedIn, async (req, res) => {
     const { oldPassword, newPassword } = req.body;
     const user = await User.findById(req.user._id);
     await user.changePassword( oldPassword, newPassword );
-    res.send('aight')
+    res.redirect('/account/settings')
+})
+
+app.put('/account/image', isLoggedIn, upload.single('image'), async (req, res) => {
+    const user = await User.findById(req.user._id);
+    user.image = req.file.path;
+    await user.save();
+    res.redirect('/account/settings')
 })
 
 app.all('*', (req, res, next) => {

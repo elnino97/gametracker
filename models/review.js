@@ -7,6 +7,10 @@ const reviewSchema = new Schema({
     body: String,
     recommend: Boolean,
     gameId: Number,
+    game: {
+        type: Schema.Types.ObjectId,
+        ref: 'Game'
+    },
     authorId: {
         type: Schema.Types.ObjectId,
         ref: 'User'

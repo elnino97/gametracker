@@ -11,7 +11,8 @@ const userSchema = new Schema({
     favorite: [{
         id: Number,
         date: String
-    }]
+    }],
+    image: String
 });
 
 userSchema.plugin(passportLocalMongoose);
