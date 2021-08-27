@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/stylesheets/signin.css">
+</head>
+<body>
+    <%- include('../partials/flash')%>
+    <div class="wrapper">
+        <div class="info-wrapper">
+            <div class="info">
+                <img class="logo" src="/img/logo.png" alt="">
+                <p class="info-1">The new gaming platform</p>
+                <p class="info-2">Join GG Library and find your favorite games here.</p>
+                <p class="info-3">Sign up</p>
+                <p class="info-4">Find your favorite games.</p>
+                <p class="info-5">Review games, create lists and share them with your friends</p>
+            </div>
+        </div>
+        <div class="signin-wrapper">
+            <div class="signin">
+                <h1 class="signin-header">Sign Up</h1>
+                <form action="/register" method="POST" novalidate>
+                    <div class="form-element">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Your username" required autofocus>
+                    </div>
+                    <div class="form-element">
+                        <label for="email">Email address</label>
+                        <input type="email" id="email" name="email" placeholder="name@domain.com" required>
+                    </div>
+                    <div class="form-element">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Your password" required>
+                    </div>
+                    <button class="create-account">Create account</button>
+                </form>
+                <a href="/login">I already have an account</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

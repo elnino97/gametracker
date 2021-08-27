@@ -1,0 +1,30 @@
+<%- layout('./layouts/useraccount')%>
+<section class="reviews">
+<h1 class="content-heading">My reviews</h1>
+<div class="review-row">
+    <% for (let review of reviews) { %> 
+        <div class="review-card">
+            <div class="review-game-side">
+                <img src="<%= review.game.background_image %> " alt="">
+                <p class="review-game-name"><%= review.game.name %> (<span class="review-date"><%= review.game.released.slice(0, 4) %></span>)</p>
+            </div>
+            <div class="review">
+                <div class="review-header">
+                    <h2 class="review-title"><%= review.title %> </h2>
+                    <p class="review-time"><%= timeDifference(Date.parse(review.created_at)) %></p>
+                </div>
+                <p class="review-body"><%= review.body %> <span><a href="/games/<%= review.gameId %>/reviews">View full review</a></span></p>
+                <p class="starability-result" data-rating="<%=review.rating%>">
+                    Rated: <%= review.rating %> stars
+                </p>
+                <% if (review.recommend) { %> 
+                    <div class="recommended">Recommended <span><img class="thumbs-up" src="/img/thumbsup.png" alt=""></span></div>
+                <% } else { %>
+                    <div class="not-recommended">Not Recommended <span><img class="thumbs-down" src="/img/thumbsdown.png" alt=""></span></div>
+                <% } %> 
+            </div>
+        </div>
+    <% } %> 
+</div> 
+</section>
+

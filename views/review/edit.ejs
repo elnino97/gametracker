@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write a review</title>
+    <link rel="stylesheet" href="/stylesheets/review.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/starability-basic.min.css"/>
+
+</head>
+<body>
+    <a class="back-link" href="/games/<%= gameDetails.id %>/review"><img src="/img/back.png" alt=""></a>
+    <section class="review-wrapper">
+        <h1>Edit your review</h1>
+        <div class="review-body">            
+            <form action="/games/<%= gameDetails.id %>/review?_method=PUT" method="POST" novalidate>
+            <div class="title">
+                <input type="text" id="title" name="review[title]" value="<%= review.title %> ">
+            </div>
+            <fieldset class="starability-basic">
+                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
+                <input type="radio" id="first-rate1" name="review[rating]" value="1"  <% if (review.rating === 1) { %>  <%= 'checked' %>  <% } %> />
+                <label for="first-rate1" title="Terrible">1 star</label>
+                <input type="radio" id="first-rate2" name="review[rating]" value="2"  <% if (review.rating === 2) { %>  <%= 'checked' %>  <% } %> />
+                <label for="first-rate2" title="Not good">2 stars</label>
+                <input type="radio" id="first-rate3" name="review[rating]" value="3"  <% if (review.rating === 3) { %>  <%= 'checked' %>  <% } %> />
+                <label for="first-rate3" title="Average">3 stars</label>
+                <input type="radio" id="first-rate4" name="review[rating]" value="4"  <% if (review.rating === 4) { %>  <%= 'checked' %>  <% } %> />
+                <label for="first-rate4" title="Very good">4 stars</label>
+                <input type="radio" id="first-rate5" name="review[rating]" value="5" <% if (review.rating === 5) { %>  <%= 'checked' %>  <% } %> />
+                <label for="first-rate5" title="Amazing">5 stars</label>
+              </fieldset>
+            <div class="review-text">
+                <textarea name="review[body]" id="body" cols="30" rows="3" required><%= review.body %> </textarea>
+            </div>
+            <div class="buttons">
+                <div class="form-group1">
+                    <button class="submit">Submit review</button>
+                    <div class="cancel"><a href="/games/<%= gameDetails.id %>/review">Cancel</a></div>
+                </div>
+                <div class="form-group2">
+                    <div>   
+                        <input type="radio" id="recommend" name="review[recommend]" value="true" <% if (review.recommend){ %> <%= "checked"  %> <% } %>  >
+                        <label class="recommended" for="recommend">Recommended <span class="thumbs-up"><img src="/img/thumbsup.png" alt=""></span></label>
+                    </div>
+                    <div>
+                        <input type="radio" id="not-recommend" name="review[recommend]" value="false" <% if (!review.recommend){ %> <%= "checked"  %> <% } %>>
+                        <label class="not-recommended" for="not-recommend">Not Recommended <span class="thumbs-down"><img src="/img/thumbsdown.png" alt=""></span></label>
+                    </div>
+                </div>
+            </div>
+        </form></div>
+    </section>
+    <script>
+        const recommended = document.querySelector('.recommended');
+        const notRecommended = document.querySelector('.not-recommended');
+        recommended.addEventListener('click', () => {
+            if (!recommended.classList.contains('recommended-selected')){
+                recommended.classList.add('recommended-selected')
+                notRecommended.classList.remove('not-recommended-selected')
+            }
+        })
+        notRecommended.addEventListener('click', () => {
+            if (!notRecommended.classList.contains('not-recommended-selected')){
+                notRecommended.classList.add('not-recommended-selected')
+                recommended.classList.remove('recommended-selected')
+            }
+        })
+    </script>
+</body>
+</html>

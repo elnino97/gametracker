@@ -1,0 +1,30 @@
+<%- layout('/layouts/boilerplate')%>
+<div class="results-wrapper">
+    <div class="results-content">
+        <div class="results-header">
+            <form action="/explore" method="POST">
+                <input type="text" name="name" id="name">
+                <span class="search-icon"><img src="/img/search.png" alt=""></span>
+            </form>
+            <h1>Results</h1>
+        </div>
+        <div class="row">
+            <% for (let game of games.results) { %>
+            <div class="col-lg-4">
+                <div class="card">
+                    <a href="/games/28958">
+                        <img src="<%= game.background_image %>" class="card-img-top" alt="...">
+                    </a>
+                        <div class="card-body">
+                        <h5 class="card-title"><%= game.name %></h5>
+                        <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam, deleniti iusto ducimus vitae.</p>
+                        </div>
+                </div>
+            </div> 
+            <% } %> 
+    </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,23 @@
+<%- layout('./layouts/useraccount')%>
+
+<section class="dashboard">
+    <h1 class="content-heading">Dashboard</h1>
+    <div class="user-info-wrapper">
+        <img src="<%= currentUser.image %>" alt="">
+        <h2 class="username"><%= currentUser.username %></h2>
+        <p class="userdesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+</section>
+<section class="activity-wrapper">
+    <h1 class="content-heading">Recent activity</h1>
+    <% for (let activity of activities) { %>
+        <div class="activity">
+            <div class="img-container">
+                <img src="<%= activity.image %>" alt="">
+            </div>
+            <p class="activity-text">You <%= activity.action === "favorite" ? "favorited" : "reviewed" %> <a href="/games/<%= activity.game.id %> "><%= activity.game.name %></a></p>
+            <p class="activity-date"><%= timeDifference(Date.parse(activity.created_at)) %></p>
+        </div>
+    <% } %> 
+</section>
+
