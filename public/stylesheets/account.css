@@ -1,0 +1,401 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+}
+
+body {
+    color: black;
+    padding: 0;
+    margin: 0;
+    background-color: black;
+    font-family: Roboto;
+}
+
+/* TOP NAVBAR */
+nav {
+    margin: auto;
+    width: 759px;
+}
+
+.navbar-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.nav-link {
+    color: white;
+    margin-top: 1px;
+}
+
+.nav-login {
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+    width: 104px;
+    text-align: center;
+}
+
+.nav-register {
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+    width: 104px;
+    text-align: center;
+}
+
+.nav-logo {
+    margin: 0;
+}
+
+.nav-logo > img {
+    width: 131px;
+}
+/*///////////////*/
+
+.wrapper {
+    display: flex;
+    width: 1220px;
+    height: 585px;
+    border: 1px solid #50E3C2;
+    box-sizing: border-box;
+    border-radius: 30px;
+    margin: 164px auto 0 auto;
+    overflow: hidden;
+}
+
+.navigation {
+    width: 191px;
+    height: 585px;
+}
+
+.navigation > a {
+    margin-top: 36px;
+    margin-left: 27px;
+    display: block;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 120.2%;
+    color: #A8A6C6;
+}
+
+.content {
+    display: flex;
+    width: 1029px;
+    background: #F7F8FC;
+}
+
+.content-heading {
+    padding-top: 19px;
+    margin-left: 20px;
+    font-size: 24px;
+    line-height: 120.2%;
+}
+
+/* START OF DASHBOARD CSS*/
+.dashboard {
+    width: 538px;
+    height: 583px;
+    border-right: 4px solid #50E3C2;
+}
+
+.user-info-wrapper {
+    margin-top: 27px;
+    margin-left: 48px;
+    width: 442px;
+    height: 478px;
+    background: #FFFFFF;
+    box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+    border: 0.5px solid #0000002f;
+    border-radius: 21px;
+}
+
+.user-info-wrapper > img {
+    margin: 45px;
+    margin-left: 98px;
+    object-fit: cover;
+    border-radius: 50%;
+    width: 247px;
+    height: 247px;
+}
+
+.username {
+    text-align: center;
+    font-size: 24px;
+    line-height: 120.2%;
+    color: #000000;
+}
+
+.userdesc {
+    padding-top: 15px;
+    font-size: 18px;
+    line-height: 120.2%;
+    width: 340px;
+    margin: auto;
+}
+
+.activity-wrapper {
+    width: 491px;
+    height: 585px;
+}
+
+.activity {
+    margin: 16px auto 0 auto;
+    width: 423px;
+    height: 63px;
+    background: #FFFFFF;
+    box-shadow: 4px 3px 4px rgba(0, 0, 0, 0.25);
+    border: 0.5px solid #00000025;
+    border-radius: 21px;
+    display: flex;
+}
+
+.img-container {
+    width: 93px;
+    height: 63px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-container > img {
+    width: 62px;
+    border-radius: 5px;
+}
+
+.activity-text {
+    padding-top: 20px;
+    font-size: 18px;
+    line-height: 120.2%;
+    text-decoration: none;
+}
+
+.activity-text > a {
+    text-decoration: none;
+}
+
+.activity-date {
+    position: relative;
+    left: 40px;
+    top: 5px;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 120.2%;
+    color: #474787;
+}
+
+/* START OF FAVORITE GAMES CSS */
+.favorites {
+    width: 1029px;
+}
+
+.fav-row {
+    display: flex;
+    width: 934px;
+    margin-left: 20px;
+    margin-top: 14px;
+}
+
+.game {
+    overflow: hidden;
+    background: white;
+    width: 223px;
+    height: 240px;
+    filter: drop-shadow(-4px 2px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 21px;
+}
+
+.game-cover {
+    object-fit: cover;
+    width: 223px;
+    height: 177px;
+}
+
+.game-name {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 120.2%;
+}
+
+.game-year {
+    text-align: center;
+    font-size: 14px;
+    line-height: 120.2%;
+    color: #474787;
+}
+/* START OF MY REVIEWS CSS*/
+.reviews {
+    width: 1029px;
+}
+
+.review-card {
+    display: flex;
+    overflow: hidden;
+    margin-left: 20px;
+    width: 873px;
+    height: 240px;
+    background: #FFFFFF;
+    box-shadow: -3px 4px 7px rgba(0, 0, 0, 0.25);
+    border-radius: 23px;
+}
+
+.review-game-side {
+    width: 223px;
+    height: 240px;
+}
+
+.review-game-side > img {
+    object-fit: cover;
+    width: 223px;
+    height: 177px;
+}
+
+.review-game-name {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 18px;
+    line-height: 120.2%;
+}
+
+.review {
+    width: 650px;
+    padding: 15px;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.review-title {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 120.2%;
+}
+
+.recommended {
+    display: inline;
+    padding: 11px;
+    width: 219px;
+    height: 51px;
+    background: #32CDB1;
+    border: 1px solid #000000;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.not-recommended {
+    display: inline;
+    width: 257px;
+    height: 51px;
+    background: #FF5A79;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 11px;
+}
+
+.thumbs-up, .thumbs-down {
+    width: 17px;
+    height: 17px;
+}
+
+/* START OF ACCOUNT SETTINGS CSS */
+.image-settings {
+    width: 514px;
+    height: 585px;
+}
+
+.image-settings > h2 {
+    margin-top: 46px;
+    margin-left: 120px;
+    font-size: 24px;
+    line-height: 120.2%;
+}
+
+.image-form > input {
+    display: none;
+}
+
+.image-form > label > img {
+    margin: 45px;
+    margin-left: 98px;
+    object-fit: cover;
+    border-radius: 50%;
+    width: 247px;
+    height: 247px;
+    filter: drop-shadow(-2px 2px 7px rgba(0, 0, 0, 0.25));
+}
+
+.upload-label {
+    display: block;
+    position: relative;
+    bottom: 176px;
+    left: 98px;
+    width: 247px;
+    height: 22px;
+    font-size: 18px;
+    line-height: 120.2%;
+    text-align: center;
+    color: #FFFFFF;
+    background: rgba(0, 0, 0, 0.53);
+    }
+
+.confirm-changes {
+    display: block;
+    width: 181px;
+    height: 40px;
+    background: #32CDB1;
+    border: 1px solid #32CDB1;
+    box-sizing: border-box;
+    border-radius: 25px;
+    font-size: 18px;
+    line-height: 120.2%;
+}
+
+.image-form > .confirm-changes {
+    margin-left: 140px;
+}
+
+.password-settings {
+    padding-top: 94px;
+    padding-left: 88px;
+    width: 515px;
+    height: 585px;
+}
+
+.change-password {
+    margin-bottom: 66px;
+    font-size: 24px;
+    line-height: 120.2%;
+}
+
+.password-form > label {
+    display: block;
+    margin-top: 31px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 120.2%;
+}
+
+.password-form > input {
+    width: 337px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid #B7B2B2;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.password-form > .confirm-changes {
+    margin-top: 31px;
+}

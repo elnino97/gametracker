@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 body {
     background: black;
     color: white;
+    font-family: Roboto, sans-serif;
 }
 
 .wrapper {

@@ -1,6 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 body {
     background: #F1F7F8;
     color: #000000;
+    font-family: Roboto, sans-serif;
+}
+
+.back-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    width: 155px;
+    height: 99px;
+    background: #FFFFFF;
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+    top: 36px;
+    left: 15px;
 }
 
 .review-wrapper {
