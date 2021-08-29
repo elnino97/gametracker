@@ -4,8 +4,11 @@ const Schema = mongoose.Schema;
 const activitySchema = new Schema({
     action: String,
     user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+        id: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        username: String
     },
     game: {
         type: Schema.Types.ObjectId,

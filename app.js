@@ -26,6 +26,7 @@ const gameDetails = require('./wolfenstein');
 const Activity = require('./models/activity');
 const Game = require('./models/gameinfo')
 const Review = require('./models/review');
+const Userdata = require('./models/userData');
 const { newActivity } = require('./schemaInstance');
 const { isLoggedIn, loginRedirect } = require('./middleware');
 const { timeDifference } = require('./timeconvert');
@@ -95,18 +96,26 @@ app.post('/explore', async (req, res) => {
     res.render('app/results', { games })
 })
 
+app.get('/community', async (req, res) => {
+    const reviews = await Review.find({}, {}, { sort: { 'created_at': 'desc'}, limit: 6 })
+        .populate('game')
+    const favorites = await Game.find({}, {}, { sort: { favoritedTimes: 'desc' }, limit: 6 })
+    const userdata = await Userdata.find({}, {}, { sort: { actionCount: 'desc' }, limit: 3 })
+    console.log(userdata)
+    res.render('app/community', { reviews, favorites, userdata, timeDifference })
+})
+
 app.get('/games/:id', loginRedirect, async (req, res) => {
     let favorites;
     const { id } = req.params;
     const reviews = await Review.find({ gameId: id });
     let checkReview = false;
     if (req.user) {
-        for (let i of req.user.favorite){
-            if (i.id === parseInt(id)) {
-                favorites = true;
-            } 
-        }
-       const findreview = await Review.find({ authorId: req.user._id })
+        const userdata = await Userdata.findOne({'user.id': req.user._id});
+        if (userdata.favorite.includes(parseInt(id))) {
+            favorites = true;
+        } 
+       const findreview = await Review.find({ authorId: userdata.user.id })
        if (findreview.length) checkReview = true;
     }
     let averageScore = 0;
@@ -142,7 +151,10 @@ app.get('/games/:id/review/new', isLoggedIn, async (req, res) => {
 
 app.delete('/games/:id/reviews/:reviewId', isLoggedIn, async (req, res) => {
     const { id, reviewId } = req.params;
+    const userdata = await Userdata.findOne({'user.id': req.user._id});
     await Review.findByIdAndDelete(reviewId);
+    userdata.review.pull(reviewId)
+    await userdata.save();
     res.redirect(`/games/${id}`)
 })
 
@@ -169,7 +181,7 @@ app.get('/games/:id/reviews', async (req, res) => {
 
 app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
     const { id } = req.params
-
+    const userdata = await Userdata.findOne({'user.id': req.user._id});
     const checkReviews = await Review.findOne({gameId: id, authorId: req.user._id})
     if (checkReviews){
         return res.redirect(`/games/${id}`)
@@ -189,7 +201,10 @@ app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
     review.game = game._id;
     await review.save();
 
-    newActivity("review", req.user._id, game._id, review._id, game.background_image);
+    userdata.review.push(review.id)
+    userdata.actionCount += 1;
+    await userdata.save();
+    newActivity("review", req.user._id, req.user.username, game._id, review._id, game.background_image);
 
     res.redirect(`/games/${id}/reviews`)
 })
@@ -197,24 +212,24 @@ app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
 app.post('/games/:id/favorite', isLoggedIn, async (req, res) => {
     const { id } = req.params;
     //---------------------SAVE GAME ID TO USER SCHEMA FOR FURTHER USE
-    const user = await User.findById(req.user._id);
-    for (let i of user.favorite){
-        if (i.id === parseInt(id)) {
-            return res.redirect(`/games/${ id }`)
-        } 
-    }
-    const favoriteGame = { id, date: Date.now() }
-    user.favorite.push(favoriteGame);
-    await user.save()
+    const userdata = await Userdata.findOne({'user.id': req.user._id});
+    console.log(userdata)
+    if (userdata.favorite.includes(parseInt(id))) {
+        return res.redirect(`/games/${ id }`)
+    } 
+    userdata.favorite.push(id);
+    userdata.actionCount += 1;
+    await userdata.save()
     //-------------------IF NO GAME DATA IN DB CREATE NEW INSTANCE, ELSE FETCH DATA
     let game = await Game.findOne({ id });
     if (!game){
         const { name, background_image, released} = gameDetails;
-        game = await new Game({ id, name, background_image, released });
-        await game.save();
+        game = await new Game({ id, name, background_image, released, favoritedTimes: 0 });
     }
+    game.favoritedTimes += 1;
+    await game.save();
     //------------------------------------------------
-    newActivity("favorite", req.user._id, game._id, null, game.background_image);
+    newActivity("favorite", req.user._id, req.user.username, game._id, null, game.background_image);
     req.flash('success', `Added to favorites!`);
     res.redirect(`/games/${ id }`)
 })
@@ -227,7 +242,9 @@ app.post('/register', async (req, res) => {
     try {
         const image = "/img/profilepicture.jpg"
         const { email, username, password } = req.body;
-        const user = new User({ email, username, image });
+        const user = new User({ email, username });
+        const userdata = new Userdata({user: {id: user.id, username}, image})
+        await userdata.save();
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if (err) return next(err);
@@ -257,19 +274,20 @@ app.get('/logout', isLoggedIn, (req, res) => {
 })
 
 app.get('/account/dashboard', isLoggedIn, async (req, res) => {
-    const activities = await Activity.find({user: req.user._id})
+    const userdata = await Userdata.findOne({'user.id': req.user._id});
+    const activities = await Activity.find({'user.id': req.user._id}, {}, { sort: { 'created_at': 'desc'}, limit: 6 })
         .populate('game')
         .populate('review')
-    res.render('user/dashboard', { activities: activities.reverse().slice(0, 6), timeDifference })
+    res.render('user/dashboard', { userdata, activities, timeDifference })
 })
 
 app.get('/account/games', isLoggedIn, async (req, res) => {
-    let i = [];
-    for (let game of req.user.favorite){
-        const foundGame = await Game.find({ id: game.id })
-        i.push(foundGame);
+    const userdata = await Userdata.findOne({'user.id': req.user._id});
+    let games = [];
+    for (let game of userdata.favorite){
+        const foundGame = await Game.findOne({ id: game })
+        games.push(foundGame);
     }
-    const games = i.flat()
     res.render('user/favorites', { games })
 })
 
@@ -280,7 +298,8 @@ app.get('/account/myreviews', isLoggedIn, async (req, res) => {
 })
 
 app.get('/account/settings', isLoggedIn, async (req, res) => {
-    res.render('user/settings')
+    const userdata = await Userdata.findOne({'user.id': req.user._id});
+    res.render('user/settings', { userdata })
 })
 
 app.post('/account/settings', isLoggedIn, async (req, res) => {
@@ -291,9 +310,9 @@ app.post('/account/settings', isLoggedIn, async (req, res) => {
 })
 
 app.put('/account/image', isLoggedIn, upload.single('image'), async (req, res) => {
-    const user = await User.findById(req.user._id);
-    user.image = req.file.path;
-    await user.save();
+    const userdata = await Userdata.findOne({'user.id': req.user._id});
+    userdata.image = req.file.path;
+    await userdata.save();
     res.redirect('/account/settings')
 })
 
