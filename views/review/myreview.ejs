@@ -18,8 +18,8 @@
                 <p class="starability-result" data-rating="<%=review.rating%>">
                     Rated: <%= review.rating %> stars
                 </p>
-                <p class="review-author"><%= review.author %> <span class="review-date"><%= review.created_at.toLocaleString() %></span></p>
-                <p class="review-text"><%- review.body %></p>
+                <p class="review-author"><%= review.author.name %> <span class="review-date"><%= review.created_at.toLocaleString() %></span></p>
+                <p class="review-text"><%= review.body %></p>
                 <% if (review.recommend) { %> 
                     <div class="recommended">Recommended <span class="thumbs-up"><img src="/img/thumbsup.png" alt=""></span></div>
                 <% } else { %>
