@@ -255,7 +255,9 @@ nav {
     color: #A2A2CF;
 }
 /* START OF MY REVIEWS CSS*/
-.reviews {
+#reviews {
+    overflow: scroll;
+    overflow-x: hidden;
     width: 1029px;
 }
 
