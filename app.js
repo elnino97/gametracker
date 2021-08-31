@@ -102,7 +102,6 @@ app.get('/community', async (req, res) => {
         .populate('game')
     const favorites = await Game.find({}, {}, { sort: { favoritedTimes: 'desc' }, limit: 6 })
     const userdata = await Userdata.find({}, {}, { sort: { actionCount: 'desc' }, limit: 3 })
-    console.log(reviews)
     res.render('app/community', { reviews, favorites, userdata, timeDifference })
 })
 
@@ -116,7 +115,7 @@ app.get('/games/:id', loginRedirect, async (req, res) => {
         if (userdata.favorite.includes(parseInt(id))) {
             favorites = true;
         } 
-       const findreview = await Review.find({ authorId: userdata.user.id })
+       const findreview = await Review.find({ 'author.id': userdata.user.id })
        if (findreview.length) checkReview = true;
     }
     let averageScore = 0;
@@ -135,9 +134,9 @@ app.get('/games/:id', loginRedirect, async (req, res) => {
 })
 
 app.get('/games/:id/review', isLoggedIn, async (req, res) => {
-    const review = await Review.findOne({ gameId: req.params.id, authorId: req.user._id });
+    const review = await Review.findOne({ gameId: req.params.id, 'author.id': req.user._id });
     if (!review) {
-        res.redirect(`/games/${id}`)
+        res.redirect(`/games/${req.params.id}`)
     }
     res.render('review/myreview', { gameDetails, review });
 })
@@ -170,7 +169,7 @@ app.get('/games/:id/review/edit', isLoggedIn, async (req, res) => {
 
 app.put('/games/:id/review', isLoggedIn, async (req, res) => {
     const { id } = req.params;
-    await Review.findOneAndUpdate({ gameId: id, authorId: req.user._id }, req.body.review);
+    await Review.findOneAndUpdate({ gameId: id, 'author.id': req.user._id }, req.body.review);
     res.redirect(`/games/${id}`)
 })
 
@@ -200,6 +199,12 @@ app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
     review.gameId = id;
     review.game = game._id;
     await review.save();
+
+    const review1 = new Review(req.body.review);
+    review1.author = { name: req.user.username, id: req.user._id }
+    review1.gameId = id;
+    review1.game = game._id;
+    await review1.save();
 
     userdata.review.push(review.id)
     userdata.actionCount += 1;
@@ -231,6 +236,19 @@ app.post('/games/:id/favorite', isLoggedIn, async (req, res) => {
     newActivity("favorite", req.user._id, req.user.username, game._id, null, game.background_image);
     req.flash('success', `Added to favorites!`);
     res.redirect(`/games/${ id }`)
+})
+
+app.put('/games/:id/favorite', isLoggedIn, async (req, res) => {
+    const userdata = await Userdata.findOne({'user.id': req.user._id});
+    if (!userdata.favorite.includes(parseInt(req.params.id))) {
+        return res.redirect(`/games/${ req.params.id }`)
+    } 
+    const filteredFav = userdata.favorite.filter(item => item === req.params.id);
+    userdata.favorite = filteredFav;
+    userdata.actionCount -= 1;
+    await userdata.save()
+    req.flash('success', `Removed from favorites!`);
+    res.redirect(`/games/${ req.params.id }`)
 })
 
 app.get('/register', (req, res) => {
