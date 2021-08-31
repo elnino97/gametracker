@@ -86,8 +86,9 @@ app.get('/', async (req, res) => {
     res.render('app/home')
 })
 
-app.get('/explore', (req, res) => {
-    res.render('app/explore')
+app.get('/explore', async (req, res) => {
+    const favorites = await Game.find({}, {}, { sort: { favoritedTimes: 'desc' }, limit: 3 })
+    res.render('app/explore', { favorites })
 })
 
 app.post('/explore', async (req, res) => {
@@ -101,7 +102,7 @@ app.get('/community', async (req, res) => {
         .populate('game')
     const favorites = await Game.find({}, {}, { sort: { favoritedTimes: 'desc' }, limit: 6 })
     const userdata = await Userdata.find({}, {}, { sort: { actionCount: 'desc' }, limit: 3 })
-    console.log(userdata)
+    console.log(reviews)
     res.render('app/community', { reviews, favorites, userdata, timeDifference })
 })
 
@@ -160,7 +161,7 @@ app.delete('/games/:id/reviews/:reviewId', isLoggedIn, async (req, res) => {
 
 app.get('/games/:id/review/edit', isLoggedIn, async (req, res) => {
     const { id } = req.params;
-    const review = await Review.findOne({ gameId: id, authorId: req.user._id });
+    const review = await Review.findOne({ gameId: id, 'author.id': req.user._id });
     if (!review) {
         res.redirect(`/games/${id}`)
     }
@@ -195,8 +196,7 @@ app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
     }
 
     const review = new Review(req.body.review);
-    review.authorId = req.user._id;
-    review.author = req.user.username;
+    review.author = { name: req.user.username, id: req.user._id }
     review.gameId = id;
     review.game = game._id;
     await review.save();
@@ -213,7 +213,6 @@ app.post('/games/:id/favorite', isLoggedIn, async (req, res) => {
     const { id } = req.params;
     //---------------------SAVE GAME ID TO USER SCHEMA FOR FURTHER USE
     const userdata = await Userdata.findOne({'user.id': req.user._id});
-    console.log(userdata)
     if (userdata.favorite.includes(parseInt(id))) {
         return res.redirect(`/games/${ id }`)
     } 
@@ -292,7 +291,7 @@ app.get('/account/games', isLoggedIn, async (req, res) => {
 })
 
 app.get('/account/myreviews', isLoggedIn, async (req, res) => {
-    const reviews = await Review.find({ authorId: req.user._id })
+    const reviews = await Review.find({ 'author.id': req.user._id })
         .populate('game');
     res.render('user/reviews', { reviews, timeDifference })
 })
