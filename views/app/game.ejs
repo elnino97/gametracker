@@ -54,7 +54,11 @@
                     <form action="/games/<%= gameDetails.id %>/favorite" method="POST">
                       <button class="favorite-btn">Add to favorites <span class="favorite-icon"><img src="/img/heart.png" alt=""></span></button>
                     </form>
-                  <% } %>
+                  <% } else { %>
+                    <form action="/games/<%= gameDetails.id %>/favorite?_method=PUT" method="POST">
+                      <button class="favorite-btn">Remove from favorites <span class="favorite-icon"><img src="/img/heart.png" alt=""></span></button>
+                    </form>
+                  <% } %>  
                   <% if (checkReview) { %>  
                   <div class="review-btn">
                     <a href="/games/<%= gameDetails.id %>/review">View my review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
