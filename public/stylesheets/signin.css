@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 body {
-    background: black;
+    background: #1A1A2D;;
     color: white;
     font-family: Roboto, sans-serif;
 }
@@ -12,12 +12,11 @@ body {
     margin: 100px auto 0 auto;
     width: 1144px;
     height: 756px;
-    border: 1px solid #32CDB1;
     box-sizing: border-box;
-    border-radius: 24px;
 }
 
 .info-wrapper {
+    background: #212137;
     width: 404px;
     height: 100%;
 }

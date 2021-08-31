@@ -1,26 +1,32 @@
 <%- layout('/layouts/boilerplate')%>
-<div class="community-wrapper">
+<div id="community-wrapper">
     <div class="community-header">
         <div class="section-title recent active">Recent reviews</div>
         <div class="section-title favorites">Top Favorites</div>
         <div class="section-title top-users">Top users</div>
     </div>
-    <div class="review-row">
+    <div id="reviewrow">
         <% for (let review of reviews) { %> 
-            <div class="recent-review">
-                <div class="review-game-side">
-                    <img src="<%= review.game.background_image %> " alt="">
-                    <p class="review-game-name"><%= review.game.name %> (<span class="review-date"><%= review.game.released.slice(0, 4) %></span>)</p>
-                </div>
-                <div class="review">
-                    <div class="review-header">
-                        <h2 class="review-title"><%= review.title %> </h2>
-                        <p class="review-time"><%= timeDifference(Date.parse(review.created_at)) %></p>
+            <div id="recent-review">
+                <div id="review-top">
+                    <div>
+                        <img src="<%= review.game.background_image %> " alt="">
                     </div>
-                    <p class="recent-review-body"><%= review.body %> <span><a href="/games/<%= review.gameId %>/reviews">View full review</a></span></p>
-                    <p class="starability-result review-rating" data-rating="<%=review.rating%>">
-                        Rated: <%= review.rating %> stars
-                    </p>
+                    <div>
+                        <div>
+                            <div id="name-rating">
+                                <p><%= review.game.name %> <span>(<%= review.game.released.slice(0, 4) %>)</span></p>
+                                <p class="starability-result" data-rating="<%=review.rating%>">
+                                    Rated: <%= review.rating %> stars
+                                </p>
+                            </div>
+                            <p id="review-time"><%= timeDifference(Date.parse(review.created_at)) %></p>
+                        </div>
+                        <h2 id="review-title"><%= review.title %><span><%= review.author.name %> </span></h2>
+                    </div>
+                </div>
+                <div id="review-lower">
+                    <p><%= review.body %>.. <span><a href="/games/<%= review.gameId %>/reviews">View full review</a></span></p>
                     <% if (review.recommend) { %> 
                         <div class="review-verdict-yes">Recommended <span><img class="thumbs-up" src="/img/thumbsup.png" alt=""></span></div>
                     <% } else { %>
@@ -30,18 +36,20 @@
             </div>
         <% } %> 
     </div>
-    <div class="favorites-row">
+    <div id="favoritesrow">
         <% for (let game of favorites) { %>
-            <div class="game">
-                <img class="game-cover" src="<%= game.background_image %> " alt="">
-                <p class="game-name"><%= game.name %></p>
-                <p class="game-year"><%= game.released %> </p>
+            <div id="game">
+                <a href="/games/<%= game.id %>">
+                    <img src="<%= game.background_image %> " alt="">
+                </a>
+                <p><%= game.name %></p>
+                <p><%= game.released.slice(0, 4) %> </p>
             </div>
         <% } %>  
     </div>
-    <section class="most-active">
+    <section id="mostactive">
         <% for (let i = 0; i < userdata.length; i++) { %>
-            <div class="user-card card<%= i + 1 %> ">
+            <div id="usercard" class="card<%= i + 1 %> ">
                 <img src="<%= userdata[i].image %> " alt="">
                 <div class="card-info">
                     <p><%= userdata[i].user.username %></p>
@@ -60,9 +68,9 @@
     const recentTitle = document.querySelector('.recent')
     const favoritesTitle = document.querySelector('.favorites')
     const usersTitle = document.querySelector('.top-users')
-    const reviews = document.querySelector('.review-row')
-    const favorites = document.querySelector('.favorites-row')
-    const mostActive = document.querySelector('.most-active')
+    const reviews = document.getElementById('reviewrow')
+    const favorites = document.getElementById('favoritesrow')
+    const mostActive = document.getElementById('mostactive')
     function toggleActive(title1, title2, title3){
         title1.addEventListener('click', () => {
             if (!title1.classList.contains('active')){

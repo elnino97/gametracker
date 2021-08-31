@@ -1,5 +1,5 @@
 <%- layout('/layouts/boilerplate')%>
-<div class="game-wrapper" style="background-image: linear-gradient(180deg, #000000 -4.83%, rgba(0, 0, 0, 0.65) 45.85%, #000000 101.55%, rgba(0, 0, 0, 0) 104.39%), url('<%= gameDetails.background_image %>')">
+<div class="game-wrapper" style="background-image: linear-gradient(180deg, #1A1A2D 0.05%, rgba(0, 0, 0, 0.65) 45.85%, #1A1A2D 101.55%), url('<%= gameDetails.background_image %>')">
     <div class="info-wrapper">
         <div class="game-info">
             <h1 class="game-title"><%= gameDetails.name %></h1>
@@ -86,7 +86,7 @@
                   <div class="review-body">
                       <div class="review-top">
                           <h1 class="review-title"><%= review.title %> </h1>
-                          <%  if( currentUser && review.authorId.equals(currentUser._id)) {%>
+                          <%  if( currentUser && review.author.id.equals(currentUser._id)) {%>
                             <div class="review-edit-btn">
                                 <a href="/games/<%= review.gameId %>/review/edit" class="review-edit">Edit</a>
                             </div>
@@ -95,7 +95,7 @@
                       <p class="starability-result" data-rating="<%=review.rating%>">
                         Rated: <%= review.rating %> stars
                       </p>
-                      <p class="review-author"><%= review.author %> <span class="review-date"><%= review.created_at.toLocaleString() %></span></p>
+                      <p class="review-author"><%= review.author.name %> <span class="review-date"><%= review.created_at.toLocaleString() %></span></p>
                       <p class="review-text"><%- review.body %></p>
                       <% if (review.recommend) { %> 
                       <div class="recommended">Recommended <span class="thumbs-up"><img src="/img/thumbsup.png" alt=""></span></div>

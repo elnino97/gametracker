@@ -1,10 +1,24 @@
 <%- layout('/layouts/boilerplate')%>
-<div class="explore-wrapper">
-    <div class="explore-content">
+<div id="explore-wrapper">
+    <div id="explore-content">
         <h1>Type the name of the game into the field to begin exploring</h1>
         <form action="/explore" method="POST">
             <input type="text" name="name" id="name">
             <span class="explore-icon"><img src="/img/search.png" alt=""></span>
         </form>
+        <div id="popular-games">
+            <h1>Popular games</h1>
+            <div id="favoritesrow">
+                <% for (let game of favorites) { %>
+                    <div id="game">
+                        <a href="/games/<%= game.id %>">
+                            <img src="<%= game.background_image %> " alt="">
+                        </a>
+                        <p><%= game.name %></p>
+                        <p><%= game.released.slice(0, 4) %> </p>
+                    </div>
+                <% } %>  
+            </div>
+        </div>
     </div>
 </div>

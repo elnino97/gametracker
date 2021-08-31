@@ -3,24 +3,30 @@
 <h1 class="content-heading">My reviews</h1>
 <div class="review-row">
     <% for (let review of reviews) { %> 
-        <div class="review-card">
-            <div class="review-game-side">
-                <img src="<%= review.game.background_image %> " alt="">
-                <p class="review-game-name"><%= review.game.name %> (<span class="review-date"><%= review.game.released.slice(0, 4) %></span>)</p>
+        <div class="recent-review">
+            <div class="review-header">
+                <div class="pic-column">
+                    <img src="<%= review.game.background_image %> " alt="">
+                </div>
+                <div class="row-1">
+                    <div class="row-2">
+                        <div class="column-1">
+                            <p class="review-game-name"><%= review.game.name %> <span>(<%= review.game.released.slice(0, 4) %>)</span></p>
+                            <p class="starability-result" data-rating="<%=review.rating%>">
+                                Rated: <%= review.rating %> stars
+                            </p>
+                        </div>
+                        <p class="review-time"><%= timeDifference(Date.parse(review.created_at)) %></p>
+                    </div>
+                    <h2 class="review-title"><%= review.title %></h2>
+                </div>
             </div>
             <div class="review">
-                <div class="review-header">
-                    <h2 class="review-title"><%= review.title %> </h2>
-                    <p class="review-time"><%= timeDifference(Date.parse(review.created_at)) %></p>
-                </div>
-                <p class="review-body"><%= review.body %> <span><a href="/games/<%= review.gameId %>/reviews">View full review</a></span></p>
-                <p class="starability-result" data-rating="<%=review.rating%>">
-                    Rated: <%= review.rating %> stars
-                </p>
+                <p class="recent-review-body"><%= review.body %>.. <span><a href="/games/<%= review.gameId %>/reviews">View full review</a></span></p>
                 <% if (review.recommend) { %> 
-                    <div class="recommended">Recommended <span><img class="thumbs-up" src="/img/thumbsup.png" alt=""></span></div>
+                    <div class="review-verdict-yes">Recommended <span><img class="thumbs-up" src="/img/thumbsup.png" alt=""></span></div>
                 <% } else { %>
-                    <div class="not-recommended">Not Recommended <span><img class="thumbs-down" src="/img/thumbsdown.png" alt=""></span></div>
+                    <div class="review-verdict-no">Not Recommended <span><img class="thumbs-down" src="/img/thumbsdown.png" alt=""></span></div>
                 <% } %> 
             </div>
         </div>

@@ -1,24 +1,24 @@
 <%- layout('./layouts/useraccount')%>
 
-<section class="image-settings">
-    <h1 class="content-heading">Account settings</h1>
-    <h2>Profile picture</h2>
-    <form class="image-form" action="/account/image?_method=PUT" method="POST" enctype="multipart/form-data">
+<section id="image-settings">
+    <h1>Account settings</h1>
+    <h2>Change profile picture</h2>
+    <form action="/account/image?_method=PUT" method="POST" enctype="multipart/form-data">
         <label for="file-input">
             <img id="output" src="<%= userdata.image %>"/>
-            <span class="upload-label">Click to change</span>
+            <span>Click to change</span>
         </label>
         <input id="file-input" type="file" name="image" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"/>
         <button class="confirm-changes">Confirm changes</button>
     </form>
 </section>
-<section class="password-settings">
-    <form class="password-form" action="/account/settings" method="POST">
-        <h2 class="change-password">Change password</h1>
+<section id="password-settings">
+    <h2>Change password</h1>
+    <form id="password-form" action="/account/settings" method="POST">
         <label for="username">Old Password</label>
-        <input class="old-password" type="password" name="oldPassword" id="oldPassword">
+        <input type="password" name="oldPassword" id="oldPassword" placeholder="Your old password">
         <label for="username">New Password</label>
-        <input class="new-password" type="password" name="newPassword" id="newPassword">
+        <input type="password" name="newPassword" id="newPassword" placeholder="Your new password">
         <button class="confirm-changes">Confirm changes</button>
     </form>
 </section>

@@ -12,7 +12,7 @@ body {
     color: black;
     padding: 0;
     margin: 0;
-    background-color: black;
+    background-color: #1A1A2D;
     font-family: Roboto;
 }
 
@@ -60,14 +60,13 @@ nav {
     display: flex;
     width: 1220px;
     height: 585px;
-    border: 1px solid #50E3C2;
     box-sizing: border-box;
-    border-radius: 30px;
     margin: 164px auto 0 auto;
     overflow: hidden;
 }
 
 .navigation {
+    background: #212137;
     width: 191px;
     height: 585px;
 }
@@ -83,77 +82,103 @@ nav {
 }
 
 .content {
+    color: white;
+    padding: 20px;
     display: flex;
     width: 1029px;
-    background: #F7F8FC;
+    background: #272740;
 }
 
 .content-heading {
-    padding-top: 19px;
-    margin-left: 20px;
     font-size: 24px;
-    line-height: 120.2%;
+    color: #32CDB1;
 }
 
 /* START OF DASHBOARD CSS*/
-.dashboard {
+#dashboard {
     width: 538px;
-    height: 583px;
+    height: 550px;
     border-right: 4px solid #50E3C2;
 }
 
-.user-info-wrapper {
+#user-info-wrapper {
     margin-top: 27px;
     margin-left: 48px;
+    padding: 45px 20px 20px 20px;
     width: 442px;
-    height: 478px;
-    background: #FFFFFF;
-    box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
-    border: 0.5px solid #0000002f;
-    border-radius: 21px;
+    height: 408px;
+    background: #35354F;
 }
 
-.user-info-wrapper > img {
-    margin: 45px;
-    margin-left: 98px;
+#user-info-wrapper > div:nth-of-type(1) {
+    display: flex;
+    width: 394px;
+}
+
+#user-info-wrapper > div:nth-of-type(1) > img {
+    margin-right: 20px;
     object-fit: cover;
     border-radius: 50%;
-    width: 247px;
-    height: 247px;
+    width: 184px;
+    height: 184px;
 }
 
-.username {
-    text-align: center;
+#user-info-wrapper > div:nth-of-type(1) > div > h2 {
     font-size: 24px;
     line-height: 120.2%;
-    color: #000000;
+    color: #8B8BE3;
 }
 
-.userdesc {
-    padding-top: 15px;
+#user-info-wrapper > div:nth-of-type(1) > div > p {
+    width: 190px;
     font-size: 18px;
     line-height: 120.2%;
-    width: 340px;
-    margin: auto;
 }
 
-.activity-wrapper {
+#user-info-wrapper > div:nth-of-type(2) {
+    padding-top: 50px;
+    padding-left: 28px;
+}
+
+.counter {
+    margin-bottom: 18px;
+    padding: 0px 10px;
+    display: flex;
+    align-items: center;
+    max-width: 204px;
+    height: 36px;
+    background: #4C4C74;    
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 120.2%;
+}
+
+.counter * {
+    padding: 0px 5px;
+}
+
+#activity-wrapper {
     width: 491px;
     height: 585px;
 }
 
-.activity {
+#activity-wrapper > h1 {
+    margin-left: 24px;
+}
+
+#activity {
     margin: 16px auto 0 auto;
     width: 423px;
     height: 63px;
-    background: #FFFFFF;
-    box-shadow: 4px 3px 4px rgba(0, 0, 0, 0.25);
-    border: 0.5px solid #00000025;
-    border-radius: 21px;
+    background: #3B3B5F;
     display: flex;
 }
 
-.img-container {
+#activity > h1 {
+    padding-left: 22px;
+}
+
+#activity > div {
     width: 93px;
     height: 63px;
     display: flex;
@@ -161,23 +186,24 @@ nav {
     align-items: center;
 }
 
-.img-container > img {
+#activity > div > img {
     width: 62px;
     border-radius: 5px;
 }
 
-.activity-text {
+#activity > p:nth-of-type(1) {
     padding-top: 20px;
     font-size: 18px;
     line-height: 120.2%;
     text-decoration: none;
 }
 
-.activity-text > a {
+#activity > p:nth-of-type(1) > a {
     text-decoration: none;
+    color: #32CDB1;
 }
 
-.activity-date {
+#date {
     position: relative;
     left: 40px;
     top: 5px;
@@ -185,7 +211,8 @@ nav {
     font-weight: 300;
     font-size: 14px;
     line-height: 120.2%;
-    color: #474787;
+    color: #32CDB1;
+    
 }
 
 /* START OF FAVORITE GAMES CSS */
@@ -196,106 +223,140 @@ nav {
 .fav-row {
     display: flex;
     width: 934px;
-    margin-left: 20px;
     margin-top: 14px;
 }
 
-.game {
+#game {
     overflow: hidden;
-    background: white;
+    background: #3B3B5F;
     width: 223px;
     height: 240px;
-    filter: drop-shadow(-4px 2px 4px rgba(0, 0, 0, 0.25));
-    border-radius: 21px;
 }
 
-.game-cover {
+#game-cover {
     object-fit: cover;
     width: 223px;
     height: 177px;
 }
 
-.game-name {
+#game > p:nth-of-type(1) {
     margin-top: 10px;
     margin-bottom: 5px;
     text-align: center;
     font-size: 18px;
     line-height: 120.2%;
+    color: #32CDB1;
 }
 
-.game-year {
+#game > p:nth-of-type(2) {
     text-align: center;
     font-size: 14px;
     line-height: 120.2%;
-    color: #474787;
+    color: #A2A2CF;
 }
 /* START OF MY REVIEWS CSS*/
 .reviews {
     width: 1029px;
 }
 
-.review-card {
-    display: flex;
-    overflow: hidden;
-    margin-left: 20px;
-    width: 873px;
-    height: 240px;
+.recent-review {
+    margin-top: 24px;
+    color: white;
+    width: 872px;
     background: #FFFFFF;
-    box-shadow: -3px 4px 7px rgba(0, 0, 0, 0.25);
-    border-radius: 23px;
-}
-
-.review-game-side {
-    width: 223px;
-    height: 240px;
-}
-
-.review-game-side > img {
-    object-fit: cover;
-    width: 223px;
-    height: 177px;
-}
-
-.review-game-name {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 18px;
-    line-height: 120.2%;
-}
-
-.review {
-    width: 650px;
-    padding: 15px;
+    border: 1px solid #474787;
+    box-sizing: border-box;
 }
 
 .review-header {
     display: flex;
-    justify-content: space-between;
+    padding: 15px;
     width: 100%;
+    background: #353562;
 }
 
-.review-title {
+.review-header > .pic-column > img {
+    width: 107px;
+    height: 57px;
+}
+
+.review-header > .row-1 {
+    width: 100%;
+    margin-left: 24px;
+}
+
+.review-header > .row-1 > .row-2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.review-header > .row-1 > .row-2 > .column-1 {
+    display: flex;
+    height: 28px;
+}
+
+.review-header > .row-1 > .row-2 > .column-1 > .starability-result {
+    margin-top: -5px;
+}
+
+.row-2 > .review-time {
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.row-1 > .review-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.review-game-name {
+    font-size: 18px;
+    line-height: 120.2%;
+    color: #FFFFFF;
+}
+
+.review-game-name > span {
+    margin-right: 11px;
+    font-size: 18px;
+    color: #32CDB1;
+}
+
+.recent-review > .review {
+    background: #1E1E33;
+    width: 100%;
+    padding: 15px 15px 25px 15px;
+}
+
+.recent-review-body {
+    white-space: pre-line;
+}
+
+.recent-review-body > span > a {
     font-weight: bold;
     font-size: 14px;
-    line-height: 120.2%;
+    color: #32CDB1;
+    text-decoration: none;
 }
 
-.recommended {
+.review-verdict-yes {
     display: inline;
     padding: 11px;
     width: 219px;
     height: 51px;
     background: #32CDB1;
+    color: black;
     border: 1px solid #000000;
     font-weight: 500;
     font-size: 14px;
 }
 
-.not-recommended {
+.review-verdict-no {
     display: inline;
     width: 257px;
     height: 51px;
     background: #FF5A79;
+    color: black;
     border: 1px solid #000000;
     box-sizing: border-box;
     font-weight: 500;
@@ -308,26 +369,41 @@ nav {
     height: 17px;
 }
 
+
 /* START OF ACCOUNT SETTINGS CSS */
-.image-settings {
+#image-settings {
     width: 514px;
-    height: 585px;
+    height: 550px;
+    border-right: 4px solid #50E3C2;
 }
 
-.image-settings > h2 {
-    margin-top: 46px;
-    margin-left: 120px;
+#image-settings > h1 {
+    display: inline;
     font-size: 24px;
+    line-height: 120.2%;
+    color: #32CDB1;
+    padding-right: 23px;
+}
+
+#image-settings > h2 {
+    display: inline;
+    font-weight: bold;
+    font-size: 18px;
     line-height: 120.2%;
 }
 
-.image-form > input {
+#image-settings > form {
+    margin-top: 64px;
+    margin-left: 116px;
+    width: 247px;
+    height: 247px;
+}
+
+#image-settings > form > input {
     display: none;
 }
 
-.image-form > label > img {
-    margin: 45px;
-    margin-left: 98px;
+#image-settings > form > label > img {
     object-fit: cover;
     border-radius: 50%;
     width: 247px;
@@ -335,11 +411,10 @@ nav {
     filter: drop-shadow(-2px 2px 7px rgba(0, 0, 0, 0.25));
 }
 
-.upload-label {
+#image-settings > form > label > span {
     display: block;
     position: relative;
-    bottom: 176px;
-    left: 98px;
+    bottom: 135px;
     width: 247px;
     height: 22px;
     font-size: 18px;
@@ -348,6 +423,10 @@ nav {
     color: #FFFFFF;
     background: rgba(0, 0, 0, 0.53);
     }
+
+#image-settings > form > button {
+    margin: auto;
+}
 
 .confirm-changes {
     display: block;
@@ -361,24 +440,21 @@ nav {
     line-height: 120.2%;
 }
 
-.image-form > .confirm-changes {
-    margin-left: 140px;
-}
-
-.password-settings {
-    padding-top: 94px;
-    padding-left: 88px;
+#password-settings {
+    padding-left: 55px;
     width: 515px;
     height: 585px;
 }
 
-.change-password {
-    margin-bottom: 66px;
-    font-size: 24px;
+#password-settings > h2 {
+    margin-top: 6px;
+    margin-bottom: 78px;
+    font-weight: bold;
+    font-size: 18px;
     line-height: 120.2%;
 }
 
-.password-form > label {
+#password-form > label {
     display: block;
     margin-top: 31px;
     margin-bottom: 8px;
@@ -387,7 +463,9 @@ nav {
     line-height: 120.2%;
 }
 
-.password-form > input {
+#password-form > input {
+    color: white;
+    padding-left: 7px;
     width: 337px;
     height: 40px;
     background: rgba(255, 255, 255, 0.12);
@@ -396,6 +474,6 @@ nav {
     border-radius: 10px;
 }
 
-.password-form > .confirm-changes {
+#password-form > .confirm-changes {
     margin-top: 31px;
 }

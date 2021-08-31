@@ -12,7 +12,7 @@ body {
     padding: 0;
     margin: 0;
     color: white;
-    background-color: black;
+    background-color: #1A1A2D;
     font-family: Roboto;
 }
 
@@ -131,29 +131,28 @@ nav {
 }
 
 /*    START OF EXPLORE CSS    */
-.explore-wrapper {
+#explore-wrapper {
     margin: auto;
     width: 922px;
-    height: 998px;
 }
 
-.explore-content {
+#explore-content {
     margin-top: 213px;
 }
 
-.explore-content > h1 {
+#explore-content > h1 {
     margin: auto;
     width: 604px;
     font-size: 36px;
     line-height: 120.2%;
 }
 
-.explore-content > form {
+#explore-content > form {
     margin-top: 53px;
     text-align: center;
 }
 
-.explore-content > form > input {
+#explore-content > form > input {
     width: 604px;
     height: 31px;
     border: 2px solid #474787;
@@ -171,31 +170,45 @@ nav {
     bottom: 28px;
 }
 
+#popular-games {
+    margin-top: 140px;
+}
+
+#popular-games h1 {
+    font-size: 36px;
+    line-height: 120.2%;
+}
+
+#popular-games #favoritesrow {
+    display: flex;
+    width: 739px;
+}
+
 /*    START OF RESULTS CSS     */
-.results-wrapper {
+#results-wrapper {
     margin: auto;
     width: 922px;
     height: 802px;
 }
 
-.results-content {
+#results-wrapper > div {
     margin-top: 91px;
 }
 
-.results-header {
+#results-search {
     display: flex;
     margin-bottom: 91px;
 }
 
-.results-header > h1 {
+#results-search > h1 {
     text-align: center;
 }
 
-.results-header > form {
+#results-search > form {
     width: 401px;
 }
 
-.results-header > form > input {
+#results-search > form > input {
     width: 200px;
     border: 2px solid #474787;
     box-sizing: border-box;
@@ -203,7 +216,7 @@ nav {
     padding-left: 35px;
 }
 
-.search-icon {
+#results-search > form > span {
     width: 18px;
     display: block;
     color:black;
@@ -212,37 +225,39 @@ nav {
     bottom: 28px;
 }
 
-.card {
+#game-card {
     overflow: hidden;
     width: 286px;
-    height: 280px;
-    border: 1px solid #32CDB1;
+    height: 290px;
     box-sizing: border-box;
     margin-bottom: 32px;
 }
 
-.card-body {
-    background: #12121F;
+#game-card > div {
+    padding: 15px;
+    background: #3B3B5F;
 }
 
-.card-img-top {
+#game-card > a > img {
     object-fit: cover;
-    max-width: 100%;
+    width: 282px;
     height: 159px;
 }
 
-.card-title {
+#game-card > div > h2 {
+    color: #32CDB1;
     font-size: 18px;
     line-height: 120.2%;
 }
 
-.card-text {
+#game-card > div > p {
+    color: #A2A2CF;
     font-size: 14px;
     line-height: 120.2%;
 }
 
 /* START OF COMMUNITY CSS */
-.community-wrapper {
+#community-wrapper {
     margin: 213px auto 0 auto;
     width: 922px;
 }
@@ -262,55 +277,91 @@ nav {
     transition: 0.2s;
 }
 
-.recent-review {
+#recent-review {
     margin-top: 38px;
-    color: black;
+    color: white;
+    width: 872px;
+    background: #1E1E33;
+    border: 1px solid #474787;
+    box-sizing: border-box;
+}
+
+#review-top {
     display: flex;
-    overflow: hidden;
-    width: 873px;
-    height: 240px;
-    background: #FFFFFF;
-    box-shadow: -3px 4px 7px rgba(0, 0, 0, 0.25), inset 0px 0px 6px #000000;
-    border-radius: 23px;
-}
-
-.review-game-side {
-    width: 223px;
-    height: 240px;
-}
-
-.review-game-side > img {
-    object-fit: cover;
-    width: 223px;
-    height: 177px;
-}
-
-.review-game-name {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 18px;
-    line-height: 120.2%;
-}
-
-.review {
-    width: 650px;
     padding: 15px;
+    width: 100%;
+    background: #353562;
 }
 
-.review-header {
+#review-top div img {
+    width: 107px;
+    height: 57px;
+}
+
+#review-top div:nth-of-type(2) {
+    width: 100%;
+    margin-left: 24px;
+}
+
+#review-top div:nth-of-type(2) div {
     display: flex;
     justify-content: space-between;
-    width: 100%;
 }
 
-.recent-review-title {
+#name-rating {
+    display: flex;
+    height: 28px;
+}
+
+#name-rating p:nth-of-type(1) {
+    font-size: 18px;
+    line-height: 120.2%;
+    color: #FFFFFF;
+}
+
+#name-rating p:nth-of-type(1) span {
+    margin-right: 11px;
+    font-size: 18px;
+    color: #32CDB1;
+}
+
+#name-rating .starability-result {
+    margin-top: -5px;
+}
+
+#review-time {
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+#review-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#review-title span {
+    padding-left: 11px;
+    font-style: italic;
+    font-weight: 300;
+    color: #32CDB1;
+}
+
+#review-lower {
+    background: #1E1E33;
+    width: 100%;
+    padding: 15px 15px 25px 15px;
+}
+
+#review-lower p {
+    white-space: pre-line;
+}
+
+#review-lower p span a {
     font-weight: bold;
     font-size: 14px;
-    line-height: 120.2%;
-}
-
-.review-rating {
-    margin-bottom: 30px;
+    color: #32CDB1;
+    text-decoration: none;
 }
 
 .review-verdict-yes {
@@ -319,6 +370,7 @@ nav {
     width: 219px;
     height: 51px;
     background: #32CDB1;
+    color: black;
     border: 1px solid #000000;
     font-weight: 500;
     font-size: 14px;
@@ -329,6 +381,7 @@ nav {
     width: 257px;
     height: 51px;
     background: #FF5A79;
+    color: black;
     border: 1px solid #000000;
     box-sizing: border-box;
     font-weight: 500;
@@ -341,29 +394,27 @@ nav {
     height: 17px;
 }
 
-.favorites-row {
+#favoritesrow {
     display: none;
     width: 739px;
 }
 
-.game {
+#game {
     margin-top: 38px;
     overflow: hidden;
-    background: white;
-    color: black;
+    background: #3B3B5F;
     width: 223px;
     height: 240px;
-    box-shadow: inset 0px 0px 6px #000000;
-    border-radius: 21px;
 }
 
-.game-cover {
+#game img {
     object-fit: cover;
     width: 223px;
     height: 177px;
 }
 
-.game-name {
+#game p:nth-of-type(1) {
+    color: #32CDB1;
     margin-top: 10px;
     margin-bottom: 5px;
     text-align: center;
@@ -371,35 +422,27 @@ nav {
     line-height: 120.2%;
 }
 
-.game-year {
+#game p:nth-of-type(2) {
     text-align: center;
     font-size: 14px;
     line-height: 120.2%;
-    color: #474787;
+    color: #A2A2CF;
 }
 
-.most-active {
+#mostactive {
     display: none;
     padding-top: 55px;
 }
 
-.user-card {
+#usercard {
     margin-right: 55px;
     width: 244px;
     height: 285px;
     background: #FFFFFF;
-    border-radius: 11px;
+    box-shadow: 0px 0px 15px -1px #32CDB1;
 }
 
-.card1 {
-    box-shadow: -1px 0px 41px #FF0000, inset 0px 0px 6px #000000;
-}
-
-.card2 {
-    box-shadow: -1px 0px 41px #0904FF, inset 0px 0px 6px #000000;
-}
-
-.user-card > img {
+#usercard > img {
     width: 244px;
     height: 161px;
     object-fit: cover;
@@ -592,11 +635,6 @@ nav {
     justify-content: space-between;
 }
 
-.review-title {
-    font-weight: bold;
-    font-size: 24px;
-}
-
 .review-display-buttons {
     display: flex;
     justify-content: space-between;
@@ -687,6 +725,6 @@ nav {
     text-decoration: none;
 }
 
-.starability-result {
+.review-body > .starability-result {
     margin-top: 10px;
 }

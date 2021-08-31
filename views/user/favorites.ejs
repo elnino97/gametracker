@@ -3,10 +3,10 @@
   <h1 class="content-heading">My favorites</h1>
   <div class="fav-row">
       <% for (let game of games) { %>
-          <div class="game">
-              <img class="game-cover" src="<%= game.background_image %> " alt="">
-              <p class="game-name"><%= game.name %></p>
-              <p class="game-year"><%= game.released %> </p>
+          <div id="game">
+              <img id="game-cover" src="<%= game.background_image %> " alt="">
+              <p><%= game.name %></p>
+              <p><%= game.released %> </p>
           </div>
       <% } %>
     </div>  

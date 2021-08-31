@@ -1,22 +1,30 @@
 <%- layout('./layouts/useraccount')%>
 
-<section class="dashboard">
+<section id="dashboard">
     <h1 class="content-heading">Dashboard</h1>
-    <div class="user-info-wrapper">
-        <img src="<%= userdata.image %>" alt="">
-        <h2 class="username"><%= currentUser.username %></h2>
-        <p class="userdesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <div id="user-info-wrapper">
+        <div>
+            <img src="<%= userdata.image %>" alt="">
+            <div>
+                <h2><%= currentUser.username %></h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+        </div>
+        <div>
+            <div class="counter"><%= userdata.favorite.length %> <span><img src="/img/heart.png" alt=""></span> <%= userdata.favorite.length === 1 ? "game" : "games" %> favorited</div>
+            <div class="counter"><%= userdata.review.length %> <span><img src="/img/review.png" alt=""></span> <%= userdata.favorite.length === 1 ? "review" : "reviews" %> made</div>
+        </div>
     </div>
 </section>
-<section class="activity-wrapper">
+<section id="activity-wrapper">
     <h1 class="content-heading">Recent activity</h1>
     <% for (let activity of activities) { %>
-        <div class="activity">
-            <div class="img-container">
+        <div id="activity">
+            <div>
                 <img src="<%= activity.image %>" alt="">
             </div>
-            <p class="activity-text">You <%= activity.action === "favorite" ? "favorited" : "reviewed" %> <a href="/games/<%= activity.game.id %> "><%= activity.game.name %></a></p>
-            <p class="activity-date"><%= timeDifference(Date.parse(activity.created_at)) %></p>
+            <p>You <%= activity.action === "favorite" ? "favorited" : "reviewed" %> <a href="/games/<%= activity.game.id %> "><%= activity.game.name %></a></p>
+            <p id="date"><%= timeDifference(Date.parse(activity.created_at)) %></p>
         </div>
     <% } %> 
 </section>
