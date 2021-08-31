@@ -1,5 +1,5 @@
 <%- layout('./layouts/useraccount')%>
-<section class="reviews">
+<section id="reviews">
 <h1 class="content-heading">My reviews</h1>
 <div class="review-row">
     <% for (let review of reviews) { %> 
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="review">
-                <p class="recent-review-body"><%= review.body %>.. <span><a href="/games/<%= review.gameId %>/reviews">View full review</a></span></p>
+                <p class="recent-review-body"><%= review.body.substring(0, 400) %>.. <span><a href="/games/<%= review.gameId %>/reviews">View full review</a></span></p>
                 <% if (review.recommend) { %> 
                     <div class="review-verdict-yes">Recommended <span><img class="thumbs-up" src="/img/thumbsup.png" alt=""></span></div>
                 <% } else { %>
