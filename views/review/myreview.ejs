@@ -1,24 +1,26 @@
 <%- layout('/layouts/boilerplate')%>
 <div id="review-page">
-    <a class="back-link" href="/games/<%= gameDetails.id %>"><img src="/img/back.png" alt=""></a>
+    <a class="back-link" href="/games/<%= review.gameId %>"><img src="/img/back.png" alt=""></a>
     <div>
         <h1>My review</h1>
             <div class="rw-page-review">
                 <div class="rw-page-review-top">
                     <h1><%= review.title %></h1>
-                    <div class="review-display-buttons">
-                        <div class="review-edit-btn">
-                            <a href="/games/<%= gameDetails.id %>/review/edit" class="review-edit">Edit</a>
+                    <% if (currentUser && review.author.id.equals(currentUser._id)) { %> 
+                        <div class="review-display-buttons">
+                            <div class="review-edit-btn">
+                                <a href="/games/<%= review.gameId %>/review/edit" class="review-edit">Edit</a>
+                            </div>
+                            <form action="/games/<%= review.gameId %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                                <button class="review-delete-btn">Delete</button>
+                            </form>
                         </div>
-                        <form action="/games/<%= gameDetails.id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
-                            <button class="review-delete-btn">Delete</button>
-                        </form>
-                    </div>
+                    <% } %> 
                 </div>
                 <p class="starability-result" data-rating="<%=review.rating%>">
                     Rated: <%= review.rating %> stars
                 </p>
-                <p class="review-author"><%= review.author.name %> <span class="review-date"><%= review.created_at.toLocaleString() %></span></p>
+                <p class="review-author"><%= review.author.name %> <span class="review-date"><%= timeDifference(Date.parse(review.created_at)) %></span></p>
                 <p class="review-text"><%= review.body %></p>
                 <% if (review.recommend) { %> 
                     <div class="recommended">Recommended <span class="thumbs-up"><img src="/img/thumbsup.png" alt=""></span></div>
