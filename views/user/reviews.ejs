@@ -22,7 +22,13 @@
                 </div>
             </div>
             <div class="review">
-                <p class="recent-review-body"><%= review.body.substring(0, 400) %>.. <span><a href="/games/<%= review.gameId %>/reviews">View full review</a></span></p>
+                <p class="recent-review-body">
+                    <% if (review.body.length >= 300) { %>
+                        <%= review.body.substring(0, 300) + ".." %> <span><a href="/games/<%= review.gameId %>/review/<%= review._id %> ">View full review</a></span>
+                    <% } else { %>
+                        <%= review.body %> 
+                    <% } %> 
+                </p>
                 <% if (review.recommend) { %> 
                     <div class="review-verdict-yes">Recommended <span><img class="thumbs-up" src="/img/thumbsup.png" alt=""></span></div>
                 <% } else { %>
