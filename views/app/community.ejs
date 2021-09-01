@@ -28,7 +28,7 @@
                 <div id="review-lower">
                     <p>
                         <% if (review.body.length >= 300) { %>
-                            <%= review.body.substring(0, 300) + ".." %> <span><a href="/games/<%= review.gameId %>/reviews">View full review</a></span>
+                            <%= review.body.substring(0, 300) + ".." %> <span><a href="/games/<%= review.gameId %>/review/<%= review._id %> ">View full review</a></span>
                         <% } else { %>
                             <%= review.body %> 
                         <% } %> 
