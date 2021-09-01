@@ -59,9 +59,9 @@
                       <button class="favorite-btn">Remove from favorites <span class="favorite-icon"><img src="/img/heart.png" alt=""></span></button>
                     </form>
                   <% } %>  
-                  <% if (checkReview) { %>  
+                  <% if (myReview) { %>  
                   <div class="review-btn">
-                    <a href="/games/<%= gameDetails.id %>/review">View my review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
+                    <a href="/games/<%= gameDetails.id %>/review/<%= myReview %>">View my review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
                   </div>
                   <% } else { %>
                     <div class="review-btn">
@@ -92,14 +92,14 @@
                           <h1><%= review.title %> </h1>
                           <%  if( currentUser && review.author.id.equals(currentUser._id)) {%>
                             <div class="review-edit-btn">
-                              <a href="/games/<%= review.gameId %>/review/" class="review-edit">Go to my review</a>
-                          </div>
+                              <a href="/games/<%= review.gameId %>/review/<%= review._id %> " class="review-edit">Go to my review</a>
+                            </div>
                         <% } %> 
                       </div>
                       <p class="starability-result" data-rating="<%=review.rating%>">
                         Rated: <%= review.rating %> stars
                       </p>
-                      <p class="review-author"><%= review.author.name %> <span class="review-date"><%= review.created_at.toLocaleString() %></span></p>
+                      <p class="review-author"><%= review.author.name %> <span class="review-date"><%= timeDifference(Date.parse(review.created_at)) %></span></p>
                       <p class="review-text"><%- review.body %></p>
                       <% if (review.recommend) { %> 
                       <div class="recommended">Recommended <span class="thumbs-up"><img src="/img/thumbsup.png" alt=""></span></div>
@@ -110,7 +110,7 @@
               <% } %>
               <% if (shortReviews.length) { %>
                 <div class="view-more">  
-                    <a href="/games/<%= gameDetails.id %>/reviews">View more reviews</a>
+                    <a href="/games/<%= gameDetails.id %>/reviews">View all reviews</a>
                 </div>
               <% } %> 
         </div>
