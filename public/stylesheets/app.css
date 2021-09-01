@@ -354,7 +354,7 @@ nav {
 }
 
 #review-lower p {
-    white-space: pre-line;
+    white-space: normal;
 }
 
 #review-lower p span a {
@@ -602,42 +602,48 @@ nav {
     left: 15px;
 }
 
-.review-page {
+#review-page {
     min-height: 1440px;
     background: #F1F7F8;
     color: black;
     line-height: 120.2%;
 }
 
-.review-wrapper {
+#review-page > div {
     padding-top: 100px;
     margin: auto;
     width: 988px;
 }
 
-.review-wrapper > h1 {
+#review-page > div > h1 {
     font-style: normal;
     font-weight: bold;
     font-size: 36px;
     color: #000000;
 }
 
-.review-body {
+.rw-page-review {
     margin-top: 48px;
     background: #FFFFFF;
     box-shadow: 9px 7px 15px rgba(0, 0, 0, 0.25);
     padding: 28px;
 }
 
-.review-top {
+.rw-page-review-top {
     display: flex;
     justify-content: space-between;
+}
+
+.rw-page-review-top h1 {
+    max-width: 770px;
+    font-weight: bold;
+    font-size: 24px;
 }
 
 .review-display-buttons {
     display: flex;
     justify-content: space-between;
-    width: 157px;
+    width: 138px;
 }
 
 .review-delete-btn {
@@ -653,7 +659,7 @@ nav {
 }
 
 .review-edit-btn {
-    width: 74px;
+    padding: 0 15px;
     height: 32px;
     background: #0500E2;
     box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.25);
@@ -724,6 +730,6 @@ nav {
     text-decoration: none;
 }
 
-.review-body > .starability-result {
+.rw-page-review > .starability-result {
     margin-top: 10px;
 }

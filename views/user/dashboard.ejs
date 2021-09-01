@@ -11,7 +11,7 @@
             </div>
         </div>
         <div>
-            <div class="counter"><%= userdata.favorite.length %> <span><img src="/img/heart.png" alt=""></span> <%= userdata.favorite.length === 1 ? "game" : "games" %> favorited</div>
+            <div class="counter"><%= userdata.favorite.length %> <span><img src="/img/heart.png" alt=""></span> <%= userdata.favorite.length === 1 ? "game" : "games" %> favourited</div>
             <div class="counter"><%= userdata.review.length %> <span><img src="/img/review.png" alt=""></span> <%= userdata.favorite.length === 1 ? "review" : "reviews" %> made</div>
         </div>
     </div>
@@ -23,7 +23,7 @@
             <div>
                 <img src="<%= activity.image %>" alt="">
             </div>
-            <p>You <%= activity.action === "favorite" ? "favorited" : "reviewed" %> <a href="/games/<%= activity.game.id %> "><%= activity.game.name %></a></p>
+            <p>You <%= activity.action === "favorite" ? "favourited" : "reviewed" %> <a href="/games/<%= activity.game.id %> "><%= activity.game.name %></a></p>
             <p id="date"><%= timeDifference(Date.parse(activity.created_at)) %></p>
         </div>
     <% } %> 

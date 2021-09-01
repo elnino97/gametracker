@@ -83,18 +83,18 @@
   </div>
   <div class="break"></div>
   <% if (shortReviews.length) { %> 
-  <div class="review-page">
-      <div class="review-wrapper">
+  <div id="review-page">
+      <div>
             <h1>User reviews</h1>
               <% for (let review of shortReviews) { %> 
-                  <div class="review-body">
-                      <div class="review-top">
-                          <h1 class="review-title"><%= review.title %> </h1>
+                  <div class="rw-page-review">
+                      <div class="rw-page-review-top">
+                          <h1><%= review.title %> </h1>
                           <%  if( currentUser && review.author.id.equals(currentUser._id)) {%>
                             <div class="review-edit-btn">
-                                <a href="/games/<%= review.gameId %>/review/edit" class="review-edit">Edit</a>
-                            </div>
-                          <% } %> 
+                              <a href="/games/<%= review.gameId %>/review/" class="review-edit">Go to my review</a>
+                          </div>
+                        <% } %> 
                       </div>
                       <p class="starability-result" data-rating="<%=review.rating%>">
                         Rated: <%= review.rating %> stars
