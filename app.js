@@ -11,6 +11,8 @@ const flash = require('connect-flash');
 const methodOverride = require('method-override');
 const multer = require('multer');
 const { storage } = require('./cloudinary');
+const Joi = require('joi');
+const { reviewSchema } = require('./schemas.js')
 const upload = multer({ storage });
 
 
@@ -40,7 +42,16 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }));
-// app.use(express.static(path.join(__dirname, 'public')))
+
+const validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+    if (error){
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    } else {
+        next();
+    }
+}
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
@@ -179,7 +190,7 @@ app.get('/games/:id/reviews', async (req, res) => {
     res.render('review/allreviews', { reviews, gameDetails })
 })
 
-app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
+app.post('/games/:id/reviews', validateReview, isLoggedIn, async (req, res) => {
     const { id } = req.params
     const userdata = await Userdata.findOne({'user.id': req.user._id});
     const checkReviews = await Review.findOne({gameId: id, authorId: req.user._id})
@@ -193,7 +204,6 @@ app.post('/games/:id/reviews', isLoggedIn, async (req, res) => {
         game = await new Game({ id, name, background_image, released });
         await game.save();
     }
-
     const review = new Review(req.body.review);
     review.author = { name: req.user.username, id: req.user._id }
     review.gameId = id;

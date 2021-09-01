@@ -14,13 +14,13 @@
     <section class="review-wrapper">
         <h1>Write a review</h1>
         <div class="review-body">            
-            <form action="/games/<%= gameDetails.id %>/reviews" method="POST" novalidate>
+            <form action="/games/<%= gameDetails.id %>/reviews" method="POST">
             <div class="title">
-                <input type="text" id="title" name="review[title] placeholder="Review Title">
+                <input type="text" id="title" name="review[title]" placeholder="Review Title" required>
             </div>
             <fieldset class="starability-basic">
-                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
-                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" aria-label="No rating." />
+                <input type="radio" id="first-rate1" name="review[rating]" value="1" checked  />
                 <label for="first-rate1" title="Terrible">1 star</label>
                 <input type="radio" id="first-rate2" name="review[rating]" value="2" />
                 <label for="first-rate2" title="Not good">2 stars</label>
