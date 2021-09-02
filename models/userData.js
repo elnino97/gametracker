@@ -7,6 +7,7 @@ const userDataSchema = new Schema({
         username: String
     },
     image: String,
+    about: String,
     favorite: [ Number ],
     review: [{
         type: Schema.Types.ObjectId,
