@@ -20,15 +20,15 @@
                                     Rated: <%= review.rating %> stars
                                 </p>
                             </div>
-                            <p id="review-time"><%= timeDifference(Date.parse(review.created_at)) %></p>
+                            <p class="review-time"><%= timeDifference(Date.parse(review.created_at)) %></p>
                         </div>
-                        <h2 id="review-title"><%= review.title %><span><%= review.author.name %> </span></h2>
+                        <h2 class="review-title"><%= review.title %><span><%= review.author.name %> </span></h2>
                     </div>
                 </div>
                 <div id="review-lower">
                     <p>
                         <% if (review.body.length >= 300) { %>
-                            <%= review.body.substring(0, 300) + ".." %> <span><a href="/games/<%= review.gameId %>/review/<%= review._id %> ">View full review</a></span>
+                            <%= review.body.substring(0, 300) + ".." %> <span><a href="/games/<%= review.gameId %>/reviews/<%= review._id %> ">View full review</a></span>
                         <% } else { %>
                             <%= review.body %> 
                         <% } %> 
@@ -59,7 +59,7 @@
                 <img src="<%= userdata[i].image %> " alt="">
                 <div class="card-info">
                     <p><%= userdata[i].user.username %></p>
-                    <p>I like good video games</p>
+                    <p><%= userdata[i].about %> </p>
                     <div class="counters">
                         <div class="times-favorited"><%= userdata[i].favorite.length %> <span class="favorite-icon"><img src="/img/heart.png" alt=""></span></div>
                         <div class="times-reviewed"><%= userdata[i].review.length %> <span class="review-icon"><img src="/img/review.png" alt=""></span></div>
