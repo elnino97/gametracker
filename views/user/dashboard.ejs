@@ -6,8 +6,11 @@
         <div>
             <img src="<%= userdata.image %>" alt="">
             <div>
-                <h2><%= currentUser.username %></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <h2 id="user-name"><%= currentUser.username %></h2>
+                <p id="about-user"><%= userdata.about ? userdata.about : "Say something cool about yourself" %></p>
+                <form id="about-form" action="/account/dashboard?_method=PUT" method="POST">
+                    <input type="text" name="about" minlength="1" maxlength="50" required>
+                </form>
             </div>
         </div>
         <div>
@@ -18,14 +21,32 @@
 </section>
 <section id="activity-wrapper">
     <h1 class="content-heading">Recent activity</h1>
-    <% for (let activity of activities) { %>
-        <div id="activity">
-            <div>
-                <img src="<%= activity.image %>" alt="">
+    <% if (activities.length) { %> 
+        <% for (let activity of activities) { %>
+            <div id="activity">
+                <div>
+                    <img src="<%= activity.image %>" alt="">
+                </div>
+                <p>You <%= activity.action === "favorite" ? "favourited" : "unfavorite" ? "unfavourited" : "reviewed" %> <a href="/games/<%= activity.game.id %> "><%= activity.game.name %></a></p>
+                <p id="date"><%= timeDifference(Date.parse(activity.created_at)) %></p>
             </div>
-            <p>You <%= activity.action === "favorite" ? "favourited" : "reviewed" %> <a href="/games/<%= activity.game.id %> "><%= activity.game.name %></a></p>
-            <p id="date"><%= timeDifference(Date.parse(activity.created_at)) %></p>
+        <% } %>
+    <% } else { %> 
+        <div class="nothing-here">
+            <img src="/img/cil_sad.png" alt="">
+            <p>Looks like there’s nothing to see here. Write a review or favorite something!</p>
         </div>
     <% } %> 
 </section>
+
+<script>
+    const dashboard = document.getElementById('nav-dashboard');
+    dashboard.style.color = "#474787";
+    const aboutuser = document.getElementById('about-user');
+    const aboutform = document.getElementById('about-form');
+    aboutuser.addEventListener('click', () => {
+       aboutuser.style.display = "none";
+       aboutform.style.display = "block";
+    })
+</script>
 
