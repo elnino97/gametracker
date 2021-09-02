@@ -8,19 +8,17 @@
             </form>
             <h1>Results</h1>
         </div>
-        <div class="row">
+        <div id="results-row">
             <% for (let game of games.results) { %>
-            <div class="col-lg-4">
-                <div id="game-card">
-                    <a href="/games/28958">
-                        <img src="<%= game.background_image %>" alt="...">
-                    </a>
-                    <div>
-                        <h2 class="card-title"><%= game.name %></h2>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam, deleniti iusto ducimus vitae.</p>
-                    </div>
+            <div id="game-card">
+                <a href="/games/28958">
+                    <img src="<%= game.background_image %>" alt="...">
+                </a>
+                <div>
+                    <h2 class="card-title"><%= game.name %></h2>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam, deleniti iusto ducimus vitae.</p>
                 </div>
-            </div> 
+            </div>
             <% } %> 
     </div>
     </div>
