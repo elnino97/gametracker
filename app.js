@@ -185,12 +185,20 @@ app.post('/games/:id/reviews', validateReview, isLoggedIn, async (req, res) => {
     res.redirect(`/games/${id}/reviews`)
 })
 
-app.get('/games/:id/review/:reviewId', async (req, res) => {
+app.get('/games/:id/reviews/edit', isLoggedIn, async (req, res) => {
+    const review = await Review.findOne({ gameId: req.params.id, 'author.id': req.user._id });
+    if (!review) {
+        res.redirect(`/games/${req.params.id}`)
+    }
+    res.render('review/edit', { gameDetails, review });
+})
+
+app.get('/games/:id/reviews/:reviewId', async (req, res) => {
     const review = await Review.findOne({ gameId: req.params.id, _id: req.params.reviewId });
     if (!review) {
         res.redirect(`/games/${req.params.id}`)
     }
-    res.render('review/myreview', { gameDetails, review });
+    res.render('review/myreview', { gameDetails, review, timeDifference });
 })
 
 app.delete('/games/:id/reviews/:reviewId', isLoggedIn, async (req, res) => {
@@ -202,16 +210,7 @@ app.delete('/games/:id/reviews/:reviewId', isLoggedIn, async (req, res) => {
     res.redirect(`/games/${id}`)
 })
 
-app.get('/games/:id/review/edit', isLoggedIn, async (req, res) => {
-    const { id } = req.params;
-    const review = await Review.findOne({ gameId: id, 'author.id': req.user._id });
-    if (!review) {
-        res.redirect(`/games/${id}`)
-    }
-    res.render('review/edit', { gameDetails, review });
-})
-
-app.put('/games/:id/review', isLoggedIn, async (req, res) => {
+app.put('/games/:id/review', validateReview, isLoggedIn, async (req, res) => {
     const { id } = req.params;
     await Review.findOneAndUpdate({ gameId: id, 'author.id': req.user._id }, req.body.review);
     res.redirect(`/games/${id}`)
@@ -256,6 +255,8 @@ app.put('/games/:id/favorite', isLoggedIn, async (req, res) => {
     userdata.favorite = filteredFav;
     userdata.actionCount -= 1;
     await userdata.save()
+    const game = await Game.findOne({ id: req.params.id });
+    newActivity("unfavorite", req.user._id, req.user.username, game._id, null, game.background_image);
     req.flash('success', `Removed from favorites!`);
     res.redirect(`/games/${ req.params.id }`)
 })
@@ -270,10 +271,10 @@ app.post('/register', async (req, res) => {
         const { email, username, password } = req.body;
         const user = new User({ email, username });
         const userdata = new Userdata({user: {id: user.id, username}, image})
-        await userdata.save();
         const registeredUser = await User.register(user, password);
-        req.login(registeredUser, err => {
+        req.login(registeredUser, async (err) => {
             if (err) return next(err);
+            await userdata.save();
             req.flash('success', `Hey ${username}`);
             res.redirect('/');
         })
@@ -305,6 +306,13 @@ app.get('/account/dashboard', isLoggedIn, async (req, res) => {
         .populate('game')
         .populate('review')
     res.render('user/dashboard', { userdata, activities, timeDifference })
+})
+
+app.put('/account/dashboard', isLoggedIn, async (req, res) => {
+    const userdata = await Userdata.findOne({'user.id': req.user._id});
+    userdata.about = req.body.about;
+    userdata.save();
+    res.redirect('/account/dashboard')
 })
 
 app.get('/account/games', isLoggedIn, async (req, res) => {
