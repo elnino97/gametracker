@@ -16,7 +16,7 @@
         <div class="review-body">            
             <form action="/games/<%= gameDetails.id %>/reviews" method="POST">
             <div class="title">
-                <input type="text" id="title" name="review[title]" placeholder="Review Title" required>
+                <input type="text" id="title" name="review[title]" placeholder="Review Title" required minlength="5" maxlength="100">
             </div>
             <fieldset class="starability-basic">
                 <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" aria-label="No rating." />
@@ -32,7 +32,7 @@
                 <label for="first-rate5" title="Amazing">5 stars</label>
               </fieldset>
             <div class="review-text">
-                <textarea name="review[body]" id="body" cols="30" rows="3" placeholder="Your review goes here..." required></textarea>
+                <textarea name="review[body]" id="body" cols="30" rows="3" placeholder="Your review goes here..." required minlength="5" maxlength="2000"></textarea>
             </div>
             <div class="buttons">
                 <div class="form-group1">
