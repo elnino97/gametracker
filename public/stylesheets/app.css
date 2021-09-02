@@ -8,6 +8,11 @@ html {
     width: 0;  /* Remove scrollbar space */
 }
 
+h1, h2, p, ul {
+    padding: 0;
+    margin: 0;
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -17,32 +22,46 @@ body {
 }
 
 /*    TOP NAVBAR    */
-nav {
-    margin: auto;
-    width: 759px;
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
 }
 
-.navbar-nav {
-    width: 100%;
+.hamburger {
+    position: fixed;
+    right: 20px;
+    display: none;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: white;
+}
+
+.nav-menu {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-item {
+    list-style: none;
+    margin-left: 5rem;
 }
 
 .nav-link {
+    text-decoration: none;
     color: white;
-    margin-top: 1px;
 }
 
-.nav-login {
-    border: 1px solid #FFFFFF;
-    box-sizing: border-box;
-    width: 104px;
-    text-align: center;
-}
-
-.nav-register {
-    border: 1px solid #FFFFFF;
-    box-sizing: border-box;
+.signin {
     width: 104px;
     text-align: center;
 }
@@ -54,6 +73,53 @@ nav {
 .nav-logo > img {
     width: 131px;
 }
+
+@media only screen and (max-width: 768px) {
+    .nav-menu {
+        padding-bottom: 20px;
+        position: fixed;
+        left: -100%;
+        top: 0;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        background-color: #1a1a2dad;
+        box-shadow:
+        0 10px 27px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-item {
+        margin-left: 0;
+        margin-top: 50px;
+    }
+
+    .nav-menu div {
+        flex-direction: column;
+    }
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .hamburger {
+        display: block;
+        cursor: pointer;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+}
+
 
 /*    START OF HOME CSS    */
 .home-wrapper {
@@ -132,27 +198,23 @@ nav {
 
 /*    START OF EXPLORE CSS    */
 #explore-wrapper {
-    margin: auto;
+    margin: 213px auto 0 auto;
     width: 922px;
 }
 
-#explore-content {
-    margin-top: 213px;
-}
-
-#explore-content > h1 {
+#explore-wrapper > h1 {
     margin: auto;
     width: 604px;
     font-size: 36px;
     line-height: 120.2%;
 }
 
-#explore-content > form {
+#explore-wrapper > form {
     margin-top: 53px;
     text-align: center;
 }
 
-#explore-content > form > input {
+#explore-wrapper > form > input {
     width: 604px;
     height: 31px;
     border: 2px solid #474787;
@@ -167,7 +229,7 @@ nav {
     color:black;
     position: relative;
     left: 170px;
-    bottom: 28px;
+    bottom: 25px;
 }
 
 #popular-games {
@@ -188,7 +250,6 @@ nav {
 #results-wrapper {
     margin: auto;
     width: 922px;
-    height: 802px;
 }
 
 #results-wrapper > div {
@@ -209,6 +270,7 @@ nav {
 }
 
 #results-search > form > input {
+    height: 31px;
     width: 200px;
     border: 2px solid #474787;
     box-sizing: border-box;
@@ -222,7 +284,14 @@ nav {
     color:black;
     position: relative;
     left: 10px;
-    bottom: 28px;
+    bottom: 24px;
+}
+
+#results-row {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 960px;
 }
 
 #game-card {
@@ -231,16 +300,16 @@ nav {
     height: 290px;
     box-sizing: border-box;
     margin-bottom: 32px;
+    background: #3B3B5F;
 }
 
 #game-card > div {
     padding: 15px;
-    background: #3B3B5F;
 }
 
 #game-card > a > img {
     object-fit: cover;
-    width: 282px;
+    width: 100%;
     height: 159px;
 }
 
@@ -251,6 +320,7 @@ nav {
 }
 
 #game-card > div > p {
+    margin-top: 6px;
     color: #A2A2CF;
     font-size: 14px;
     line-height: 120.2%;
@@ -270,7 +340,7 @@ nav {
     cursor: pointer;
 }
 
-.active {
+.section-title.active {
     font-weight: bold;
     font-size: 24px;
     color: #32CDB1;
@@ -289,7 +359,6 @@ nav {
 #review-top {
     display: flex;
     padding: 15px;
-    width: 100%;
     background: #353562;
 }
 
@@ -329,18 +398,19 @@ nav {
     margin-top: -5px;
 }
 
-#review-time {
+.review-time {
     font-style: italic;
     font-weight: 300;
     font-size: 14px;
 }
 
-#review-title {
+.review-title {
+    word-wrap: anywhere;
     font-weight: bold;
     font-size: 18px;
 }
 
-#review-title span {
+.review-title span {
     padding-left: 11px;
     font-style: italic;
     font-weight: 300;
@@ -349,12 +419,13 @@ nav {
 
 #review-lower {
     background: #1E1E33;
-    width: 100%;
-    padding: 15px 15px 25px 15px;
+    padding: 15px;
 }
 
 #review-lower p {
+    word-wrap: anywhere;
     white-space: normal;
+    margin-bottom: 10px;
 }
 
 #review-lower p span a {
@@ -365,28 +436,30 @@ nav {
 }
 
 .review-verdict-yes {
-    display: inline;
-    padding: 11px;
-    width: 219px;
-    height: 51px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 115px;
     background: #32CDB1;
     color: black;
     border: 1px solid #000000;
     font-weight: 500;
     font-size: 14px;
+    padding: 11px 10px;
 }
 
 .review-verdict-no {
-    display: inline;
-    width: 257px;
-    height: 51px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 168px;
     background: #FF5A79;
     color: black;
     border: 1px solid #000000;
     box-sizing: border-box;
     font-weight: 500;
     font-size: 14px;
-    padding: 11px;
+    padding: 11px 10px;
 }
 
 .thumbs-up, .thumbs-down {
@@ -437,7 +510,7 @@ nav {
 #usercard {
     margin-right: 55px;
     width: 244px;
-    height: 285px;
+    height: 310px;
     background: #FFFFFF;
     box-shadow: 0px 0px 15px -1px #32CDB1;
 }
@@ -489,7 +562,7 @@ nav {
 }
 
 /*   START OF GAME PAGE CSS   */
-.game-wrapper {
+#game-wrapper {
     width: 100%;
     height: 100vh;
     margin-top: 52px;
@@ -498,16 +571,11 @@ nav {
     background-position: center;
 }
 
-.info-wrapper {
+#info-wrapper {
     margin: 91px auto 0 auto;
+    padding: 40px;
     width: 1020px;
-    height: 476px;
     background: rgba(57, 57, 96, 0.34);
-}
-
-.game-info {
-    margin-left: 40px;
-    padding-top: 47px;
 }
 
 .game-title {
@@ -518,8 +586,17 @@ nav {
 }
 
 .row {
+    display: flex;
     width: 900px;
-    margin-bottom: 25px;
+    margin-bottom: 50px;
+}
+
+.row .col-1 {
+    margin-right: 60px;
+}
+
+.row .col-2 {
+    margin-right: 114px;
 }
 
 .info-span {
@@ -533,14 +610,10 @@ nav {
     margin-bottom: 38px;
 }
 
-.info-data, .developer-name {
+.info-data {
     margin-top: 10px;
     font-size: 18px;
     line-height: 120.2%;
-}
-
-.developer-name {
-    display: inline;
 }
 
 .genres, .platforms {
@@ -549,6 +622,7 @@ nav {
 }
 
 .buttons {
+    margin-top: 40px;
     display: flex;
 }
 
@@ -636,6 +710,7 @@ nav {
 }
 
 .rw-page-review-top h1 {
+    word-wrap: anywhere;
     max-width: 770px;
     font-weight: bold;
     font-size: 24px;
@@ -678,6 +753,7 @@ nav {
 }
 
 .review-author {
+    margin: 18px 0;
     font-size: 18px;
     color: rgba(0, 0, 0, 0.8);
 }
@@ -690,6 +766,7 @@ nav {
 }
 
 .review-text {
+    word-wrap: anywhere;
     white-space: pre-line;
     font-size: 18px;
     margin-bottom: 30px;
@@ -732,4 +809,34 @@ nav {
 
 .rw-page-review > .starability-result {
     margin-top: 10px;
+}
+
+/* ANIMATIONS */
+
+#community-wrapper, #explore-wrapper {
+    -webkit-animation: transitionIn 0.5s;
+}
+
+#results-row {
+    -webkit-animation: fadein 2s;
+}
+
+@keyframes fadein {
+    from { 
+        opacity: 0;
+     }
+    to { 
+        opacity: 1;
+    }
+}
+
+@keyframes transitionIn {
+    from { 
+        opacity: 0;
+        margin-top: 500px;
+     }
+    to { 
+        opacity: 1;
+        margin-top: 213px;
+    }
 }
