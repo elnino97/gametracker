@@ -1,42 +1,54 @@
 <%- layout('./layouts/useraccount')%>
 <section id="reviews">
-<h1 class="content-heading">My reviews</h1>
-<div class="review-row">
-    <% for (let review of reviews) { %> 
-        <div class="recent-review">
-            <div class="review-header">
-                <div class="pic-column">
-                    <img src="<%= review.game.background_image %> " alt="">
-                </div>
-                <div class="row-1">
-                    <div class="row-2">
-                        <div class="column-1">
-                            <p class="review-game-name"><%= review.game.name %> <span>(<%= review.game.released.slice(0, 4) %>)</span></p>
-                            <p class="starability-result" data-rating="<%=review.rating%>">
-                                Rated: <%= review.rating %> stars
-                            </p>
+    <h1 class="content-heading">My reviews</h1>
+    <% if (reviews.length) { %> 
+        <div class="review-row">
+            <% for (let review of reviews) { %> 
+                <div class="recent-review">
+                    <div class="review-header">
+                        <div class="pic-column">
+                            <img src="<%= review.game.background_image %> " alt="">
                         </div>
-                        <p class="review-time"><%= timeDifference(Date.parse(review.created_at)) %></p>
+                        <div class="row-1">
+                            <div class="row-2">
+                                <div class="column-1">
+                                    <p class="review-game-name"><%= review.game.name %> <span>(<%= review.game.released.slice(0, 4) %>)</span></p>
+                                    <p class="starability-result" data-rating="<%=review.rating%>">
+                                        Rated: <%= review.rating %> stars
+                                    </p>
+                                </div>
+                                <p class="review-time"><%= timeDifference(Date.parse(review.created_at)) %></p>
+                            </div>
+                            <h2 class="review-title"><%= review.title %></h2>
+                        </div>
                     </div>
-                    <h2 class="review-title"><%= review.title %></h2>
+                    <div class="review">
+                        <p class="recent-review-body">
+                            <% if (review.body.length >= 300) { %>
+                                <%= review.body.substring(0, 300) + ".." %> <span><a href="/games/<%= review.gameId %>/reviews/<%= review._id %> ">View full review</a></span>
+                            <% } else { %>
+                                <%= review.body %> 
+                            <% } %> 
+                        </p>
+                        <% if (review.recommend) { %> 
+                            <div class="review-verdict-yes">Recommended <span><img class="thumbs-up" src="/img/thumbsup.png" alt=""></span></div>
+                        <% } else { %>
+                            <div class="review-verdict-no">Not Recommended <span><img class="thumbs-down" src="/img/thumbsdown.png" alt=""></span></div>
+                        <% } %> 
+                    </div>
                 </div>
+            <% } %> 
+            </div> 
+        <% } else { %>
+            <div class="nothing-here">
+                <img src="/img/cil_sad.png" alt="">
+                <p>Looks like there’s nothing to see here.</p>
             </div>
-            <div class="review">
-                <p class="recent-review-body">
-                    <% if (review.body.length >= 300) { %>
-                        <%= review.body.substring(0, 300) + ".." %> <span><a href="/games/<%= review.gameId %>/review/<%= review._id %> ">View full review</a></span>
-                    <% } else { %>
-                        <%= review.body %> 
-                    <% } %> 
-                </p>
-                <% if (review.recommend) { %> 
-                    <div class="review-verdict-yes">Recommended <span><img class="thumbs-up" src="/img/thumbsup.png" alt=""></span></div>
-                <% } else { %>
-                    <div class="review-verdict-no">Not Recommended <span><img class="thumbs-down" src="/img/thumbsdown.png" alt=""></span></div>
-                <% } %> 
-            </div>
-        </div>
-    <% } %> 
-</div> 
+        <% } %>  
 </section>
+
+<script>
+    const reviews = document.getElementById('nav-reviews');
+    reviews.style.color = "#474787";
+</script>
 

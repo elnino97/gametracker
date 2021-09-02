@@ -2,12 +2,24 @@
 <section class="favorites">
   <h1 class="content-heading">My favorites</h1>
   <div class="fav-row">
-      <% for (let game of games) { %>
-          <div id="game">
-              <img id="game-cover" src="<%= game.background_image %> " alt="">
-              <p><%= game.name %></p>
-              <p><%= game.released %> </p>
-          </div>
-      <% } %>
+    <% if (games.length) { %>
+        <% for (let game of games) { %>
+            <div id="game">
+            <img id="game-cover" src="<%= game.background_image %> " alt="">
+            <p><%= game.name %></p>
+            <p><%= game.released %></p>
+            </div>
+        <% } %>
+    <% } else { %>
+        <div class="nothing-here">
+            <img src="/img/cil_sad.png" alt="">
+            <p>Looks like there’s nothing to see here.</p>
+        </div>
+    <% } %> 
     </div>  
 </section>
+
+<script>
+    const favorites = document.getElementById('nav-favorites');
+    favorites.style.color = "#474787";
+</script>
