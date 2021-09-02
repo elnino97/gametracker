@@ -9,7 +9,7 @@
                         <h1><%= review.title %> </h1>
                         <%  if( currentUser && review.author.id.equals(currentUser._id)) {%>
                             <div class="review-edit-btn">
-                                <a href="/games/<%= review.gameId %>/review/<%= review._id %>" class="review-edit">Go to my review</a>
+                                <a href="/games/<%= review.gameId %>/reviews/<%= review._id %>" class="review-edit">Go to my review</a>
                             </div>
                           <% } %> 
                     </div>
