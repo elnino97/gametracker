@@ -21,14 +21,14 @@ module.exports.timeDifference = previous => {
     }
 
     else if (elapsed < msPerMonth) {
-        return Math.round(elapsed/msPerDay) + 'd ago';   
+        return Math.round(elapsed/msPerDay) + ' days ago';   
     }
 
     else if (elapsed < msPerYear) {
-        return Math.round(elapsed/msPerMonth) + ' months ago';   
+        return Math.round(elapsed/msPerMonth) + ' month ago';   
     }
 
     else {
-        return Math.round(elapsed/msPerYear ) + ' yr ago';   
+        return Math.round(elapsed/msPerYear ) + ' year ago';   
     }
 }
