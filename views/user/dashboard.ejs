@@ -3,9 +3,9 @@
 <section id="dashboard">
     <h1 class="content-heading">Dashboard</h1>
     <div id="user-info-wrapper">
-        <div>
+        <div class="about-row">
             <img src="<%= userdata.image %>" alt="">
-            <div>
+            <div class="about-col">
                 <h2 id="user-name"><%= currentUser.username %></h2>
                 <p id="about-user"><%= userdata.about ? userdata.about : "Say something cool about yourself" %></p>
                 <form id="about-form" action="/account/dashboard?_method=PUT" method="POST">
@@ -13,7 +13,7 @@
                 </form>
             </div>
         </div>
-        <div>
+        <div class="about-counters">
             <div class="counter"><%= userdata.favorite.length %> <span><img src="/img/heart.png" alt=""></span> <%= userdata.favorite.length === 1 ? "game" : "games" %> favourited</div>
             <div class="counter"><%= userdata.review.length %> <span><img src="/img/review.png" alt=""></span> <%= userdata.favorite.length === 1 ? "review" : "reviews" %> made</div>
         </div>
@@ -23,12 +23,12 @@
     <h1 class="content-heading">Recent activity</h1>
     <% if (activities.length) { %> 
         <% for (let activity of activities) { %>
-            <div id="activity">
+            <div class="activity">
                 <div>
                     <img src="<%= activity.image %>" alt="">
                 </div>
                 <p>You <%= activity.action === "favorite" ? "favourited" : "unfavorite" ? "unfavourited" : "reviewed" %> <a href="/games/<%= activity.game.id %> "><%= activity.game.name %></a></p>
-                <p id="date"><%= timeDifference(Date.parse(activity.created_at)) %></p>
+                <p class="date"><%= timeDifference(Date.parse(activity.created_at)) %></p>
             </div>
         <% } %>
     <% } else { %> 

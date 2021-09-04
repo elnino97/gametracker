@@ -7,21 +7,17 @@
     </div>
     <div id="reviewrow">
         <% for (let review of reviews) { %> 
-            <div id="recent-review">
+            <div class="recent-review">
                 <div id="review-top">
-                    <div>
-                        <img src="<%= review.game.background_image %> " alt="">
-                    </div>
-                    <div>
-                        <div>
-                            <div id="name-rating">
-                                <p><%= review.game.name %> <span>(<%= review.game.released.slice(0, 4) %>)</span></p>
-                                <p class="starability-result" data-rating="<%=review.rating%>">
-                                    Rated: <%= review.rating %> stars
-                                </p>
-                            </div>
-                            <p class="review-time"><%= timeDifference(Date.parse(review.created_at)) %></p>
+                    <img src="<%= review.game.background_image %> " alt="">
+                    <div class="top-col">
+                        <div id="name-rating">
+                            <p><%= review.game.name %> <span>(<%= review.game.released.slice(0, 4) %>)</span></p>
+                            <p class="starability-result" data-rating="<%=review.rating%>">
+                                Rated: <%= review.rating %> stars
+                            </p>
                         </div>
+                        <p class="review-time"><%= timeDifference(Date.parse(review.created_at)) %></p>
                         <h2 class="review-title"><%= review.title %><span><%= review.author.name %> </span></h2>
                     </div>
                 </div>
@@ -42,9 +38,9 @@
             </div>
         <% } %> 
     </div>
-    <div id="favoritesrow">
+    <div class="favoritesrow">
         <% for (let game of favorites) { %>
-            <div id="game">
+            <div class="game">
                 <a href="/games/<%= game.id %>">
                     <img src="<%= game.background_image %> " alt="">
                 </a>
@@ -55,7 +51,7 @@
     </div>
     <section id="mostactive">
         <% for (let i = 0; i < userdata.length; i++) { %>
-            <div id="usercard" class="card<%= i + 1 %> ">
+            <div class="usercard" class="card<%= i + 1 %> ">
                 <img src="<%= userdata[i].image %> " alt="">
                 <div class="card-info">
                     <p><%= userdata[i].user.username %></p>
@@ -75,7 +71,7 @@
     const favoritesTitle = document.querySelector('.favorites')
     const usersTitle = document.querySelector('.top-users')
     const reviews = document.getElementById('reviewrow')
-    const favorites = document.getElementById('favoritesrow')
+    const favorites = document.querySelector('.favoritesrow')
     const mostActive = document.getElementById('mostactive')
     function toggleActive(title1, title2, title3){
         title1.addEventListener('click', () => {

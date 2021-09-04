@@ -7,9 +7,9 @@
     </form>
     <div id="popular-games">
         <h1>Popular games</h1>
-        <div id="favoritesrow">
+        <div class="favoritesrow">
             <% for (let game of favorites) { %>
-                <div id="game">
+                <div class="game">
                     <a href="/games/<%= game.id %>">
                         <img src="<%= game.background_image %> " alt="">
                     </a>

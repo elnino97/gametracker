@@ -83,7 +83,7 @@
                           <h1><%= review.title %> </h1>
                           <%  if( currentUser && review.author.id.equals(currentUser._id)) {%>
                             <div class="review-edit-btn">
-                              <a href="/games/<%= review.gameId %>/reviews/<%= review._id %> " class="review-edit">Go to my review</a>
+                              <a href="/games/<%= review.gameId %>/reviews/<%= review._id %> " class="review-edit">View</a>
                             </div>
                         <% } %> 
                       </div>
@@ -93,9 +93,9 @@
                       <p class="review-author"><%= review.author.name %> <span class="review-date"><%= timeDifference(Date.parse(review.created_at)) %></span></p>
                       <p class="review-text"><%- review.body %></p>
                       <% if (review.recommend) { %> 
-                      <div class="recommended">Recommended <span class="thumbs-up"><img src="/img/thumbsup.png" alt=""></span></div>
+                      <div class="recommend yes">Recommended <span><img src="/img/thumbsup.png" alt=""></span></div>
                       <% } else { %>
-                      <div class="not-recommended">Not Recommended <span class="thumbs-down"><img src="/img/thumbsdown.png" alt=""></span></div>
+                      <div class="recommend no">Not Recommended <span><img src="/img/thumbsdown.png" alt=""></span></div>
                       <% } %>  
                   </div>
               <% } %>
