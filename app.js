@@ -218,7 +218,7 @@ app.put('/games/:id/review', validateReview, isLoggedIn, async (req, res) => {
 
 app.get('/games/:id/reviews', async (req, res) => {
     const { id } = req.params;
-    const reviews = await Review.find({ gameId: id });
+    const reviews = await Review.find({ gameId: id }, {}, { sort: { 'created_at': 'desc'} });
     res.render('review/allreviews', { reviews, gameDetails, timeDifference })
 })
 
