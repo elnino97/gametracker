@@ -3,9 +3,11 @@
 html {
     overflow: scroll;
     overflow-x: hidden;
+    scrollbar-width: none;
 }
 ::-webkit-scrollbar {
-    width: 0;  /* Remove scrollbar space */
+    width: 0;
+    background: transparent;
 }
 
 h1, h2, p, ul {
@@ -23,6 +25,7 @@ body {
 
 /*    TOP NAVBAR    */
 #navbar {
+    z-index: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -74,53 +77,6 @@ body {
     width: 131px;
 }
 
-@media only screen and (max-width: 768px) {
-    .nav-menu {
-        padding-bottom: 20px;
-        position: fixed;
-        left: -100%;
-        top: 0;
-        flex-direction: column;
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        background-color: #1a1a2dad;
-        box-shadow:
-        0 10px 27px rgba(0, 0, 0, 0.05);
-    }
-
-    .nav-item {
-        margin-left: 0;
-        margin-top: 50px;
-    }
-
-    .nav-menu div {
-        flex-direction: column;
-    }
-    .nav-menu.active {
-        left: 0;
-    }
-
-    .hamburger {
-        display: block;
-        cursor: pointer;
-    }
-
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-    }
-
-    .hamburger.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-
-    .hamburger.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
-
-}
-
-
 /*    START OF HOME CSS    */
 .home-wrapper {
     margin: auto;
@@ -155,7 +111,6 @@ body {
 
 .explore {
     background: #33D9B2;
-    border: 1px solid #FFFFFF;
     box-sizing: border-box;
     box-shadow: 0px 1px 15px 1px rgba(219, 187, 187, 0.05);
     width: 230px;
@@ -172,7 +127,6 @@ body {
 }
 
 .learn {
-    border: 1px solid #FFFFFF;
     box-sizing: border-box;
     width: 182px;
     height: 48px;
@@ -200,6 +154,7 @@ body {
 #explore-wrapper {
     margin: 213px auto 0 auto;
     width: 922px;
+    padding-bottom: 20px;
 }
 
 #explore-wrapper > h1 {
@@ -215,7 +170,7 @@ body {
 }
 
 #explore-wrapper > form > input {
-    width: 604px;
+    width: 66%;
     height: 31px;
     border: 2px solid #474787;
     box-sizing: border-box;
@@ -228,7 +183,7 @@ body {
     display: block;
     color:black;
     position: relative;
-    left: 170px;
+    left: 19%;
     bottom: 25px;
 }
 
@@ -241,9 +196,9 @@ body {
     line-height: 120.2%;
 }
 
-#popular-games #favoritesrow {
+#popular-games .favoritesrow {
     display: flex;
-    width: 739px;
+    width: 100%;
 }
 
 /*    START OF RESULTS CSS     */
@@ -329,6 +284,7 @@ body {
 /* START OF COMMUNITY CSS */
 #community-wrapper {
     margin: 213px auto 0 auto;
+    padding-bottom: 20px;
     width: 922px;
 }
 
@@ -347,7 +303,7 @@ body {
     transition: 0.2s;
 }
 
-#recent-review {
+.recent-review {
     margin-top: 38px;
     color: white;
     width: 872px;
@@ -362,18 +318,17 @@ body {
     background: #353562;
 }
 
-#review-top div img {
+#review-top img {
     width: 107px;
     height: 57px;
+    margin-right: 24px;
 }
 
-#review-top div:nth-of-type(2) {
-    width: 100%;
-    margin-left: 24px;
-}
-
-#review-top div:nth-of-type(2) div {
+#review-top > .top-col {
+    position: relative;
+    width: 90%;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 
@@ -399,6 +354,8 @@ body {
 }
 
 .review-time {
+    position: absolute;
+    right: 10px;
     font-style: italic;
     font-weight: 300;
     font-size: 14px;
@@ -467,12 +424,13 @@ body {
     height: 17px;
 }
 
-#favoritesrow {
+#community-wrapper .favoritesrow {
+    margin-top: 38px;
     display: none;
-    width: 739px;
+    width: 100%;
 }
 
-#game {
+.game {
     margin-top: 38px;
     overflow: hidden;
     background: #3B3B5F;
@@ -480,13 +438,13 @@ body {
     height: 240px;
 }
 
-#game img {
+.game img {
     object-fit: cover;
     width: 223px;
     height: 177px;
 }
 
-#game p:nth-of-type(1) {
+.game p:nth-of-type(1) {
     color: #32CDB1;
     margin-top: 10px;
     margin-bottom: 5px;
@@ -495,7 +453,7 @@ body {
     line-height: 120.2%;
 }
 
-#game p:nth-of-type(2) {
+.game p:nth-of-type(2) {
     text-align: center;
     font-size: 14px;
     line-height: 120.2%;
@@ -507,7 +465,7 @@ body {
     padding-top: 55px;
 }
 
-#usercard {
+.usercard {
     margin-right: 55px;
     width: 244px;
     height: 310px;
@@ -515,7 +473,7 @@ body {
     box-shadow: 0px 0px 15px -1px #32CDB1;
 }
 
-#usercard > img {
+.usercard > img {
     width: 244px;
     height: 161px;
     object-fit: cover;
@@ -575,7 +533,8 @@ body {
     margin: 91px auto 0 auto;
     padding: 40px;
     width: 1020px;
-    background: rgba(57, 57, 96, 0.34);
+    background: rgba(48, 49, 53, 0.55);
+    border-radius: 26px;
 }
 
 .game-title {
@@ -663,15 +622,16 @@ body {
 
 /* Review styling stuff */
 .back-link {
+    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: -webkit-sticky;
     position: sticky;
     width: 155px;
     height: 99px;
     background: #FFFFFF;
-    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.25);
-    border-radius: 7px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
     top: 100px;
     left: 15px;
 }
@@ -738,8 +698,6 @@ body {
     padding: 0 15px;
     height: 32px;
     background: #0500E2;
-    box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 3px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -772,27 +730,31 @@ body {
     margin-bottom: 30px;
 }
 
-.recommended {
-    display: inline;
-    padding: 11px;
-    width: 219px;
+.recommend {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 51px;
-    background: #32CDB1;
-    border: 1px solid #000000;
     font-weight: 500;
     font-size: 24px;
 }
 
-.not-recommended {
-    display: inline;
-    width: 257px;
-    height: 51px;
+.recommend.yes {
+    width: 219px;
+    background: #32CDB1;
+}
+
+.recommend.no {
+    width: 270px;
     background: #FF5A79;
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    font-weight: 500;
-    font-size: 24px;
-    padding: 11px;
+}
+
+.recommend span {
+    margin-left: 6px;
+}
+
+.recommend span img {
+    width: 22px;
 }
 
 .view-more {
@@ -838,5 +800,217 @@ body {
     to { 
         opacity: 1;
         margin-top: 213px;
+    }
+}
+
+/* MEDIA QUERIES */
+@media only screen and (max-width: 768px) {
+    #navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #1A1A2D;
+    }
+    .nav-menu {
+        padding-bottom: 20px;
+        position: fixed;
+        left: -100%;
+        top: 0;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        background-color: #1a1a2dad;
+        box-shadow:
+        0 10px 27px rgba(0, 0, 0, 0.05);
+    }
+    .nav-item {
+        margin-left: 0;
+        margin-top: 50px;
+    }
+    .nav-menu div {
+        flex-direction: column;
+    }
+    .nav-menu.active {
+        left: 0;
+    }
+    .hamburger {
+        display: block;
+        cursor: pointer;
+    }
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    /*HOME SCREEN*/
+    .home-wrapper * {
+        font-size: 24px;
+    }
+    .home-wrapper {
+        width: 95vw;
+    }
+    .welcome {
+        margin-top: 35vh;
+        width: 90%;
+    }
+    .welcome-text {
+        font-size: 36px;
+    }
+    .welcome h2 {
+        font-size: 18px;
+    }
+    .welcome-links {
+        margin-top: 30px;
+        flex-direction: column;
+    }
+    .welcome-links div {
+        margin: 6px auto;
+    }
+    /*EXPLORE*/
+    #explore-wrapper {
+        width: 95vw;
+    }
+    #explore-wrapper h1 {
+        width: 100%;
+        font-size: 32px;
+        text-align: center;
+    }
+    #explore-wrapper .favoritesrow {
+        align-items: center;
+        flex-direction: column;
+    }
+    /*RESULTS*/
+    #results-wrapper {
+        width: 95vw;
+    }
+    #results-search {
+        width: 80%;
+        display: block;
+        margin-bottom: 30px;
+        padding-left: 48px;
+    }
+    #results-search form {
+        width: 100%;
+    }
+    #results-search h1 {
+        width: 50vw;
+        padding-top: 30px;
+        text-align: left;
+    }
+    #results-row {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    /*COMMUNITY*/
+    #community-wrapper {
+        width: 95vw;
+    }
+    .community-header {
+        overflow-x: scroll;
+        scrollbar-width: none;
+        white-space: nowrap;
+        width: auto;
+    }
+    .recent-review {
+        width: 100%;
+    }
+    #review-top img {
+        display: none;
+    }
+    #name-rating {
+        display: block;
+        height: 100%;
+    }
+    #name-rating p {
+        margin-bottom: 12px;
+    }
+    .review-time {
+        position: static;
+    }
+    #community-wrapper .favoritesrow {
+        scrollbar-width: none;
+        overflow-x: scroll;
+    }
+    #community-wrapper .favoritesrow .game {
+        margin-left: 20px;
+    }
+    #mostactive {
+        scrollbar-width: none;
+        overflow-x: scroll;
+        padding-left: 20px;
+    }
+    .usercard {
+        margin-right: 35px;
+    }
+    /*GAME PAGE*/
+    .break {
+        display: none;
+    }
+    #game-wrapper {
+        overflow: hidden;
+    }
+    #info-wrapper {
+        padding: 0;
+        width: 100%;
+    }
+    #info-wrapper h1 {
+        padding-top: 26px;
+        margin-left: 20px;
+    }
+    #info-wrapper .description {
+        width: 89vw;
+        margin-left: 20px;
+    }
+    #info-wrapper .row {
+        margin-left: 20px;
+        margin-bottom: 0;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    .row .col-1 {
+        margin-right: 20px;
+        margin-bottom: 20px;
+    }
+    .row .col-2 {
+        margin-right: 0;
+        margin-top: 15px;
+    }
+    .buttons {
+        height: 100px;
+        justify-content: space-around;
+        flex-direction: column;
+        padding: 0 15px 15px;
+    }
+    .favorite-btn, .review-btn {
+        border: none;
+    }
+    #review-page > div {
+        width: 100%;
+    }
+    #review-page > div > h1 {
+        margin-left: 20px;
+    }
+    .rw-page-review {
+        padding: 30px 0;
+    }
+    .rw-page-review > * {
+        margin: 15px 20px;
+    }
+    .rw-page-review-top > h1, .review-text {
+        line-height: 110%;
+    }
+    .back-link {
+        top: 70px;
+        width: 90px;
+        height: 50px;
+    }
+    .back-link > img {
+        width: 18px;
     }
 }

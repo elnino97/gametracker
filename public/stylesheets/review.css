@@ -7,6 +7,7 @@ body {
 }
 
 .back-link {
+    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,15 +15,13 @@ body {
     width: 155px;
     height: 99px;
     background: #FFFFFF;
-    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.25);
-    border-radius: 7px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
     top: 36px;
     left: 15px;
 }
 
 .review-wrapper {
     width: 988px;
-    height: 723px;
     margin: 20px auto 0 auto;
 }
 
@@ -34,7 +33,7 @@ body {
 
 .review-body {
     width: 988px;
-    height: 723px;
+    padding-bottom: 20px;
     background: #FFFFFF;
     box-shadow: 9px 7px 15px rgba(0, 0, 0, 0.25);
 }
@@ -96,7 +95,7 @@ form {
     height: 51px;
     background: #50E3C2;
     box-sizing: border-box;
-    border-radius: 24px;
+    border: none;
     font-weight: 500;
     font-size: 24px;
     line-height: 120.2%;
@@ -107,7 +106,6 @@ form {
     height: 51px;
     background: #474787;
     box-sizing: border-box;
-    border-radius: 24px;
     text-align: center;
     font-weight: 500;
     font-size: 24px;
@@ -121,29 +119,31 @@ form {
 }
 
 .recommended, .recommeded-selected {
-    padding: 11px;
-    width: 219px;
-    height: 51px;
+    padding: 10px;
+    display: flex;
+    text-align: center;
     border: 1px solid #000000;
     box-sizing: border-box;
     display: block;
 }
 
 .recommended-selected {
+    border: none;
     background: #32CDB1;
     transition: 1s;
 }
 
 .not-recommended, .not-recommended-selected {
-    padding: 11px;
-    width: 264px;
-    height: 51px;
+    padding: 10px;
+    display: flex;
+    text-align: center;
     border: 1px solid #000000;
     box-sizing: border-box;
     display: block;
 }
 
 .not-recommended-selected {
+    border: none;
     background: #FF5A79;
     transition: 1s;
 }
@@ -161,13 +161,60 @@ input[type=radio] {
 }
 
 .thumbs-up {
-    position: relative;
-    left: 170px;
-    bottom: 29px;
+
 }
 
 .thumbs-down {
-    position: relative;
-    left: 213px;
-    bottom: 25px;
+
+}
+
+@media only screen and (max-width: 768px) {
+    .back-link {
+        top: 20px;
+        width: 90px;
+        height: 50px;
+    }
+    .back-link > img {
+        width: 18px;
+    }
+    .review-wrapper {
+        width: 95vw;
+    }
+    .review-body {
+        width: auto;
+        height: auto;
+    }
+    #title {
+        margin: 0;
+        margin-left: 20px;
+        width: 80%;
+    }
+    .starability-basic {
+        margin-left: 20px;
+    }
+    .review-text {
+        margin-left: 20px;
+    }
+    #body {
+        width: 94%;
+    }
+    .buttons {
+        margin-left: 20px;
+        width: auto;
+        height: auto;
+        flex-direction: column-reverse;
+    }
+    .form-group2 {
+        width: 310px;
+        margin-top: 5px;
+        margin-bottom: 30px;
+    }
+    .recommended, .not-recommended {
+        width: auto;
+        padding: 5px;
+        font-size: 14px;
+    }
+    label > span > img {
+        width: 20px;
+    }
 }
