@@ -14,7 +14,7 @@
     <section class="review-wrapper">
         <h1>Write a review</h1>
         <div class="review-body">            
-            <form action="/games/<%= gameDetails.id %>/reviews" method="POST">
+            <form action="/games/<%= gameDetails.id %>/reviews" method="POST" enctype="multipart/form-data">
             <div class="title">
                 <input type="text" id="title" name="review[title]" placeholder="Review Title" required minlength="5" maxlength="100">
             </div>
@@ -30,9 +30,27 @@
                 <label for="first-rate4" title="Very good">4 stars</label>
                 <input type="radio" id="first-rate5" name="review[rating]" value="5" />
                 <label for="first-rate5" title="Amazing">5 stars</label>
-              </fieldset>
+            </fieldset>
             <div class="review-text">
                 <textarea name="review[body]" id="body" cols="30" rows="3" placeholder="Your review goes here..." required minlength="5" maxlength="2000"></textarea>
+            </div>
+            <h2>Screenshots</h2>
+            <div class="screenshots">
+                <label for="1">
+                    <img id="screenshot1" src="" alt="">
+                    <div class="hide"></div>
+                </label>
+                <label for="2">
+                    <img id="screenshot2" src="" alt="">
+                    <div class="hide"></div>
+                </label>
+                <label for="3">
+                    <img id="screenshot3" src="" alt="">
+                    <div class="hide"></div>
+                </label>
+                <input onchange="document.getElementById('screenshot1').src = window.URL.createObjectURL(this.files[0])" type="file" id="1" name="screenshot">
+                <input onchange="document.getElementById('screenshot2').src = window.URL.createObjectURL(this.files[0])" type="file" id="2" name="screenshot">
+                <input onchange="document.getElementById('screenshot3').src = window.URL.createObjectURL(this.files[0])" type="file" id="3" name="screenshot">
             </div>
             <div class="buttons">
                 <div class="form-group1">
@@ -52,21 +70,6 @@
             </div>
         </form></div>
     </section>
-    <script>
-        const recommended = document.querySelector('.recommended');
-        const notRecommended = document.querySelector('.not-recommended');
-        recommended.addEventListener('click', () => {
-            if (!recommended.classList.contains('recommended-selected')){
-                recommended.classList.add('recommended-selected')
-                notRecommended.classList.remove('not-recommended-selected')
-            }
-        })
-        notRecommended.addEventListener('click', () => {
-            if (!notRecommended.classList.contains('not-recommended-selected')){
-                notRecommended.classList.add('not-recommended-selected')
-                recommended.classList.remove('recommended-selected')
-            }
-        })
-    </script>
+    <script src="/javascripts/form.js"></script>
 </body>
 </html>
