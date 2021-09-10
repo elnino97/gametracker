@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 body {
     background: #F1F7F8;
     color: #000000;
-    font-family: Roboto, sans-serif;
+    font-family: Lato, Roboto, sans-serif;
 }
 
 .back-link {
@@ -52,9 +53,57 @@ form {
     margin: auto;
 }
 
+.row {
+    padding: 10px 0;
+    display: flex;
+}
+
 .starability-basic {
     margin-top: 22px;
     margin-left: 33px;
+}
+
+h2 {
+    margin-left: 33px;
+}
+
+.screenshots {
+    margin-left: 33px;
+    display: flex;
+}
+
+.screenshots > input {
+    display: none;
+}
+
+.screenshots > label {
+    position: relative;
+    margin-left: 10px;
+    width: 135px;
+    height: 76px;
+}
+
+.screenshots > label > img {
+    box-sizing: border-box;
+    border: 1px dashed black;
+    width: 135px;
+    height: 76px;
+    object-fit: cover;
+}
+
+.hide {
+    background: #474787;
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+    width: 135px;
+    height: 76px;
+    opacity: 0;
+    transition: opacity .2s, visibility .2s;
+}
+.screenshots > label:hover .hide {
+    opacity: 0.6;
+    visibility: visible;
 }
 
 .review-text {
@@ -160,14 +209,6 @@ input[type=radio] {
     pointer-events: none;
 }
 
-.thumbs-up {
-
-}
-
-.thumbs-down {
-
-}
-
 @media only screen and (max-width: 768px) {
     .back-link {
         top: 20px;
@@ -197,6 +238,19 @@ input[type=radio] {
     }
     #body {
         width: 94%;
+    }
+    .screenshots {
+        flex-direction: column;
+        margin-left: 15px;
+    }
+    .screenshots > label {
+        width: 170px;
+        height: 95px;
+        margin: 0 auto 20px;
+    }
+    .screenshots > label > img {
+        width: 170px;
+        height: 95px;
     }
     .buttons {
         margin-left: 20px;

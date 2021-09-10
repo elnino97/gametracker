@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 html {
     overflow: scroll;
@@ -10,7 +11,8 @@ html {
     background: transparent;
 }
 
-h1, h2, p, ul {
+* {
+    box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
@@ -19,12 +21,16 @@ body {
     padding: 0;
     margin: 0;
     color: white;
-    background-color: #1A1A2D;
-    font-family: Roboto;
+    background-color: #151528;
+    font-family: Lato, Roboto, sans;
 }
 
 /*    TOP NAVBAR    */
 #navbar {
+    background: rgba(26, 26, 45, 0.5);
+    position: fixed;
+    top: 0;
+    width: 100%;
     z-index: 1;
     display: flex;
     justify-content: space-between;
@@ -70,11 +76,14 @@ body {
 }
 
 .nav-logo {
+    width: 80px;
+    display: flex;
+    justify-content: space-between;
     margin: 0;
 }
 
 .nav-logo > img {
-    width: 131px;
+    width: 29px;
 }
 
 /*    START OF HOME CSS    */
@@ -104,7 +113,7 @@ body {
 }
 
 .welcome-links {
-    margin-top: 74px;
+    margin-top: 49px;
     display: flex;
     justify-content: space-evenly;
 }
@@ -113,33 +122,29 @@ body {
     background: #33D9B2;
     box-sizing: border-box;
     box-shadow: 0px 1px 15px 1px rgba(219, 187, 187, 0.05);
-    width: 230px;
+    width: 372px;
     height: 48px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
     line-height: 120.2%;
+}
+
+.explore:hover {
+    background: #474787;
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 15px 4px rgba(219, 187, 187, 0.5);
+    transition: 0.3s;
+}
+
+.explore:hover > a {
+    color: white;
 }
 
 .explore > a {
     color: #000000;
-}
-
-.learn {
-    box-sizing: border-box;
-    width: 182px;
-    height: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    line-height: 120.2%;
-    color: #FFFFFF;
-}
-
-.learn > a {
-    color: #FFFFFF;
 }
 
 .welcome h2 {
@@ -175,7 +180,7 @@ body {
     border: 2px solid #474787;
     box-sizing: border-box;
     border-radius: 4px;
-    padding-left: 35px;
+    padding-left: 42px;
 }
 
 .explore-icon {
@@ -392,11 +397,21 @@ body {
     text-decoration: none;
 }
 
+.screenshot-row {
+    margin-bottom: 12px;
+}
+
+.screenshot-row > a > img {
+    object-fit: cover;
+    width: 135px;
+    height: 76px;
+}
+
 .review-verdict-yes {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 115px;
+    width: 140px;
     background: #32CDB1;
     color: black;
     border: 1px solid #000000;
@@ -522,51 +537,79 @@ body {
 /*   START OF GAME PAGE CSS   */
 #game-wrapper {
     width: 100%;
-    height: 100vh;
-    margin-top: 52px;
     padding-top: 35px;
     background-size: cover;
     background-position: center;
 }
 
 #info-wrapper {
-    margin: 91px auto 0 auto;
-    padding: 40px;
+    margin: 319px auto 0 auto;
+    padding-top: 80px;
     width: 1020px;
-    background: rgba(48, 49, 53, 0.55);
-    border-radius: 26px;
 }
 
 .game-title {
-    color: #32CDB1;
-    font-size: 48px;
+    font-weight: bold;
+    font-size: 64px;
     line-height: 120.2%;
     margin-bottom: 42px;
 }
 
-.row {
-    display: flex;
-    width: 900px;
-    margin-bottom: 50px;
+.game-rating {
+    font-size: 24px;
+    margin-bottom: 29px;
 }
 
-.row .col-1 {
-    margin-right: 60px;
+.game-description {
+    font-size: 18px;
+    line-height: 140%;
+    margin-bottom: 21px;
 }
 
-.row .col-2 {
-    margin-right: 114px;
-}
-
-.info-span {
-    color: #A2A2CF;
+.game-info {
     font-weight: bold;
     font-size: 18px;
     line-height: 120.2%;
+    margin-right: 56px;
+}
+
+.game-info > span {
+    font-weight: normal;
+    font-style: italic;
+}
+
+.game-genre, .game-platform, .game-link > div {
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    padding: 0 10px;
+    background: #2A2A46;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+.game-link {
+    text-decoration: none;
+    color: white;
+}
+
+.row {
+    flex-wrap: wrap;
+    display: flex;
+    width: 900px;
+    margin-bottom: 35px;
 }
 
 .description {
     margin-bottom: 38px;
+}
+
+#info-wrapper > h2:nth-of-type(2), #info-wrapper > h2:nth-of-type(3) {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .info-data {
@@ -575,26 +618,18 @@ body {
     line-height: 120.2%;
 }
 
-.genres, .platforms {
-    font-size: 18px;
-    line-height: 120.2%;
-}
-
 .buttons {
-    margin-top: 40px;
+    margin-bottom: 35px;
     display: flex;
 }
 
 .favorite-btn, .review-btn {
     background-color: rgba(0, 0, 0, 0);
     color: white;
-    height: 33px;
-    border: 1px solid #FFFFFF;
+    border: none;
     box-sizing: border-box;
     font-weight: bold;
     font-size: 18px;
-    line-height: 120.2%;
-    padding: 0px 9px;
     margin-right: 20px;
 }
 
@@ -608,12 +643,20 @@ body {
     color: white;
 }
 
-.splide {
-    margin: 16px auto 0 auto;
+#game-screenshots {
     width: 1020px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 9px;
-    overflow: hidden;
+    margin: auto;
+}
+
+.screenshot {
+    margin-top: 24px;
+    margin-right: 21px;
+    object-fit: cover;
+    width: 279px;
+    height: 157px;
+    box-sizing: border-box;
+    box-shadow: 2px 4px 7px 2px rgba(0, 0, 0, 0.47);
+    border-radius: 6px;
 }
 
 .break {
@@ -956,30 +999,42 @@ body {
         overflow: hidden;
     }
     #info-wrapper {
+        margin-top: 150px;
         padding: 0;
         width: 100%;
     }
     #info-wrapper h1 {
+        font-size: 36px;
         padding-top: 26px;
         margin-left: 20px;
     }
-    #info-wrapper .description {
+    #info-wrapper h2 {
+        margin-left: 20px;
+    }
+    .game-rating {
+        margin-left: 20px;
+    }
+    .game-description {
         width: 89vw;
         margin-left: 20px;
     }
-    #info-wrapper .row {
+    #info-wrapper > .row {
         margin-left: 20px;
-        margin-bottom: 0;
         flex-wrap: wrap;
         width: 100%;
     }
-    .row .col-1 {
-        margin-right: 20px;
+    .game-info {
         margin-bottom: 20px;
     }
-    .row .col-2 {
-        margin-right: 0;
-        margin-top: 15px;
+    #game-screenshots {
+        width: auto;
+    }
+    #game-screenshots > .row {
+        flex-direction: column;
+        width: auto;
+    }
+    #game-screenshots > .row > a {
+        margin: auto;
     }
     .buttons {
         height: 100px;

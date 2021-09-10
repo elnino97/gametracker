@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 ::-webkit-scrollbar {
     width: 0;  /* Remove scrollbar space */
@@ -14,12 +15,21 @@ body {
     color: black;
     padding: 0;
     margin: 0;
-    background-color: #1A1A2D;
-    font-family: Roboto;
+    background-color: #151528;
+    font-family: Lato, Roboto, sans-serif;
+}
+
+a {
+    text-decoration: none;
 }
 
 /* TOP NAVBAR */
 #navbar {
+    background: rgba(26, 26, 45, 0.5);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,11 +74,14 @@ body {
 }
 
 .nav-logo {
+    width: 80px;
+    display: flex;
+    justify-content: space-between;
     margin: 0;
 }
 
 .nav-logo > img {
-    width: 131px;
+    width: 29px;
 }
 
 /* LAYOUT STYLING */
@@ -78,6 +91,7 @@ body {
     height: 585px;
     box-sizing: border-box;
     margin: 164px auto 0 auto;
+    background: #272740;
 }
 
 .navigation {
@@ -90,7 +104,6 @@ body {
     margin-top: 36px;
     margin-left: 27px;
     display: block;
-    text-decoration: none;
     font-size: 18px;
     line-height: 120.2%;
     color: #A8A6C6;
@@ -105,7 +118,6 @@ body {
     padding: 20px;
     display: flex;
     width: 1029px;
-    background: #272740;
 }
 
 .content-heading {
@@ -140,11 +152,8 @@ body {
 }
 
 #user-info-wrapper {
-    margin: 27px;
-    padding: 45px 20px 20px 20px;
+    margin: 65px 0 0 34px;
     width: 442px;
-    height: 408px;
-    background: #35354F;
 }
 
 .about-row {
@@ -183,26 +192,48 @@ body {
     height: 25px;
 }
 
-.about-counters {
-    padding-top: 50px;
-    padding-left: 28px;
-}
-
-.counter {
-    margin-bottom: 18px;
-    padding: 0px 15px;
-    display: flex;
-    align-items: center;
-    max-width: 240px;
-    height: 36px;
-    background: #4C4C74;    
+.about-stats {
+    margin-top: 69px;
     font-weight: bold;
     font-size: 18px;
     line-height: 120.2%;
+    color: #32CDB1;
 }
 
-.counter * {
-    padding: 0px 5px;
+.about-counters {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 13px;
+}
+
+.counter {
+    margin-right: 18px;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 5px;
+    color: #000000;
+}
+
+.counter > span {
+    margin-left: 5px;
+}
+
+.counter-favorite {
+    width: 165px;
+    padding: 26px 20px;
+    background: #FF6683;
+}
+
+.counter-reviews {
+    width: 153px;
+    padding: 26px 20px;
+    background: #FFB800;
+}
+
+.counter-joindate {
+    padding: 7px 20px;
+    margin-top: 13px;
+    background: #A2A2CF;
 }
 
 #activity-wrapper {
@@ -245,11 +276,9 @@ body {
     padding-top: 25px;
     font-size: 18px;
     line-height: 120.2%;
-    text-decoration: none;
 }
 
 .activity > p:nth-of-type(1) > a {
-    text-decoration: none;
     color: #32CDB1;
 }
 
@@ -395,7 +424,6 @@ body {
     font-weight: bold;
     font-size: 14px;
     color: #32CDB1;
-    text-decoration: none;
 }
 
 .review-verdict-yes {
@@ -584,11 +612,13 @@ button.confirm-changes {
     }
     /*DASHBOARD*/
     .wrapper {
+        background: none;
         margin: 0;
         width: auto;
+        height: auto;
         display: block;
     }
-    .wrapper * {
+    .wrapper > * {
         width: auto
     }
     .navigation {
@@ -606,11 +636,9 @@ button.confirm-changes {
         margin-right: 12px;
         margin-bottom: 20px;
     }
-    .navigation > a > span {
-        display: inline;
-    }
     .content {
         flex-direction: column;
+        background: #272740;
     }
     #dashboard {
         border: none;
@@ -646,6 +674,17 @@ button.confirm-changes {
     .about-counters {
         padding-left: 0;
     }
+    .counter {
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+    .counter-favorite, .counter-reviews {
+        padding: 34px 30px;
+        width: 220px;
+    }
+    .counter-joindate {
+        margin: 0;
+    }
     #activity-wrapper {
         padding-top: 30px;
         width: auto;
@@ -653,6 +692,9 @@ button.confirm-changes {
     }
     #activity-wrapper > .content-heading {
         margin: 0;
+    }
+    .activity {
+        width: auto;
     }
     /*MY REVIEWS*/
     #reviews {
