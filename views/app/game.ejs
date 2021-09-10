@@ -1,83 +1,78 @@
 <%- layout('/layouts/boilerplate')%>
-<div id="game-wrapper" style="background-image: linear-gradient(180deg, #1A1A2D 0.05%, rgba(0, 0, 0, 0.65) 45.85%, #1A1A2D 101.55%), url('<%= gameDetails.background_image %>')">
+<div id="game-wrapper" 
+    style="background-image: linear-gradient(180deg, #151528 1%, rgba(0, 0, 0, 0.65) 22%, #151528 52%), url('<%= gameDetails.background_image %>')">
     <div id="info-wrapper">
         <h1 class="game-title"><%= gameDetails.name %></h1>
-        <div class="description">
-            <span class="info-span">Description</span>
-            <p class="info-data"><%= gameDetails.description_raw %></p>
-        </div>
+        <h2 class="game-rating">User rating: <%= averageScore %>/5</h2>
+        <p class="game-description"><%= gameDetails.description_raw %></p>
         <div class="row">
-          <div class="col-1">
-            <p class="info-span">Released</p>
-            <p class="info-data"><%= gameDetails.released %> </p>
-          </div>
-          <div class="col-1">
-            <p class="info-span">Metacritic</p>
-            <p class="info-data"><%= gameDetails.metacritic %></p>
-          </div>
-          <div class="col-1">
-            <p class="info-span">User Score</p>
-            <p class="info-data"><%= averageScore %>/5</p>
-          </div>
-          <div class="col-1">
-            <p class="info-span">Developer</p>
-            <p class="info-data">
+          <% for (let genre of gameDetails.genres) { %> 
+              <div class="game-genre"><%= genre.name %></div>
+          <% } %> 
+      </div>
+        <div class="row">
+            <p class="game-info">Metacritic: <span><%= gameDetails.metacritic %></span></p>
+            <p class="game-info">Released: <span><%= gameDetails.released %></span> </p>
+            <p class="game-info">Developers: 
               <% for (let developer of gameDetails.developers) { %> 
-                <%= developer.name %>
+                <span><%= developer.name %></span>
               <% } %> 
             </p>
-          </div>
         </div>
-        <div class="row">
-            <div class="col-2">
-              <div class="genres">
-                <p>
-                    <span class="info-span">Genres </span>
-                    <% for (let genre of gameDetails.genres) { %> 
-                        <%= genre.name %>
-                    <% } %> 
-                </p>
-              </div>
+        <h2>Platforms</h2>
+          <div class="row">
+              <% for (let platform of gameDetails.parent_platforms) { %>
+                <div class="game-platform"><%= platform.platform.name %></div>
+              <% } %>
+          </div> 
+        <div class="buttons">
+          <% if (!favorites) { %> 
+              <form action="/games/<%= gameDetails.id %>/favorite" method="POST">
+                <button class="favorite-btn">Add to favorites <span class="favorite-icon"><img src="/img/heart.png" alt=""></span></button>
+              </form>
+            <% } else { %>
+              <form action="/games/<%= gameDetails.id %>/favorite?_method=PUT" method="POST">
+                <button class="favorite-btn">Remove from favorites <span class="favorite-icon"><img src="/img/heart.png" alt=""></span></button>
+              </form>
+            <% } %>  
+            <% if (myReview) { %>  
+            <div class="review-btn">
+              <a href="/games/<%= gameDetails.id %>/reviews/<%= myReview %>">View my review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
             </div>
-            <div class="col-2">
-              <div class="platforms">
-                <p>
-                  <span class="info-span">Platforms</span>
-                  <% for (let i of gameDetails.platforms) { %>
-                    <span><%= i.platform.name %></span>
-                  <% } %>
-                </p>
-              </div>                    
-            </div>
-        </div>
-          <div class="buttons">
-            <% if (!favorites) { %> 
-                <form action="/games/<%= gameDetails.id %>/favorite" method="POST">
-                  <button class="favorite-btn">Add to favorites <span class="favorite-icon"><img src="/img/heart.png" alt=""></span></button>
-                </form>
-              <% } else { %>
-                <form action="/games/<%= gameDetails.id %>/favorite?_method=PUT" method="POST">
-                  <button class="favorite-btn">Remove from favorites <span class="favorite-icon"><img src="/img/heart.png" alt=""></span></button>
-                </form>
-              <% } %>  
-              <% if (myReview) { %>  
+            <% } else { %>
               <div class="review-btn">
-                <a href="/games/<%= gameDetails.id %>/reviews/<%= myReview %>">View my review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
+                <a href="/games/<%= gameDetails.id %>/review/new">Write a review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
               </div>
-              <% } else { %>
-                <div class="review-btn">
-                  <a href="/games/<%= gameDetails.id %>/review/new">Write a review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
-                </div>
+            <% } %> 
+        </div>
+        <h2>Links</h2>
+        <div class="row">
+        <% if (gameDetails.website) { %>
+            <a href="<%= gameDetails.website %>" class="game-link"><div><%= gameDetails.name %></div></a>
+        <% } %>
+        <% if (gameDetails.metacritic_url) { %>
+            <a href="<%= gameDetails.metacritic_url %>" class="game-link"><div>Metacritic</div></a>
+        <% } %>    
+        </div>
+      </div>
+      <% if (screenshots) { %>
+      <div id="game-screenshots">
+          <div class="row">
+              <% for (let screenshot of screenshots) { %> 
+              <a href="<%= screenshot.url %>" class="screenshot-link"><img class="screenshot" src="<%= screenshot.mediumScreenshot %> " alt=""></a>
               <% } %> 
           </div>
+      </div>
+      <% } %> 
     </div>
   </div>
+
   <div class="break"></div>
-  <% if (shortReviews.length) { %> 
+  <% if (reviews.length) { %> 
   <div id="review-page">
       <div>
             <h1>User reviews</h1>
-              <% for (let review of shortReviews) { %> 
+              <% for (let review of reviews) { %> 
                   <div class="rw-page-review">
                       <div class="rw-page-review-top">
                           <h1><%= review.title %> </h1>
@@ -92,6 +87,13 @@
                       </p>
                       <p class="review-author"><%= review.author.name %> <span class="review-date"><%= timeDifference(Date.parse(review.created_at)) %></span></p>
                       <p class="review-text"><%- review.body %></p>
+                      <% if (review.screenshots.length) { %>
+                        <div class="screenshot-row">
+                            <% for (let img of review.screenshots) { %>
+                                <a href="<%= img.url %> "><img src="<%= img.smallScreenshot %>" alt=""></a>
+                            <% } %>  
+                        </div> 
+                      <% } %>  
                       <% if (review.recommend) { %> 
                       <div class="recommend yes">Recommended <span><img src="/img/thumbsup.png" alt=""></span></div>
                       <% } else { %>
@@ -99,7 +101,7 @@
                       <% } %>  
                   </div>
               <% } %>
-              <% if (shortReviews.length) { %>
+              <% if (reviews.length) { %>
                 <div class="view-more">  
                     <a href="/games/<%= gameDetails.id %>/reviews">View all reviews</a>
                 </div>
