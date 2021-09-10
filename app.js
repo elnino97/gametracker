@@ -118,7 +118,8 @@ app.get('/community', async (req, res) => {
 
 app.get('/games/:id', loginRedirect, async (req, res) => {
     let favorites;
-    const reviews = await Review.find({ gameId: req.params.id });
+    const reviews = await Review.find({ gameId: req.params.id }, {}, { sort: { 'created_at': 'desc'}, limit: 3 });
+    const game = await Game.findOne({ id: req.params.id });
     let myReview;
     if (req.user) {
         const userdata = await Userdata.findOne({'user.id': req.user._id});
@@ -135,12 +136,9 @@ app.get('/games/:id', loginRedirect, async (req, res) => {
         }
         averageScore = (Math.round(averageScore / reviews.length * 10) / 10).toFixed(1)
     }
-    const shortReviews = reviews.slice(0,3);
-    const screenshots = games.results
-        .filter(i => i.id === parseInt(req.params.id))
-        .map(i => i.short_screenshots)
-        .flat()
-    res.render('app/game', { screenshots, gameDetails, shortReviews, favorites, myReview, averageScore, timeDifference });
+    let screenshots;
+    if (game && game.screenshots) screenshots = game.screenshots.reverse().slice(0, 9);
+    res.render('app/game', { screenshots, gameDetails, reviews, favorites, myReview, averageScore, timeDifference });
 })
 
 app.get('/games/:id/review/new', isLoggedIn, async (req, res) => {
@@ -151,10 +149,10 @@ app.get('/games/:id/review/new', isLoggedIn, async (req, res) => {
     res.render("review/new", { gameDetails })
 })
 
-app.post('/games/:id/reviews', validateReview, isLoggedIn, async (req, res) => {
+app.post('/games/:id/reviews', isLoggedIn, upload.array('screenshot'), validateReview, async (req, res) => {
     const { id } = req.params
     const userdata = await Userdata.findOne({'user.id': req.user._id});
-    const checkReviews = await Review.findOne({gameId: id, authorId: req.user._id})
+    const checkReviews = await Review.findOne({gameId: id, 'author.id': req.user._id})
     if (checkReviews){
         return res.redirect(`/games/${id}`)
     }
@@ -163,15 +161,17 @@ app.post('/games/:id/reviews', validateReview, isLoggedIn, async (req, res) => {
     if (!game){
         const { name, background_image, released} = gameDetails;
         game = await new Game({ id, name, background_image, released });
-        await game.save();
     }
     const review = new Review(req.body.review);
+    const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    review.screenshots = imgs;
     review.author = { name: req.user.username, id: req.user._id }
     review.gameId = id;
     review.game = game._id;
     await review.save();
 
     const review1 = new Review(req.body.review);
+    review1.screenshots = req.files.map(f => ({ url: f.path, filename: f.filename }));
     review1.author = { name: req.user.username, id: req.user._id }
     review1.gameId = id;
     review1.game = game._id;
@@ -180,8 +180,9 @@ app.post('/games/:id/reviews', validateReview, isLoggedIn, async (req, res) => {
     userdata.review.push(review.id)
     userdata.actionCount += 1;
     await userdata.save();
+    game.screenshots.push(...imgs)
+    await game.save();
     newActivity("review", req.user._id, req.user.username, game._id, review._id, game.background_image);
-
     res.redirect(`/games/${id}/reviews`)
 })
 
