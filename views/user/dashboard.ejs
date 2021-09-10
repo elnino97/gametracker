@@ -1,7 +1,6 @@
 <%- layout('./layouts/useraccount')%>
 
 <section id="dashboard">
-    <h1 class="content-heading">Dashboard</h1>
     <div id="user-info-wrapper">
         <div class="about-row">
             <img src="<%= userdata.image %>" alt="">
@@ -13,9 +12,11 @@
                 </form>
             </div>
         </div>
+        <h2 class="about-stats">Your stats</h2>
         <div class="about-counters">
-            <div class="counter"><%= userdata.favorite.length %> <span><img src="/img/heart.png" alt=""></span> <%= userdata.favorite.length === 1 ? "game" : "games" %> favourited</div>
-            <div class="counter"><%= userdata.review.length %> <span><img src="/img/review.png" alt=""></span> <%= userdata.favorite.length === 1 ? "review" : "reviews" %> made</div>
+            <a href="/account/games"><div class="counter counter-favorite"><%= userdata.favorite.length %> <%= userdata.favorite.length === 1 ? "game" : "games" %> favorited <span><img src="/img/heart2.png" alt=""></span></div></a>
+            <a href="/account/myreviews"><div class="counter counter-reviews"><%= userdata.review.length %> <%= userdata.review.length === 1 ? "review" : "reviews" %> written<span><img src="/img/review2.png" alt=""></span></div></a>
+            <div class="counter counter-joindate">Joined <%= timeDifference(Date.parse(userdata.created_at)) %></div>
         </div>
     </div>
 </section>
