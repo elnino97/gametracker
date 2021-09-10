@@ -18,6 +18,13 @@
                     </p>
                     <p class="review-author"><%= review.author.name %> <span class="review-date"><%= timeDifference(Date.parse(review.created_at)) %></span></p>
                     <p class="review-text"><%- review.body %></p>
+                    <% if (review.screenshots.length) { %>
+                        <div class="screenshot-row">
+                            <% for (let img of review.screenshots) { %>
+                                <a href="<%= img.url %> "><img src="<%= img.smallScreenshot %>" alt=""></a>
+                            <% } %>  
+                        </div> 
+                    <% } %>  
                     <% if (review.recommend) { %> 
                         <div class="recommend yes">Recommended <span class="thumbs-up"><img src="/img/thumbsup.png" alt=""></span></div>
                     <% } else { %>
