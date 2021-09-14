@@ -1,11 +1,12 @@
 <% if(success && success.length) {%>
-<div>
+<div class="flash flash-success">
+    <a href="#" class="close"></a>
     <%= success %>
 </div>
 <% } %>
 
 <% if(error && error.length) {%>
-<div>
+<div class="flash flash-error">
     <%= error %>
 </div>
 <% } %>
