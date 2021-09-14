@@ -10,11 +10,11 @@
 
 </head>
 <body>
-    <a class="back-link" href="/games/<%= gameDetails.id %>/reviews/<%= review._id %> "><img src="/img/back.png" alt=""></a>
+    <a class="back-link" href="/games/<%= id %>/reviews/<%= review._id %> "><img src="/img/back.png" alt=""></a>
     <section class="review-wrapper">
         <h1>Edit your review</h1>
         <div class="review-body">            
-            <form action="/games/<%= gameDetails.id %>/review?_method=PUT" method="POST">
+            <form action="/games/<%= id %>/review?_method=PUT" method="POST">
             <div class="title">
                 <input type="text" id="title" name="review[title]" value="<%= review.title %>" required minlength="5" maxlength="100">
             </div>
@@ -37,7 +37,7 @@
             <div class="buttons">
                 <div class="form-group1">
                     <button class="submit">Submit review</button>
-                    <div class="cancel"><a href="/games/<%= gameDetails.id %>/review">Cancel</a></div>
+                    <div class="cancel"><a href="/games/<%= id %>/review">Cancel</a></div>
                 </div>
                 <div class="form-group2">
                     <div>   
