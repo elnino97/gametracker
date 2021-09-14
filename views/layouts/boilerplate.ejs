@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GG Library</title>
+    <title>Playable</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/starability-basic.min.css">
     <link rel="stylesheet" href="/stylesheets/app.css">
+    <link rel="icon" type="image/ico" href="/img/favicon.ico">
 </head>
 <body>
     <%- include('../partials/navbar')%>
@@ -13,5 +14,10 @@
     <%- body %>
 
     <script src="/javascripts/nav.js"></script>
+    <script>
+        document.querySelector('.flash').addEventListener('click', function(){
+            this.remove();
+        })
+    </script>
 </body>
 </html>
