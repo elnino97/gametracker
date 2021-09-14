@@ -249,9 +249,9 @@ a {
     position: relative;
     margin: 16px auto 0 auto;
     width: 423px;
-    height: 63px;
     border-bottom: 1px solid #786ca5;
     display: flex;
+    padding-bottom: 5px;
 }
 
 .activity > h1 {
@@ -272,8 +272,8 @@ a {
 }
 
 .activity > p:nth-of-type(1) {
+    margin-top: 20px;
     width: 90%;
-    padding-top: 25px;
     font-size: 18px;
     line-height: 120.2%;
 }
@@ -290,33 +290,40 @@ a {
     line-height: 120.2%;
     color: #A2A2CF;
     right: 28px;
-    top: 8px;
 }
 
 /* START OF FAVORITE GAMES CSS */
 .favorites {
-    width: 1029px;
+    width: 100%;
+    overflow-y: scroll;
 }
 
 .fav-row {
     display: flex;
-    width: 934px;
+    flex-wrap: wrap;
     margin-top: 14px;
+    height: 100%;
 }
 
-#game {
+.fav-row > a {
+    margin-right: 14px;
+    margin-bottom: 14px;
+}
+
+.game {
     background: #3B3B5F;
     width: 223px;
-    height: 240px;
+    min-height: 264px;
+    padding-bottom: 9px;
 }
 
-#game-cover {
+.game-cover {
     object-fit: cover;
     width: 223px;
     height: 177px;
 }
 
-#game > p:nth-of-type(1) {
+.game > p:nth-of-type(1) {
     margin-top: 10px;
     margin-bottom: 5px;
     text-align: center;
@@ -325,7 +332,7 @@ a {
     color: #32CDB1;
 }
 
-#game > p:nth-of-type(2) {
+.game > p:nth-of-type(2) {
     text-align: center;
     font-size: 14px;
     line-height: 120.2%;
@@ -424,6 +431,16 @@ a {
     font-weight: bold;
     font-size: 14px;
     color: #32CDB1;
+}
+
+.screenshot-row {
+    margin-bottom: 12px;
+}
+
+.screenshot-row > a > img {
+    object-fit: cover;
+    width: 135px;
+    height: 76px;
 }
 
 .review-verdict-yes {
