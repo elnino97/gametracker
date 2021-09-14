@@ -22,14 +22,9 @@ body {
 }
 
 .info {
-    margin: 144px auto 0 auto;
+    margin: 211px auto 0 auto;
     width: 309px;
     height: 319px;
-}
-
-.logo {
-    width: 206px;
-    margin-bottom: 31px;
 }
 
 .info-1 {
@@ -116,3 +111,26 @@ a {
     text-decoration: none;
     color: black;
 }
+
+@media only screen and (max-width: 768px) {
+    .wrapper {
+        width: 100%;
+        margin: 0;
+    } 
+        .info-wrapper {
+            display: none;
+        }
+        .signin-wrapper {
+            width: auto;
+            background: none;
+        }
+            .signin-header {
+                color: #50E3C2;
+            }
+            label, a {
+                color: white;
+            }
+            input {
+                background: white;
+            }
+} 
