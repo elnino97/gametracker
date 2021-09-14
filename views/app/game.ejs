@@ -1,57 +1,57 @@
 <%- layout('/layouts/boilerplate')%>
 <div id="game-wrapper" 
-    style="background-image: linear-gradient(180deg, #151528 1%, rgba(0, 0, 0, 0.65) 22%, #151528 52%), url('<%= gameDetails.background_image %>')">
+    style="background-image: linear-gradient(180deg, #151528 1%, rgba(0, 0, 0, 0.65) 22%, #151528 52%), url('<%= game.background_image %>')">
     <div id="info-wrapper">
-        <h1 class="game-title"><%= gameDetails.name %></h1>
+        <h1 class="game-title"><%= game.name %></h1>
         <h2 class="game-rating">User rating: <%= averageScore %>/5</h2>
-        <p class="game-description"><%= gameDetails.description_raw %></p>
+        <p class="game-description"><%= game.description_raw.slice(0, 300) %>...</p>
         <div class="row">
-          <% for (let genre of gameDetails.genres) { %> 
+          <% for (let genre of game.genres) { %> 
               <div class="game-genre"><%= genre.name %></div>
           <% } %> 
       </div>
         <div class="row">
-            <p class="game-info">Metacritic: <span><%= gameDetails.metacritic %></span></p>
-            <p class="game-info">Released: <span><%= gameDetails.released %></span> </p>
+            <p class="game-info">Metacritic: <span><%= game.metacritic %></span></p>
+            <p class="game-info">Released: <span><%= game.released %></span> </p>
             <p class="game-info">Developers: 
-              <% for (let developer of gameDetails.developers) { %> 
+              <% for (let developer of game.developers) { %> 
                 <span><%= developer.name %></span>
               <% } %> 
             </p>
         </div>
         <h2>Platforms</h2>
           <div class="row">
-              <% for (let platform of gameDetails.parent_platforms) { %>
+              <% for (let platform of game.parent_platforms) { %>
                 <div class="game-platform"><%= platform.platform.name %></div>
               <% } %>
           </div> 
         <div class="buttons">
           <% if (!favorites) { %> 
-              <form action="/games/<%= gameDetails.id %>/favorite" method="POST">
+              <form action="/games/<%= game.id %>/favorite" method="POST">
                 <button class="favorite-btn">Add to favorites <span class="favorite-icon"><img src="/img/heart.png" alt=""></span></button>
               </form>
             <% } else { %>
-              <form action="/games/<%= gameDetails.id %>/favorite?_method=PUT" method="POST">
+              <form action="/games/<%= game.id %>/favorite?_method=PUT" method="POST">
                 <button class="favorite-btn">Remove from favorites <span class="favorite-icon"><img src="/img/heart.png" alt=""></span></button>
               </form>
             <% } %>  
-            <% if (myReview) { %>  
+            <% if (findMyReview.length) { %>  
             <div class="review-btn">
-              <a href="/games/<%= gameDetails.id %>/reviews/<%= myReview %>">View my review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
+              <a href="/games/<%= game.id %>/reviews/<%= findMyReview._id %>">View my review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
             </div>
             <% } else { %>
               <div class="review-btn">
-                <a href="/games/<%= gameDetails.id %>/review/new">Write a review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
+                <a href="/games/<%= game.id %>/review/new">Write a review <span class="review-icon"><img src="/img/review.png" alt=""></span></a>
               </div>
             <% } %> 
         </div>
         <h2>Links</h2>
         <div class="row">
-        <% if (gameDetails.website) { %>
-            <a href="<%= gameDetails.website %>" class="game-link"><div><%= gameDetails.name %></div></a>
+        <% if (game.website) { %>
+            <a href="<%= game.website %>" class="game-link"><div><%= game.name %></div></a>
         <% } %>
-        <% if (gameDetails.metacritic_url) { %>
-            <a href="<%= gameDetails.metacritic_url %>" class="game-link"><div>Metacritic</div></a>
+        <% if (game.metacritic_url) { %>
+            <a href="<%= game.metacritic_url %>" class="game-link"><div>Metacritic</div></a>
         <% } %>    
         </div>
       </div>
@@ -66,8 +66,6 @@
       <% } %> 
     </div>
   </div>
-
-  <div class="break"></div>
   <% if (reviews.length) { %> 
   <div id="review-page">
       <div>
@@ -103,7 +101,7 @@
               <% } %>
               <% if (reviews.length) { %>
                 <div class="view-more">  
-                    <a href="/games/<%= gameDetails.id %>/reviews">View all reviews</a>
+                    <a href="/games/<%= game.id %>/reviews">View all reviews</a>
                 </div>
               <% } %> 
         </div>
