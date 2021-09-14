@@ -9,7 +9,6 @@ const Game = require('../models/gameinfo')
 const Joi = require('joi');
 const Review = require('../models/review');
 const Userdata = require('../models/userData');
-const gameDetails = require('../wolfenstein');
 const { timeDifference } = require('../timeconvert');
 const { newActivity } = require('../schemaInstance');
 const { reviewSchema } = require('../schemas.js')
