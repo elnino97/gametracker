@@ -1,8 +1,8 @@
 <%- layout('/layouts/boilerplate')%>
 <div id="review-page">
-    <a class="back-link" href="/games/<%= gameDetails.id %>"><img src="/img/back.png" alt=""></a>
+    <a class="back-link" href="/games/<%= reviews[0].gameId %>"><img src="/img/back.png" alt=""></a>
     <div>
-            <h1>User reviews</h1>
+        <h1>User reviews</h1>
             <% for (let review of reviews) { %> 
                 <div class="rw-page-review">
                     <div class="rw-page-review-top">
