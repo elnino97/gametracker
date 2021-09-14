@@ -18,8 +18,6 @@ const homeRoutes = require('./routes/home')
 const accountRoutes = require('./routes/account')
 
 
-// const fetch = require('node-fetch');
-
 const app = express();
 const ExpressError = require('./utils/ExpressError');
 const User = require('./models/user')
@@ -65,14 +63,6 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     next();
 })
-
-const apiKey = process.env.RAWG_KEY
-
-// const getGames = async (name) => {
-//     const response = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&search=${name}`);
-//     const gamesData = await response.json();
-//     return gamesData
-// }
 
 app.use('/', homeRoutes)
 app.use('/games', games)
