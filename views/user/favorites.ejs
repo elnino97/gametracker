@@ -4,13 +4,15 @@
   <div class="fav-row">
     <% if (games.length) { %>
         <% for (let game of games) { %>
-            <div id="game">
-            <img id="game-cover" src="<%= game.background_image %> " alt="">
-            <p><%= game.name %></p>
-            <p><%= game.released %></p>
-            </div>
+            <a href="/games/<%= game.id %> ">
+                <div class="game">
+                    <img class="game-cover" src="<%= game.background_image %> " alt="">
+                    <p><%= game.name %></p>
+                    <p><%= game.released.slice(0,4) %></p>
+                </div>
+            </a>
         <% } %>
-    <% } else { %>
+        <% } else { %>
         <div class="nothing-here">
             <img src="/img/cil_sad.png" alt="">
             <p>Looks like there’s nothing to see here.</p>
