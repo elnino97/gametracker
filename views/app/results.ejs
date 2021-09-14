@@ -9,14 +9,19 @@
             <h1>Results</h1>
         </div>
         <div id="results-row">
-            <% for (let game of games.results) { %>
-            <div id="game-card">
-                <a href="/games/28958">
+            <% for (let game of games) { %>
+            <div class="game-card">
+                <a href="/games/<%= game.id %> ">
                     <img src="<%= game.background_image %>" alt="...">
                 </a>
                 <div>
                     <h2 class="card-title"><%= game.name %></h2>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam, deleniti iusto ducimus vitae.</p>
+                    <p><% if (game.released) { %> 
+                            <%= game.released.slice(0, 4) %>
+                        <% } else { %>
+                            <%= 'N/A' %> 
+                        <% } %>  
+                    </p>
                 </div>
             </div>
             <% } %> 
