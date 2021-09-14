@@ -6,8 +6,3 @@ module.exports.isLoggedIn = (req, res, next) => {
     }
     next();
 }
-
-module.exports.loginRedirect = (req, res, next) => {
-    req.session.returnTo = req.originalUrl;
-    next();
-}
