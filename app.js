@@ -10,6 +10,8 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
 const multer = require('multer');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
 const { storage } = require('./cloudinary');
 const { reviewSchema } = require('./schemas.js')
 const upload = multer({ storage });
@@ -31,11 +33,12 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }));
+app.use(mongoSanitize());
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
 const sessionConfig = {
-    name: 'session',
+    name: 'playablesession',
     secret,
     resave: false,
     saveUninitialized: true,
@@ -49,6 +52,28 @@ const sessionConfig = {
 
 app.use(session(sessionConfig));
 app.use(flash());
+app.use(helmet());
+
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'"],
+            scriptSrc: ["'unsafe-inline'", "'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com/"],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                "https://media.rawg.io/media/",
+                "https://res.cloudinary.com/dkc9btnxn/",
+            ],
+            fontSrc: ["'self'", "https://fonts.gstatic.com/s/lato/v20/S6uyw4BMUTPHjx4wXg.woff2"],
+        },
+    })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
