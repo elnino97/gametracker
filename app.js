@@ -24,7 +24,7 @@ const app = express();
 const ExpressError = require('./utils/ExpressError');
 const User = require('./models/user')
 
-mongoose.connect('mongodb://localhost:27017/gametracker', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/playable', {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }));
 app.use(mongoSanitize());
 
-const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
+const secret = process.env.SECRET;
 
 const sessionConfig = {
     name: 'playablesession',
