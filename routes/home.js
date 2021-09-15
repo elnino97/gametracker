@@ -54,7 +54,7 @@ router.post('/register', catchAsync(async (req, res) => {
             res.redirect('/register')
         }
         const user = new User({ email, username });
-        const image = "/img/profilepicture.jpg"
+        const image = "/img/profilepicture.png"
         const userdata = new Userdata({user: {id: user.id, username}, image})
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, async (err) => {
