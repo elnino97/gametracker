@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-
 html {
     overflow: scroll;
     overflow-x: hidden;
@@ -69,6 +66,20 @@ a {
     margin-left: 5rem;
 }
 
+.nav-item > .nav-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: rgb(179, 179, 216);
+    transition: width .3s;
+}
+
+.nav-item > .nav-link:hover::after {
+    width: 100%;
+    transition: width .3s;
+}
+
 .nav-link {
     color: white;
 }
@@ -128,6 +139,7 @@ a {
     align-items: center;
     font-size: 36px;
     line-height: 120.2%;
+    transition: 0.2s;
 }
 
 .home-link:hover {
@@ -153,9 +165,11 @@ a {
 
 /*    START OF EXPLORE CSS    */
 #explore-wrapper {
-    margin: 213px auto 0 auto;
+    margin: 313px auto 0 auto;
     width: 720px;
     padding-bottom: 20px;
+    -webkit-animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 #explore-wrapper > h1 {
@@ -208,13 +222,13 @@ a {
     width: 922px;
 }
 
-#results-wrapper > div {
-    margin-top: 91px;
+#results-wrapper {
+    margin-top: 147px;
 }
 
 #results-search {
     display: flex;
-    margin-bottom: 91px;
+    margin-bottom: 161px;
 }
 
 #results-search > h1 {
@@ -247,45 +261,19 @@ a {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    width: 960px;
-}
-
-.game-card {
-    overflow: hidden;
-    width: 286px;
-    box-sizing: border-box;
-    margin-bottom: 32px;
-    background: #3B3B5F;
-}
-
-.game-card > div {
-    padding: 15px;
-}
-
-.game-card > a > img {
-    object-fit: cover;
-    width: 100%;
-    height: 159px;
-}
-
-.game-card > div > h2 {
-    color: #32CDB1;
-    font-size: 18px;
-    line-height: 120.2%;
-}
-
-.game-card > div > p {
-    margin-top: 6px;
-    color: #A2A2CF;
-    font-size: 14px;
-    line-height: 120.2%;
+    width: 740px;
+    margin: auto;
+    -webkit-animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 /* START OF COMMUNITY CSS */
 #community-wrapper {
-    margin: 213px auto 0 auto;
+    margin: 313px auto 0 auto;
     padding-bottom: 20px;
     width: 922px;
+    -webkit-animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .section-title {
@@ -294,6 +282,12 @@ a {
     font-size: 18px;
     line-height: 120.2%;
     cursor: pointer;
+    transition: .2s;
+}
+
+.section-title:hover {
+    font-size: 24px;
+    transition: .2s;
 }
 
 .section-title.active {
@@ -440,12 +434,20 @@ a {
 }
 
 .game {
+    position: relative;
+    top: 0;
     margin-top: 38px;
     margin-right: 20px;
     overflow: hidden;
-    background: #3B3B5F;
+    background: #1E1E33;
     width: 223px;
     min-height: 264px;
+    transition: top ease .2s;
+}
+
+.game:hover {
+    top: -15px;
+    transition: top ease .2s;
 }
 
 .game img {
@@ -531,6 +533,8 @@ a {
 
 /*   START OF GAME PAGE CSS   */
 #game-wrapper {
+    -webkit-animation: fade-in 0.5;
+    animation: fade-in 0.5s;
     width: 100%;
     padding: 35px 0 200px;
     background-size: cover;
@@ -538,9 +542,11 @@ a {
 }
 
 #info-wrapper {
-    margin: 319px auto 0 auto;
+    margin: 419px auto 0 auto;
     padding-top: 80px;
     width: 1020px;
+    -webkit-animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .game-title {
@@ -554,6 +560,15 @@ a {
     font-size: 24px;
     margin-bottom: 29px;
 }
+    .game-score.good {
+        color: #16D89D;
+    }
+    .game-score.average {
+        color:#ffc400
+    }
+    .game-score.bad {
+        color:#ff0055
+    }
 
 .game-description {
     white-space: pre-line;
@@ -588,6 +603,10 @@ a {
 
 .game-link {
     color: white;
+}
+
+.game-link > div {
+    transition: .2s;
 }
 
 .row {
@@ -626,6 +645,7 @@ a {
     font-weight: bold;
     font-size: 18px;
     margin-right: 20px;
+    transition: .2s;
 }
 
 .review-btn {
@@ -651,6 +671,14 @@ a {
     box-sizing: border-box;
     box-shadow: 2px 4px 7px 2px rgba(0, 0, 0, 0.47);
     border-radius: 6px;
+    transition: .2s;
+}
+
+.game-link > div:hover, .favorite-btn:hover, .review-btn:hover, .screenshot:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    transition: .2s;
 }
 
 /* Review styling stuff */
@@ -712,16 +740,15 @@ a {
 .review-display-buttons {
     display: flex;
     justify-content: space-between;
-    width: 138px;
+    width: 145px;
 }
 
 .review-delete-btn {
     width: 74px;
     height: 32px;
-    background: #B60E0E;
+    background: #BA4343;
     color: white;
     box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 3px;
     border: none;
     font-size: 18px;
     line-height: 120.2%;
@@ -730,14 +757,14 @@ a {
 .review-edit-btn {
     padding: 0 15px;
     height: 32px;
-    background: #0500E2;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid #000000;
 }
 
-.review-edit-btn > a{
-    color: white;
+.review-edit-btn > a {
+    color: black;
     font-size: 18px;
     line-height: 120.2%;
 }
@@ -857,36 +884,30 @@ a {
     transform: rotate(-45deg);
   }
 /* ANIMATIONS */
-#community-wrapper, #explore-wrapper {
-    animation: transitionIn 0.5s;
-    -webkit-animation: transitionIn 0.5s;
-}
-
-#results-row {
-    animation: fadein 2s;
-    -webkit-animation: fadein 2s;
-}
-
-@keyframes fadein {
-    from { 
-        opacity: 0;
-     }
-    to { 
-        opacity: 1;
+@-webkit-keyframes slide-top {
+    0% {
+        opacity: 0.2;
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
     }
-}
-
-@keyframes transitionIn {
-    from { 
-        opacity: 0;
-        margin-top: 500px;
-     }
-    to { 
+    100% {
         opacity: 1;
-        margin-top: 213px;
+      -webkit-transform: translateY(-100px);
+              transform: translateY(-100px);
     }
-}
-
+  }
+  @keyframes slide-top {
+    0% {
+        opacity: 0.2;
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+    }
+    100% {
+        opacity: 1;
+      -webkit-transform: translateY(-100px);
+              transform: translateY(-100px);
+    }
+  }
 /* MEDIA QUERIES */
 @media only screen and (max-width: 768px) {
     #navbar {
@@ -959,15 +980,18 @@ a {
     #explore-wrapper {
         width: 95vw;
     }
-    #explore-wrapper h1 {
-        width: 100%;
-        font-size: 32px;
-        text-align: center;
-    }
-    #explore-wrapper .favoritesrow {
-        align-items: center;
-        flex-direction: column;
-    }
+        #popular-games {
+            margin-top: 70px;
+        }
+        #explore-wrapper h1 {
+            width: 100%;
+            font-size: 32px;
+            text-align: center;
+        }
+        #explore-wrapper .favoritesrow {
+            align-items: center;
+            flex-direction: column;
+        }
     /*RESULTS*/
     #results-wrapper {
         width: 95vw;
@@ -987,6 +1011,7 @@ a {
         text-align: left;
     }
     #results-row {
+        margin-top: 100px;
         flex-direction: column;
         align-items: center;
         width: 100%;
@@ -1108,3 +1133,12 @@ a {
         width: 18px;
     }
 }
+
+.js-scroll {
+    opacity: 0;
+    transition: opacity 500ms;
+  }
+   
+  .js-scroll.scrolled {
+    opacity: 1;
+  }

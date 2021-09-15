@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-
 ::-webkit-scrollbar {
     width: 0;  /* Remove scrollbar space */
 }
@@ -103,10 +100,24 @@ a {
 .navigation > a {
     margin-top: 36px;
     margin-left: 27px;
-    display: block;
+    display: inline-block;
     font-size: 18px;
     line-height: 120.2%;
     color: #A8A6C6;
+}
+
+.navigation > a::after, .nav-item > .nav-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: rgb(179, 179, 216);
+    transition: width .3s;
+}
+
+.navigation > a:hover::after, .nav-item > .nav-link:hover::after {
+    width: 100%;
+    transition: width .3s;
 }
 
 .navigation > a > span {
@@ -181,6 +192,15 @@ a {
     width: 190px;
     font-size: 18px;
     line-height: 120.2%;
+    transition: .2s;
+}
+
+#about-user:hover {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    transform-origin: top left;
+    transition: .2s;
 }
 
 #about-form {
@@ -222,12 +242,18 @@ a {
     width: 165px;
     padding: 26px 20px;
     background: #FF6683;
+    transition: 0.2s;
 }
 
 .counter-reviews {
     width: 153px;
     padding: 26px 20px;
     background: #FFB800;
+    transition: 0.2s;
+}
+.counter-favorite:hover, .counter-reviews:hover {
+    padding: 35px 20px;
+    transition: 0.2s;
 }
 
 .counter-joindate {
@@ -311,10 +337,18 @@ a {
 }
 
 .game {
+    position: relative;
+    top: 0;
     background: #3B3B5F;
     width: 223px;
     min-height: 264px;
     padding-bottom: 9px;
+    transition: top ease .2s;
+}
+
+.game:hover {
+    top: -11px;
+    transition: top ease .2s;
 }
 
 .game-cover {
@@ -510,25 +544,21 @@ a {
 }
 
 #image-settings > form > label > img {
+    margin-bottom: 20px;
+    opacity: 0.5;
     object-fit: cover;
     border-radius: 50%;
     width: 247px;
     height: 247px;
     filter: drop-shadow(-2px 2px 7px rgba(0, 0, 0, 0.25));
+    transition: .2s;
 }
 
-#image-settings > form > label > span {
-    display: block;
-    position: relative;
-    bottom: 135px;
-    width: 247px;
-    height: 22px;
-    font-size: 18px;
-    line-height: 120.2%;
-    text-align: center;
-    color: #FFFFFF;
-    background: rgba(0, 0, 0, 0.53);
-    }
+#image-settings > form > label > img:hover {
+    opacity: 1;
+    box-shadow: 0px 0px 14px -1px #32CDB1;
+    transition: .2s;
+}
 
 #image-settings > form > button {
     margin: auto;
