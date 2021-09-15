@@ -482,7 +482,6 @@ a {
     width: 244px;
     height: 310px;
     background: #FFFFFF;
-    box-shadow: 0px 0px 15px -1px #32CDB1;
 }
 
 .usercard > img {
@@ -519,13 +518,14 @@ a {
 }
 
 .times-favorited, .times-reviewed {
+    color: #40406D;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     width: 67px;
     height: 36px;
-    background: #000000;
     border-radius: 12px;
+    border: 1px solid #000000;
     font-weight: bold;
     font-size: 18px;
     line-height: 120.2%;
