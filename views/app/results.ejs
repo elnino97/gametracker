@@ -1,31 +1,27 @@
 <%- layout('/layouts/boilerplate')%>
 <div id="results-wrapper">
-    <div>
-        <div id="results-search">
-            <form action="/explore" method="POST">
-                <input type="text" name="name" id="name">
-                <span><img src="/img/search.png" alt=""></span>
-            </form>
-            <h1>Results</h1>
-        </div>
-        <div id="results-row">
-            <% for (let game of games) { %>
-            <div class="game-card">
-                <a href="/games/<%= game.id %> ">
-                    <img src="<%= game.background_image %>" alt="...">
-                </a>
-                <div>
-                    <h2 class="card-title"><%= game.name %></h2>
-                    <p><% if (game.released) { %> 
-                            <%= game.released.slice(0, 4) %>
-                        <% } else { %>
-                            <%= 'N/A' %> 
-                        <% } %>  
-                    </p>
-                </div>
-            </div>
-            <% } %> 
+    <div id="results-search">
+        <form action="/explore" method="POST">
+            <input type="text" name="name" id="name">
+            <span><img src="/img/search.png" alt=""></span>
+        </form>
+        <h1>Results</h1>
     </div>
+    <div id="results-row">
+        <% for (let game of games) { %>
+            <div class="game">
+                <a href="/games/<%= game.id %>">
+                    <img src="<%= game.background_image %> " alt="">
+                </a>
+                <p><%= game.name %></p>
+                <p><% if (game.released) { %> 
+                        <%= game.released.slice(0, 4) %>
+                    <% } else { %>
+                        <%= 'N/A' %> 
+                    <% } %>  
+                </p>
+            </div>
+        <% } %>   
     </div>
 </div>
 

@@ -3,7 +3,7 @@
     style="background-image: linear-gradient(180deg, #151528 1%, rgba(0, 0, 0, 0.65) 22%, #151528 52%), url('<%= game.background_image %>')">
     <div id="info-wrapper">
         <h1 class="game-title"><%= game.name %></h1>
-        <h2 class="game-rating">User rating: <%= averageScore %>/5</h2>
+        <h2 class="game-rating">User rating: <span class="game-score <%= score <= 5 && score >= 4 ? "good" : score < 4 && score >= 2 ? "average" : score < 2 ? "bad" : "no-rating"%>"><%= score === "NaN" ? "No ratings yet" : score%></span></h2>
         <p class="game-description"><%= game.description_raw.slice(0, 300) %>...</p>
         <div class="row">
           <% for (let genre of game.genres) { %> 
@@ -54,16 +54,16 @@
             <a href="<%= game.metacritic_url %>" class="game-link"><div>Metacritic</div></a>
         <% } %>    
         </div>
-      </div>
-      <% if (screenshots) { %>
-      <div id="game-screenshots">
-          <div class="row">
-              <% for (let screenshot of screenshots) { %> 
-              <a href="<%= screenshot.url %>" class="screenshot-link"><img class="screenshot" src="<%= screenshot.mediumScreenshot %> " alt=""></a>
-              <% } %> 
+        <% if (screenshots) { %>
+          <div id="game-screenshots">
+              <div class="row">
+                  <% for (let screenshot of screenshots) { %> 
+                  <a href="<%= screenshot.url %>" class="screenshot-link"><img class="screenshot" src="<%= screenshot.mediumScreenshot %> " alt=""></a>
+                  <% } %> 
+              </div>
           </div>
+          <% } %> 
       </div>
-      <% } %> 
     </div>
   </div>
   <% if (reviews.length) { %> 

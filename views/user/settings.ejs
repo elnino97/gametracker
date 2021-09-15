@@ -6,7 +6,6 @@
     <form action="/account/image?_method=PUT" method="POST" enctype="multipart/form-data">
         <label for="file-input">
             <img id="output" src="<%= userdata.image %>"/>
-            <span>Click to change</span>
         </label>
         <input id="file-input" type="file" name="image" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"/>
         <button class="confirm-changes">Confirm changes</button>

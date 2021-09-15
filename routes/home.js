@@ -7,7 +7,7 @@ const Game = require('../models/gameinfo')
 const Review = require('../models/review');
 const User = require('../models/user')
 const Userdata = require('../models/userData')
-const { timeDifference } = require('../timeconvert');
+const { timeDifference } = require('../utils/timeconvert');
 const axios = require('axios');
 const catchAsync = require('../utils/catchAsync');
 
