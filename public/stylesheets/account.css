@@ -477,6 +477,16 @@ a {
     height: 76px;
 }
 
+.review-lower > .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.review-lower > .row > a {
+    color: rgb(179, 175, 175);
+}
+
 .review-verdict-yes {
     display: flex;
     justify-content: space-between;
@@ -508,7 +518,6 @@ a {
     width: 17px;
     height: 17px;
 }
-
 
 /* START OF ACCOUNT SETTINGS CSS */
 #image-settings {
@@ -745,6 +754,9 @@ button.confirm-changes {
     }
     /*MY REVIEWS*/
     #reviews {
+        width: auto;
+    }
+    .recent-review {
         width: auto;
     }
     .review-top img {
