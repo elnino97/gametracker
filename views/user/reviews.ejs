@@ -32,12 +32,15 @@
                                     <a href="<%= img.url %> "><img src="<%= img.smallScreenshot %>" alt=""></a>
                                 <% } %>  
                             </div> 
-                        <% } %>  
-                        <% if (review.recommend) { %> 
-                            <div class="review-verdict-yes">Recommended <span><img class="thumbs-up" src="/img/thumbsup.png" alt=""></span></div>
-                        <% } else { %>
-                            <div class="review-verdict-no">Not Recommended <span><img class="thumbs-down" src="/img/thumbsdown.png" alt=""></span></div>
-                        <% } %> 
+                        <% } %>
+                        <div class="row">
+                            <% if (review.recommend) { %> 
+                                <div class="review-verdict-yes">Recommended <span><img class="thumbs-up" src="/img/thumbsup.png" alt=""></span></div>
+                            <% } else { %>
+                                <div class="review-verdict-no">Not Recommended <span><img class="thumbs-down" src="/img/thumbsdown.png" alt=""></span></div>
+                            <% } %>
+                            <a href="/games/<%= review.gameId %>/reviews/<%= review._id %>">View</a>  
+                        </div>  
                     </div>
                 </div>
             <% } %> 
