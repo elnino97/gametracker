@@ -9,9 +9,8 @@ const Game = require('../models/gameinfo')
 const Joi = require('joi');
 const Review = require('../models/review');
 const Userdata = require('../models/userData');
-const { timeDifference } = require('../timeconvert');
-const { newActivity } = require('../schemaInstance');
-const { reviewSchema } = require('../schemas.js')
+const { timeDifference } = require('../utils/timeconvert');
+const { reviewSchema, newActivity } = require('../schemas.js')
 const axios = require('axios');
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
@@ -46,9 +45,9 @@ router.get('/:id', catchAsync(async (req, res) => {
         favorites = userdata.favorite.includes(parseInt(req.params.id));
         findMyReview = reviews.filter(item => String(item.author.id) === String(req.user._id));
     }
-    const averageScore = (Math.round(reviews.reduce((acc, current) => acc + current.rating, 0) / reviews.length * 10) / 10).toFixed(1);
+    const score = (Math.round(reviews.reduce((acc, current) => acc + current.rating, 0) / reviews.length * 10) / 10).toFixed(1);
     if (game && game.screenshots) screenshots = game.screenshots.reverse().slice(0, 9);
-    res.render('app/game', { screenshots, game: response.data, reviews: reviews.slice(0, 3), favorites, findMyReview, averageScore, timeDifference });
+    res.render('app/game', { screenshots, game: response.data, reviews: reviews.slice(0, 3), favorites, findMyReview, score, timeDifference });
 }))
 
 router.get('/:id/review/new', isLoggedIn, catchAsync(async (req, res) => {
@@ -101,7 +100,7 @@ router.get('/:id/reviews/:reviewId', catchAsync(async (req, res) => {
     if (!review) {
         return res.redirect(`/games/${req.params.id}`)
     }
-    res.render('review/myreview', { gameDetails, review, timeDifference });
+    res.render('review/myreview', { review, timeDifference });
 }))
 
 router.delete('/:id/reviews/:reviewId', isLoggedIn, catchAsync(async (req, res) => {
